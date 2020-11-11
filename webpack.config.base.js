@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports={
     target: 'web',
@@ -23,4 +25,12 @@ module.exports={
             // }
         ]
     },
+    // externals: [nodeExternals(), 'react-helmet'],
+    plugins: [
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: 'src/base.html',
+            filename: 'template/index.html',
+        }),
+    ]
 }

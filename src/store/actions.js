@@ -7,6 +7,9 @@ export const setHello = payload => ({
 });
 
 export const fetchTodos = () => async dispatch => {
+
+    console.log('inside')
+
     const response = await axios.get(
         'https://jsonplaceholder.typicode.com/todos'
     );

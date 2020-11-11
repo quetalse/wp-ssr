@@ -4,12 +4,6 @@ import Todo from "./pages/Todo";
 import NotFound from "./pages/NotFound";
 import App from './App';
 
-
-console.log(Home)
-console.log(About)
-console.log(Todo)
-console.log(NotFound)
-
 export default [
     {
         ...App,

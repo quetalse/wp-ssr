@@ -7,12 +7,13 @@ import Routes from './Route';
 import {store} from "./store";
 import '@babel/polyfill';
 
+
+console.log('store', store)
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <div>
-                {renderRoutes(Routes)}
-            </div>
+            {renderRoutes(Routes)}
         </BrowserRouter>
     </Provider>,
 document.querySelector('#root'));

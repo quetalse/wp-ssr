@@ -5,7 +5,11 @@ import { fetchTodos } from "../store/actions";
 
 const Todo = ({fetchTodos, todos}) => {
 
+    console.log('INSIDE TODO')
+    console.log('todos todos', todos)
+
     useEffect(() => {
+        console.log('INSIDE TODO')
         fetchTodos();
     },[])
 
