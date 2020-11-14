@@ -1,4 +1,4 @@
-import { FETCH_TODOS, SET_HELLO } from "./types";
+import { FETCH_TODOS, SET_HELLO, REQUEST_TODOS } from "./types";
 import axios from 'axios';
 
 export const setHello = payload => ({
@@ -6,16 +6,15 @@ export const setHello = payload => ({
     payload
 });
 
-export const fetchTodos = () => async dispatch => {
+export const requestTodos = () => {
+    return {
+        type: REQUEST_TODOS
+    }
+}
 
-    console.log('inside')
-
-    const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/todos'
-    );
-
-    dispatch({
-        type: FETCH_TODOS,
-        payload: response.data
-    })
+export const fetchTodos = () => {
+    console.log("actions")
+    return {
+        type: FETCH_TODOS
+    }
 }

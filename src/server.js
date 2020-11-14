@@ -14,11 +14,14 @@ import '@babel/polyfill';
 
 import Routes from './Route';
 import { store } from './store';
-import { assetsByChunkName } from '../dist/stats.json';
+import { assetsByChunkName } from '../build/stats.json';
+
+
+console.log('assetsByChunkName', assetsByChunkName)
 
 const app = express();
 
-app.use(express.static('dist'));
+app.use(express.static('build'));
 
 // eslint-disable-next-line no-shadow
 const renderer = (req, store, context) => {
@@ -93,7 +96,8 @@ app.get('*', (req, res, next) => {
             res.status(404);
         }
 
-        const indexFile = path.resolve('./dist/template/index.html');
+        const indexFile = path.resolve('./build/template.html');
+        console.log('indexFile', indexFile)
         fs.readFile(indexFile, 'utf-8', (err, data) => {
             if(err){
                 console.log('Something went wrong:', err);
@@ -103,6 +107,10 @@ app.get('*', (req, res, next) => {
             const helmet = Helmet.renderStatic();
 
             data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
+
+
+            console.log('data', )
+
             data = data.replace('__LOADER__', '');
             data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
 

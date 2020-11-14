@@ -1,23 +1,38 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
-const baseConfig = require('./webpack.config.base');
+const baseConfig = require('../base/webpack.config.base');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {StatsWriterPlugin} = require('webpack-stats-plugin')
+const {StatsWriterPlugin} = require('webpack-stats-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = merge(baseConfig, {
+
+module.exports = {
     mode: 'production',
     entry: './src/client.js',
     output: {
-        filename: 'bundle.[chunkhash].js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: 'client-bundle.[chunkhash].js',
+        path: path.resolve(process.cwd(), 'build'),
         publicPath: '/'
     },
     module: {
         rules: [
+            {
+                test: /\.js?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-react',
+                            ['@babel/env', {targets: {browsers: ['last 7 versions']}}]
+                        ]
+                    }
+                }
+            },
             {
                 test: /\.scss$/,
                 use: [
@@ -41,6 +56,11 @@ module.exports = merge(baseConfig, {
         ]
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: 'src/base.prod.html',
+            filename: 'template.html'
+        }),
         new CompressionPlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
@@ -55,9 +75,8 @@ module.exports = merge(baseConfig, {
            }
         }),
         new MiniCssExtractPlugin({
-            filename: 'styles.[chunkhash].css'
+            filename: 'client-styles.[chunkhash].css'
         })
     ],
     devtool: 'inline-source-map' // для отладки в браузере
-
-})
+}

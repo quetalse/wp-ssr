@@ -1,14 +1,13 @@
 import {createStore, applyMiddleware, compose} from "redux";
+import createSagaMiddleware from 'redux-saga'
 import thunk from "redux-thunk";
 
 import reducers from './reducers';
+import root from './sagas'
 
-const middleware = [thunk];
 
-// const composeEnhancers =
-//     typeof window !== 'undefined'
-//         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//         : compose; // eslint-disable-line
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [thunk, sagaMiddleware];
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers =
@@ -27,13 +26,12 @@ if (typeof window !== 'undefined') {
     delete window.__INITIAL_DATA__;
 }
 
-console.log('state', state)
-console.log('composeEnhancers', composeEnhancers)
-
 const store = createStore(
     reducers,
     state,
-    composeEnhancers(applyMiddleware(...middleware))
+    // composeEnhancers(applyMiddleware(...middleware))
+    applyMiddleware(sagaMiddleware)
 );
+sagaMiddleware.run(root);
 
 export {store};

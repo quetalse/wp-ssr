@@ -1,0 +1,12 @@
+{
+  "errors": [],
+  "warnings": [],
+  "assetsByChunkName": {
+    "main": [
+      "client-styles.b7bef88382f1293d41fe.css",
+      "client-bundle.b7bef88382f1293d41fe.js"
+    ]
+  },
+  "assets": [],
+  "filteredAssets": 5
+}
