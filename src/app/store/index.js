@@ -1,10 +1,7 @@
 import {createStore, applyMiddleware, compose} from "redux";
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from "redux-thunk";
-
 import reducers from './reducers';
-import root from './sagas'
-
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [thunk, sagaMiddleware];
@@ -29,9 +26,12 @@ if (typeof window !== 'undefined') {
 const store = createStore(
     reducers,
     state,
-    // composeEnhancers(applyMiddleware(...middleware))
-    applyMiddleware(sagaMiddleware)
+    composeEnhancers(applyMiddleware(...middleware))
+    // applyMiddleware(sagaMiddleware)
 );
-sagaMiddleware.run(root);
+store.runSaga = sagaMiddleware.run;
+console.log('store', store)
+store.close = () => store.dispatch(END);
+// sagaMiddleware.run(rootSaga);
 
 export {store};

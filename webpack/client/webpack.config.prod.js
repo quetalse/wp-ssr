@@ -8,7 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {StatsWriterPlugin} = require('webpack-stats-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -74,6 +74,10 @@ module.exports = {
                assets: true
            }
         }),
+        new CopyWebpackPlugin([
+            { from: 'src/images', to: 'images' },
+            // { from: 'src/static', to: 'static' },
+        ]),
         new MiniCssExtractPlugin({
             filename: 'client-styles.[chunkhash].css'
         })

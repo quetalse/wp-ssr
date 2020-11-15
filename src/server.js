@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 
@@ -10,14 +11,12 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 import express from 'express';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
-import '@babel/polyfill';
 
-import Routes from './Route';
-import { store } from './store';
+
+import Routes from './app/Route';
+import { store } from './app/store';
+import { rootSaga } from './app/store/sagas/server';
 import { assetsByChunkName } from '../build/stats.json';
-
-
-console.log('assetsByChunkName', assetsByChunkName)
 
 const app = express();
 
@@ -71,24 +70,58 @@ app.get('*', (req, res, next) => {
     const params = req.params[0].split('/');
     const id = params[2];
     const routes = matchRoutes(Routes, req.path);
+    const indexFile = path.resolve('./build/template.html');
 
-    const promises = routes
-        .map(({ route }) => {
-            return route.loadData ? route.loadData(store, id) : null;
-        })
-        .map(promise => {
-            if (promise) {
-                // eslint-disable-next-line no-unused-vars
-                return new Promise((resolve, reject) => {
-                    promise
-                        .then(resolve)
-                        .catch(resolve);
-                });
-            }
-            return null;
-        });
+    // const promises = routes
+    //     .map(({ route }) => {
+    //         return route.loadData ? route.loadData(store, id) : null;
+    //     })
+    //     .map(promise => {
+    //         if (promise) {
+    //             // eslint-disable-next-line no-unused-vars
+    //             return new Promise((resolve, reject) => {
+    //                 promise
+    //                     .then(resolve)
+    //                     .catch(resolve);
+    //             });
+    //         }
+    //         return null;
+    //     });
+    //
+    // Promise.all(promises).then(() => {
+    //     const context = {};
+    //     const content = renderer(req, store, context);
+    //
+    //     if (context.notFound) {
+    //         res.status(404);
+    //     }
+    //
+    //
+    //     fs.readFile(indexFile, 'utf-8', (err, data) => {
+    //         if(err){
+    //             console.log('Something went wrong:', err);
+    //             return res.status(500).send('Oops, better luck next time!')
+    //         }
+    //
+    //         const helmet = Helmet.renderStatic();
+    //
+    //         data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
+    //
+    //         data = data.replace('__LOADER__', '');
+    //         data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
+    //
+    //         data = data.replace('<title></title>', helmet.title.toString());
+    //         data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
+    //         data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.getState())};</script>`);
+    //         data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
+    //
+    //         return res.send(data)
+    //     })
+    //
+    //     // res.send(content);
+    // });
 
-    Promise.all(promises).then(() => {
+    store.runSaga(rootSaga).done.then(() => {
         const context = {};
         const content = renderer(req, store, context);
 
@@ -96,24 +129,16 @@ app.get('*', (req, res, next) => {
             res.status(404);
         }
 
-        const indexFile = path.resolve('./build/template.html');
-        console.log('indexFile', indexFile)
         fs.readFile(indexFile, 'utf-8', (err, data) => {
             if(err){
                 console.log('Something went wrong:', err);
                 return res.status(500).send('Oops, better luck next time!')
             }
-
             const helmet = Helmet.renderStatic();
 
             data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
-
-
-            console.log('data', )
-
             data = data.replace('__LOADER__', '');
             data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
-
             data = data.replace('<title></title>', helmet.title.toString());
             data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
             data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.getState())};</script>`);
@@ -121,12 +146,10 @@ app.get('*', (req, res, next) => {
 
             return res.send(data)
         })
-
-        // res.send(content);
-    });
-
+    })
+    store.close();
 });
 
 app.listen(3000, () => {
-    console.log('Server on port 3000');
+    console.log('😎 Server on port 3000');
 })

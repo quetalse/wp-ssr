@@ -67,8 +67,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new ProgressBarPlugin(),
         new CopyWebpackPlugin([
-            // { from: 'app/images', to: 'images' },
-            // { from: 'app/static/**', to: '.' },
+            { from: 'src/images', to: 'images' },
+            // { from: 'src/static', to: 'static' },
         ]),
         new webpack.ProvidePlugin({
             // make fetch available

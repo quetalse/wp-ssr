@@ -3,10 +3,10 @@
   "warnings": [],
   "assetsByChunkName": {
     "main": [
-      "client-styles.b7bef88382f1293d41fe.css",
-      "client-bundle.b7bef88382f1293d41fe.js"
+      "client-styles.0adf6429de468b89d1a4.css",
+      "client-bundle.0adf6429de468b89d1a4.js"
     ]
   },
   "assets": [],
-  "filteredAssets": 5
+  "filteredAssets": 6
 }

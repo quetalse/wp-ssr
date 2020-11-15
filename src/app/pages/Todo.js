@@ -1,19 +1,10 @@
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {connect, useDispatch} from 'react-redux';
-import { requestTodos } from "../store/actions";
+import { sagaFetchTodos } from "../store/actions/todos";
 
 const Todo = ({todos}) => {
-
-    // console.log('INSIDE TODO')
-    // console.log('todos todos', todos)
-    //
-    // useEffect(() => {
-    //     console.log('INSIDE TODO')
-    //     // fetchTodos();
-    // },[])
-
-
+    console.log('todos', todos)
     const dispatch = useDispatch();
 
     return (
@@ -21,9 +12,9 @@ const Todo = ({todos}) => {
         <h1>Todo</h1>
         <Link to="/">Home</Link>
         <br/>
-        // <button type='button' onClick={()=> dispatch(requestTodos())}>Get</button>
+        // <button type='button' onClick={()=> dispatch(sagaFetchTodos())}>Get</button>
         <br/>
-        {todos.map(todo => (
+        {todos.data.map(todo => (
             <p key={todo.id}>{todo.title}</p>
         ))}
     </div>
@@ -34,10 +25,8 @@ const mapStateToProps = state => ({
     todos: state.todos
 });
 
-
-
-const mapDispatchToProps = {requestTodos}
+const mapDispatchToProps = {sagaFetchTodos}
 
 export default {
-    component: connect(mapStateToProps,mapDispatchToProps)(Todo)
+    component: connect(mapStateToProps, mapDispatchToProps)(Todo)
 }

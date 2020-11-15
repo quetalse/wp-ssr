@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { setHello } from "../store/actions";
 
 const About = ({hello, setHello}) => {
     return (
@@ -19,7 +18,7 @@ const mapStateToProps = state => ({
     hello: state.hello
 });
 
-const mapDispatchToProps = {setHello}
+const mapDispatchToProps = {}
 
 export default {
     component: connect(mapStateToProps,mapDispatchToProps)(About)
