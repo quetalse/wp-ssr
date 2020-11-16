@@ -9,7 +9,7 @@ const About = ({hello, setHello}) => {
             <Link to="/">Home</Link>
             <br/>
             {hello}
-            <button type="button" onClick={() => setHello('HELLO')}>Hello</button>
+            <button type="button" onClick={() => console.log('about page')}>Hello</button>
         </div>
     )
 }

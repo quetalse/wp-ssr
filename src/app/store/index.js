@@ -20,6 +20,7 @@ let state;
 
 if (typeof window !== 'undefined') {
     state = window.__INITIAL_DATA__;
+
     delete window.__INITIAL_DATA__;
 }
 
@@ -30,7 +31,7 @@ const store = createStore(
     // applyMiddleware(sagaMiddleware)
 );
 store.runSaga = sagaMiddleware.run;
-console.log('store', store)
+// console.log('store', store)
 store.close = () => store.dispatch(END);
 // sagaMiddleware.run(rootSaga);
 

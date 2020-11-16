@@ -1,6 +1,6 @@
 import '@babel/polyfill';
 import React from 'react';
-import { hydrate } from 'react-dom';
+import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
@@ -10,7 +10,9 @@ import rootSaga from './app/store/sagas/client'
 
 store.runSaga(rootSaga)
 
-hydrate(
+const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
+
+renderMethod(
     <Provider store={store}>
         <BrowserRouter>
             {renderRoutes(Routes)}
