@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     target: 'node',
     mode: 'development',
-    entry: './src/server.js',
+    entry: './src/server/server.js',
     externals: [webpackNodeExternals(), 'react-helmet'],
     output: {
         filename: '[name].js',

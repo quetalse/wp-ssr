@@ -3,13 +3,15 @@ import axios from "axios";
 
 import {successFetchTodos, failureFetchTodos} from '../actions/todos';
 
-const fetchTodos = async () => {
-    return await axios.get('https://jsonplaceholder.typicode.com/todos');
+const fetchTodos = async (el) => {
+    console.log('EL', el)
+    return await axios.get(`https://jsonplaceholder.typicode.com/todos/${el}`);
 }
 
-export function* loadInitialData() {
+export function* loadInitialData(args) {
+
     try{
-        const response = yield call(fetchTodos);
+        const response = yield call(fetchTodos, args.el);
         yield put(successFetchTodos(response.data))
     }catch(e){
         console.log(e)
@@ -17,18 +19,20 @@ export function* loadInitialData() {
     }
 }
 
-function* watch() {
-    yield fork(loadInitialData)
+function* watch(args) {
+    yield fork(loadInitialData, args)
 }
 
 function* helloSaga() {
     console.log('Saga running')
 }
 
-export function* rootSaga() {
+export function* rootSaga(args) {
+
+    console.log('args', args)
 
     yield all([
         helloSaga(),
-        fork(watch)
+        fork(watch, args)
     ])
 }

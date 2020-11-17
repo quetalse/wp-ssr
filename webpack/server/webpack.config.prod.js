@@ -8,7 +8,7 @@ const WaitPlugin = require('../waitPlugin')
 module.exports = {
     mode: 'production',
     target: 'node',
-    entry: './src/server.js',
+    entry: './src/server/server.js',
     externals: [webpackNodeExternals()],
     output: {
         filename: 'server.js',

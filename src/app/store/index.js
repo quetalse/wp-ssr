@@ -15,13 +15,14 @@ const composeEnhancers =
         : compose;
 /* eslint-enable */
 
-
 let state;
 
 if (typeof window !== 'undefined') {
     state = window.__INITIAL_DATA__;
 
     delete window.__INITIAL_DATA__;
+
+    console.log(window)
 }
 
 const store = createStore(
@@ -30,7 +31,7 @@ const store = createStore(
     composeEnhancers(applyMiddleware(...middleware))
     // applyMiddleware(sagaMiddleware)
 );
-store.runSaga = sagaMiddleware.run;
+store.runSaga = (saga, params = {}) => sagaMiddleware.run(saga, params);
 // console.log('store', store)
 store.close = () => store.dispatch(END);
 // sagaMiddleware.run(rootSaga);

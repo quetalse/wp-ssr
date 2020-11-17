@@ -10,4 +10,4 @@
 ### Запуск node сервера:
 
 `npm run prod:build`
-`npm run start`
+`npm run start` 

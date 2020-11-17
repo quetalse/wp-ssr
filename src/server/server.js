@@ -12,11 +12,10 @@ import express from 'express';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 
-
-import Routes from './app/Route';
-import { store } from './app/store';
-import { rootSaga } from './app/store/sagas/server';
-import { assetsByChunkName } from '../build/stats.json';
+import Routes from '../app/Route';
+import { store } from '../app/store';
+import { allSagas } from './store/sagas';
+import { assetsByChunkName } from '../../build/stats.json';
 
 const app = express();
 
@@ -121,7 +120,7 @@ app.get('*', (req, res, next) => {
     //     // res.send(content);
     // });
 
-    store.runSaga(rootSaga).done.then(() => {
+    store.runSaga(allSagas.bathroomSaga, {url: 'http://react-ssr-api.herokuapp.com/users'}).done.then(() => {
         const context = {};
         const content = renderer(req, store, context);
 
