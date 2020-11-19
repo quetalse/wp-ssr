@@ -58,8 +58,8 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            // { from: 'app/images', to: 'images' },
-            // { from: 'app/static/**', to: '.' },
+            // { from: 'app/_images', to: '_images' },
+            // { from: 'app/_static/**', to: '.' },
         ]),
         new webpack.ProvidePlugin({
             // window: path.resolve(path.join(__dirname, './../window.mock')),

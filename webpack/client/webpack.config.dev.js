@@ -12,7 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     target: 'web',
     mode: 'development',
-    entry: './src/client.js',
+    entry: './src/client/client.js',
     output: {
         filename: 'client.js',
         // chunkFilename: '[name].js',
@@ -57,7 +57,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
-            template: 'src/base.dev.html',
+            template: 'src/templates/base.dev.html',
             filename: 'index.html'
         }),
         new CircularDependencyPlugin({
@@ -67,8 +67,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new ProgressBarPlugin(),
         new CopyWebpackPlugin([
-            { from: 'src/images', to: 'images' },
-            // { from: 'src/static', to: 'static' },
+            { from: 'src/_images', to: 'images' },
+            // { from: 'src/_static', to: '_static' },
         ]),
         new webpack.ProvidePlugin({
             // make fetch available

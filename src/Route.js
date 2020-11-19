@@ -1,9 +1,9 @@
-import Home from './pages/Home';
-import About from "./pages/About";
-import Todo from "./pages/Todo";
-import NotFound from "./pages/NotFound";
-import Bathrooms from "./pages/Bathrooms";
-import App from './App';
+import Home from './client/pages/Home';
+import About from "./client/pages/About";
+import Todo from "./client/pages/Todo";
+import NotFound from "./client/pages/NotFound";
+import Bathrooms from "./client/pages/Bathrooms";
+import App from './client/App';
 
 export default [
     {

@@ -12,7 +12,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production',
-    entry: './src/client.js',
+    entry: './src/client/client.js',
     output: {
         filename: 'client-bundle.[chunkhash].js',
         path: path.resolve(process.cwd(), 'build'),
@@ -58,7 +58,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             inject: false,
-            template: 'src/base.prod.html',
+            template: 'src/templates/base.prod.html',
             filename: 'template.html'
         }),
         new CompressionPlugin(),
@@ -75,8 +75,8 @@ module.exports = {
            }
         }),
         new CopyWebpackPlugin([
-            { from: 'src/images', to: 'images' },
-            // { from: 'src/static', to: 'static' },
+            { from: 'src/_images', to: 'images' },
+            // { from: 'src/_static', to: '_static' },
         ]),
         new MiniCssExtractPlugin({
             filename: 'client-styles.[chunkhash].css'

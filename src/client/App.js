@@ -2,6 +2,7 @@ import React from 'react';
 import {renderRoutes} from 'react-router-config';
 import { Helmet } from 'react-helmet';
 
+import Header from "./components/Header";
 import './App.scss';
 const renderSiteMeta = (location) => {
     const canonical = location.pathname.toLowerCase();
@@ -22,6 +23,7 @@ const App = ({location, route}) => {
     return (
         <React.Fragment>
             {/*{renderSiteMeta(location)}*/}
+            <Header/>
             {renderRoutes(route.routes)}
         </React.Fragment>
     )

@@ -12,9 +12,9 @@ import express from 'express';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 
-import Routes from '../app/Route';
-import { store } from '../app/store';
-import { allSagas } from './store/sagas';
+import Routes from '../Route';
+import { store } from '../store';
+import { allSagas } from '../store/sagas';
 import { assetsByChunkName } from '../../build/stats.json';
 
 const app = express();
@@ -68,9 +68,14 @@ const renderer = (req, store, context) => {
 app.get('*', (req, res, next) => {
     const params = req.params[0].split('/');
     const id = params[2];
-    const routes = matchRoutes(Routes, req.path);
+    const routes = matchRoutes(Routes, req.path).pop();
     const indexFile = path.resolve('./build/template.html');
 
+    console.log('routes', routes)
+
+    let saga = routes.route.saga || function* (){}
+
+    console.log('saga', saga)
     // const promises = routes
     //     .map(({ route }) => {
     //         return route.loadData ? route.loadData(store, id) : null;
@@ -120,7 +125,7 @@ app.get('*', (req, res, next) => {
     //     // res.send(content);
     // });
 
-    store.runSaga(allSagas.bathroomSaga, {url: 'http://react-ssr-api.herokuapp.com/users'}).done.then(() => {
+    store.runSaga(saga, {url: 'http://react-ssr-api.herokuapp.com/users'}).done.then(() => {
         const context = {};
         const content = renderer(req, store, context);
 
@@ -128,23 +133,28 @@ app.get('*', (req, res, next) => {
             res.status(404);
         }
 
+        const helmet = Helmet.renderStatic();
+
         fs.readFile(indexFile, 'utf-8', (err, data) => {
             if(err){
                 console.log('Something went wrong:', err);
                 return res.status(500).send('Oops, better luck next time!')
             }
-            const helmet = Helmet.renderStatic();
+
 
             data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
             data = data.replace('__LOADER__', '');
             data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
             data = data.replace('<title></title>', helmet.title.toString());
             data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-            data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.getState())};</script>`);
+            data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())};</script>`);
             data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
 
             return res.send(data)
         })
+    })
+    .catch((e) => {
+        console.log({ message: e.message, source: 'sagaError', stacktrace: e.sagaStack })
     })
     store.close();
 });

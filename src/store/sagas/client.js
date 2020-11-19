@@ -24,6 +24,7 @@ function* watchTodoItemsRequest() {
 }
 
 export default function* rootSaga() {
+    console.log('SAGA RUNNING')
     yield all([
         fork(watchTodoItemsRequest)
     ])

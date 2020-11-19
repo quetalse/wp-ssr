@@ -1,4 +1,4 @@
-import { SAGA_FETCH_BATHROOMS, SUCCESS_FETCH_BATHROOMS, FAILURE_FETCH_BATHROOMS,  } from "../types";
+import { SAGA_FETCH_BATHROOMS, SUCCESS_FETCH_BATHROOMS, FAILURE_FETCH_BATHROOMS } from "../types";
 
 export const sagaFetchBathRooms = () => ({
     type: SAGA_FETCH_BATHROOMS

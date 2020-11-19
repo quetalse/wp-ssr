@@ -4,11 +4,20 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
-import Routes from './app/Route';
-import {store} from "./app/store";
-import rootSaga from './app/store/sagas/client'
 
-store.runSaga(rootSaga)
+import axios from 'axios'
+
+import Routes from '../Route';
+import {store} from "../store";
+import { allSagas } from '../store/sagas'
+
+
+const axiosInstance = axios.create({
+    baseURL: '/api', // get '/api/user' for request
+
+})
+
+// store.runSaga(allSagas.bathroomSaga, {url: 'http://react-ssr-api.herokuapp.com/users'})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 
