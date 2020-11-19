@@ -76,7 +76,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: 'src/_images', to: 'images' },
-            // { from: 'src/_static', to: '_static' },
+            // { from: 'src/_static', to: './' },
         ]),
         new MiniCssExtractPlugin({
             filename: 'client-styles.[chunkhash].css'

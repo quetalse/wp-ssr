@@ -7,7 +7,8 @@ export const sagaFetchBathRooms = () => ({
 export const successFetchBathrooms = bathrooms => ({
     type: SUCCESS_FETCH_BATHROOMS,
     payload: {
-        data: bathrooms
+        data: bathrooms.data,
+        meta: bathrooms.meta,
     }
 })
 

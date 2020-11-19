@@ -68,7 +68,7 @@ module.exports = {
         new ProgressBarPlugin(),
         new CopyWebpackPlugin([
             { from: 'src/_images', to: 'images' },
-            // { from: 'src/_static', to: '_static' },
+            // { from: 'src/_static/state.js', to: './' },
         ]),
         new webpack.ProvidePlugin({
             // make fetch available

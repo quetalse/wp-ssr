@@ -2,7 +2,7 @@ import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -21,15 +21,23 @@ const app = express();
 
 app.use(express.static('build'));
 
+// fs.open('./build/state.js', 'w', function (err) {
+//     if (err) throw err;
+//     console.log('Saved!');
+// });
+
 // eslint-disable-next-line no-shadow
-const renderer = (req, store, context) => {
+const renderer = (req, store, context, helmetContext) => {
+
 
     return renderToString(
-        <Provider store={store}>
-            <StaticRouter location={req.path} context={context}>
-                {renderRoutes(Routes)}
-            </StaticRouter>
-        </Provider>
+        <HelmetProvider context={helmetContext}>
+            <Provider store={store}>
+                <StaticRouter location={req.path} context={context}>
+                    {renderRoutes(Routes)}
+                </StaticRouter>
+            </Provider>
+        </HelmetProvider>
     );
 
 //     const content = renderToString(
@@ -73,9 +81,13 @@ app.get('*', (req, res, next) => {
 
     console.log('routes', routes)
 
-    let saga = routes.route.saga || function* (){}
+    let saga = routes.route.saga || function* (){},
+        sagaUrl = routes.route.sagaUrl || '',
+        sagaUrlParam = routes.match.params.id || '',
+        dataUrl = `${sagaUrl}/${sagaUrlParam}`,
+        metaUrl = routes.route.sagaMetaUrl || '';
 
-    console.log('saga', saga)
+    // console.log('saga', saga)
     // const promises = routes
     //     .map(({ route }) => {
     //         return route.loadData ? route.loadData(store, id) : null;
@@ -125,33 +137,42 @@ app.get('*', (req, res, next) => {
     //     // res.send(content);
     // });
 
-    store.runSaga(saga, {url: 'http://react-ssr-api.herokuapp.com/users'}).done.then(() => {
-        const context = {};
-        const content = renderer(req, store, context);
+    store.runSaga(saga, {dataUrl, metaUrl}).done
+        .then(() => {
 
-        if (context.notFound) {
-            res.status(404);
-        }
+            const context = {};
+            const helmetContext = {};
+            const content = renderer(req, store, context, helmetContext);
 
-        const helmet = Helmet.renderStatic();
-
-        fs.readFile(indexFile, 'utf-8', (err, data) => {
-            if(err){
-                console.log('Something went wrong:', err);
-                return res.status(500).send('Oops, better luck next time!')
+            if (context.notFound) {
+                res.status(404);
             }
 
 
-            data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
-            data = data.replace('__LOADER__', '');
-            data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
-            data = data.replace('<title></title>', helmet.title.toString());
-            data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-            data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())};</script>`);
-            data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
 
-            return res.send(data)
-        })
+            // fs.writeFile('./build/state.js', `window.__INITIAL_DATA__ = ${serialize(store.getState())}`, function (err) {
+            //     if (err) throw err;
+            //     console.log('Saved!');
+
+
+            fs.readFile(indexFile, 'utf-8', (err, data) => {
+                if(err){
+                    console.log('Something went wrong:', err);
+                    return res.status(500).send('Oops, better luck next time!')
+                }
+
+                const { helmet } = helmetContext;
+
+                data = data.replace('__STYLES__', `./${assetsByChunkName.main[0]}`);
+                data = data.replace('__LOADER__', '');
+                data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
+                data = data.replace('<title></title>', helmet.title.toString());
+                data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
+                data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>`);
+                data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
+
+                return res.send(data)
+            })
     })
     .catch((e) => {
         console.log({ message: e.message, source: 'sagaError', stacktrace: e.sagaStack })

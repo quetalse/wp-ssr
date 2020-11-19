@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 
 import axios from 'axios'
 
@@ -22,9 +23,11 @@ const axiosInstance = axios.create({
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 
 renderMethod(
+    <HelmetProvider>
     <Provider store={store}>
         <BrowserRouter>
             {renderRoutes(Routes)}
         </BrowserRouter>
-    </Provider>,
+    </Provider>
+    </HelmetProvider>,
 document.querySelector('#root'));

@@ -3,6 +3,7 @@ import About from "./client/pages/About";
 import Todo from "./client/pages/Todo";
 import NotFound from "./client/pages/NotFound";
 import Bathrooms from "./client/pages/Bathrooms";
+import Bathroom from "./client/pages/Bathroom";
 import App from './client/App';
 
 export default [
@@ -15,7 +16,12 @@ export default [
                 exact: true
             }, {
                 ...Bathrooms,
-                path: '/bathrooms'
+                path: '/bathrooms',
+                exact: true,
+            },
+            {
+                path: "/bathrooms/:id",
+                ...Bathroom
             },
             {
                 ...About,

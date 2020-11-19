@@ -10,9 +10,9 @@ const fetchBathrooms= async (url) => {
 export function* loadBathrooms(data) {
 
     try{
-        const response = yield call(fetchBathrooms, data.url);
-        console.log('response', response)
-        yield put(successFetchBathrooms(response.data))
+        const data = yield call(fetchBathrooms, data.dataUrl);
+        const meta = yield call(fetchBathrooms, data.metaUrl);
+        yield put(successFetchBathrooms({data, meta}))
     }catch(e){
         console.log(e)
         yield put(failureFetchBathrooms(e))
@@ -27,8 +27,8 @@ function* helloSaga() {
     console.log('Saga running')
 }
 
-export function* bathroomSaga(data) {
-
+export function* bathroomsSaga(data) {
+    console.log('data', data)
     yield all([
         helloSaga(),
         fork(watchBathrooms, data)
