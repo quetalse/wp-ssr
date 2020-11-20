@@ -31,7 +31,11 @@ const store = createStore(
     composeEnhancers(applyMiddleware(...middleware))
     // applyMiddleware(sagaMiddleware)
 );
-store.runSaga = (saga, params = {}) => sagaMiddleware.run(saga, params);
+store.runSaga = (saga, params = {}) => {
+    console.log('saga', saga)
+    console.log('params', params)
+    return sagaMiddleware.run(saga, params)
+};
 // console.log('store', store)
 store.close = () => store.dispatch(END);
 // sagaMiddleware.run(rootSaga);

@@ -2,8 +2,10 @@ import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+// process.env["NO_PROXY"]="*";
 
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import proxy from 'express-http-proxy';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -19,6 +21,9 @@ import { assetsByChunkName } from '../../build/stats.json';
 
 const app = express();
 
+app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
+
+}));
 app.use(express.static('build'));
 
 // fs.open('./build/state.js', 'w', function (err) {

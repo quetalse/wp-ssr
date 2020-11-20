@@ -5,11 +5,17 @@ import { sagaFetchBathRooms } from '../../store/actions/bathrooms';
 import {allSagas} from "../../store/sagas";
 import { Link } from "react-router-dom";
 
-const head = (bathrooms) => {
+import HeaderMeta from "../components/HeaderMeta";
+
+const head = (meta) => {
     return (
         <Helmet>
-            <title>{ `${bathrooms.length} Bathrooms Loaded`}</title>
-            <meta property="og:title" content="Bathrooms App"/>
+            <title>{meta.title}</title>
+            <meta property="og:title" content={meta.title}/>
+            <meta property="og:description" content={meta.description}/>
+            <meta property="og:keywords" content={meta.keywords}/>
+            <meta name="keywords" content={meta.keywords} />
+            <meta property="og:site_name" content={meta.name}/>
         </Helmet>
     )
 }
@@ -34,7 +40,7 @@ const renderBathrooms = (bathrooms) => {
     })
 }
 
-const Bathrooms = ({bathrooms, sagaFetchBathRooms}) => {
+const Bathrooms = ({data, meta}) => {
     // console.log('bathrooms', bathrooms)
     // useEffect(() => {
     //     console.log('INSADE')
@@ -42,18 +48,19 @@ const Bathrooms = ({bathrooms, sagaFetchBathRooms}) => {
     // },[])
 
     return (
-        <div>
-            {head(bathrooms)}
-            Here list of bathrooms:
-            <ul>{renderBathrooms(bathrooms)}</ul>
-        </div>
+      <div>
+        <HeaderMeta meta={meta} />
+        Here list of bathrooms:
+        <ul>{renderBathrooms(data)}</ul>
+      </div>
     )
 }
 
 const mapStateToProps = (state) =>{
     // console.log('bathrooms', state)
     return {
-        bathrooms: state.bathrooms.data
+        data: state.bathrooms.data,
+        meta: state.bathrooms.meta
     }
 };
 

@@ -1,17 +1,24 @@
 import { takeEvery, all, call, fork, put } from 'redux-saga/effects';
 import axios from "axios";
+const fetch = require('node-fetch');
 
 import {successFetchBathrooms, failureFetchBathrooms} from '../../server/store/actions/bathrooms';
 
-const fetchBathrooms= async (url) => {
-    return await axios.get(`${url}`);
+const fetchBathrooms = async (url) => {
+    console.log('url', url)
+    // const response = await axios("https://jsonplaceholder.typicode.com/photos");
+    const response = await fetch(url);
+    const json = await response.json();
+
+    return json;
 }
 
-export function* loadBathrooms(data) {
-
+export function* loadBathrooms(arg) {
     try{
-        const data = yield call(fetchBathrooms, data.dataUrl);
-        const meta = yield call(fetchBathrooms, data.metaUrl);
+        const data = yield call(fetchBathrooms, arg.dataUrl);
+        const meta = yield call(fetchBathrooms, arg.metaUrl);
+
+        console.log(data)
         yield put(successFetchBathrooms({data, meta}))
     }catch(e){
         console.log(e)
@@ -19,18 +26,18 @@ export function* loadBathrooms(data) {
     }
 }
 
-function* watchBathrooms(data) {
-    yield fork(loadBathrooms, data)
+function* watchBathrooms(arg) {
+    yield fork(loadBathrooms, arg)
 }
 
 function* helloSaga() {
     console.log('Saga running')
 }
 
-export function* bathroomsSaga(data) {
-    console.log('data', data)
+export function* bathroomsSaga(arg) {
+    console.log('arg', arg)
     yield all([
         helloSaga(),
-        fork(watchBathrooms, data)
+        fork(watchBathrooms, arg)
     ])
 }
