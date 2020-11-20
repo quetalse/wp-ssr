@@ -1,14 +1,15 @@
 import { SAGA_FETCH_BATHROOMS, SUCCESS_FETCH_BATHROOMS, FAILURE_FETCH_BATHROOMS } from "../types";
 
-export const sagaFetchBathRooms = (a) => ({
+export const sagaFetchBathRooms = (data) => ({
     type: SAGA_FETCH_BATHROOMS,
-    payload: a
+    payload: {data}
 })
 
 export const successFetchBathrooms = bathrooms => ({
     type: SUCCESS_FETCH_BATHROOMS,
     payload: {
-        data: bathrooms
+        data: bathrooms.data,
+        meta: bathrooms.meta,
     }
 })
 

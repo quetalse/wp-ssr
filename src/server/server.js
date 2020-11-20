@@ -84,7 +84,7 @@ app.get('*', (req, res, next) => {
     const routes = matchRoutes(Routes, req.path).pop();
     const indexFile = path.resolve('./build/template.html');
 
-    console.log('routes', routes)
+    // console.log('routes', routes)
 
     let saga = routes.route.saga || function* (){},
         sagaUrl = routes.route.sagaUrl || '',

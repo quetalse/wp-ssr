@@ -28,10 +28,6 @@ export default [
                 path: '/about',
             },
             {
-                ...Todo,
-                path: '/todo',
-            },
-            {
                 ...NotFound
             }
         ]

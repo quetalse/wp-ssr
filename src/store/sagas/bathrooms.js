@@ -2,7 +2,7 @@ import { takeLatest, all, call, fork, put } from 'redux-saga/effects';
 import axios from "axios";
 const fetch = require('node-fetch');
 
-import {successFetchBathrooms, failureFetchBathrooms} from '../../server/store/actions/bathrooms';
+import {successFetchBathrooms, failureFetchBathrooms} from '../actions/bathrooms';
 import { SAGA_FETCH_BATHROOMS } from "../types";
 
 const fetchBathrooms = async (url) => {
@@ -16,6 +16,7 @@ const fetchBathrooms = async (url) => {
 }
 
 export function* loadBathrooms(arg) {
+    console.log('loadBathrooms', arg)
     try{
         const data = yield call(fetchBathrooms, arg.dataUrl);
         const meta = yield call(fetchBathrooms, arg.metaUrl);
@@ -30,8 +31,10 @@ function* watchBathrooms(arg) {
     yield fork(loadBathrooms, arg)
 }
 function* clientBathrooms(arg) {
-    console.log('arg', arg)
-    yield takeLatest(SAGA_FETCH_BATHROOMS, loadBathrooms);
+    console.log('clientBathrooms')
+    yield takeLatest(SAGA_FETCH_BATHROOMS, function* (action){
+        yield fork(loadBathrooms, action.payload.data)
+    });
 }
 
 function* helloSaga() {
@@ -42,14 +45,14 @@ export function* bathroomsSaga(arg) {
     // console.log('arg', arg)
     yield all([
         helloSaga(),
-        fork(watchBathrooms, arg),
-        fork(clientBathrooms, arg)
+        fork(watchBathrooms, arg)
     ])
 }
 
 export function* clientBathroomsSaga(arg) {
     // console.log('arg', arg)
     yield all([
-        fork(clientBathrooms, arg)
+        helloSaga(),
+        fork(clientBathrooms)
     ])
 }

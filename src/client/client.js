@@ -19,6 +19,7 @@ const axiosInstance = axios.create({
 })
 
 store.runSaga(allSagas.clientBathroomsSaga, {})
+store.runSaga(allSagas.clientBathroomSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 

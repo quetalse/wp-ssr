@@ -45,11 +45,15 @@ const renderBathrooms = (bathrooms) => {
     })
 }
 
-const Bathrooms = ({data, meta}) => {
+const Bathrooms = ({data, meta, sagaFetchBathRooms}) => {
     // console.log('bathrooms', bathrooms)
     useEffect(() => {
-        console.log('INSADE')
-        sagaFetchBathRooms('12')
+        if(!data.length) {
+            sagaFetchBathRooms({
+                dataUrl: routes.sagaUrl,
+                metaUrl: routes.sagaMetaUrl
+            })
+        }
     },[])
 
     return (

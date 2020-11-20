@@ -1,8 +1,9 @@
 import {bathroomsSaga, clientBathroomsSaga} from './bathrooms';
-import {bathroomSaga} from './bathroom';
+import {bathroomSaga, clientBathroomSaga} from './bathroom';
 
 export const allSagas = {
     bathroomsSaga,
     clientBathroomsSaga,
-    bathroomSaga
+    bathroomSaga,
+    clientBathroomSaga
 }

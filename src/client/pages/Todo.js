@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {connect, useDispatch} from 'react-redux';
-import { sagaFetchTodos } from "../../store/actions/todos";
+// import { sagaFetchTodos } from "../../store/actions/todos";
 
 const Todo = ({todos}) => {
     console.log('todos', todos)
@@ -12,7 +12,7 @@ const Todo = ({todos}) => {
         <h1>Todo</h1>
         <Link to="/">Home</Link>
         <br/>
-        // <button type='button' onClick={()=> dispatch(sagaFetchTodos())}>Get</button>
+        // <button type='button' onClick={()=> {}}>Get</button>
         <br/>
         {todos.data.map(todo => (
             <p key={todo.id}>{todo.title}</p>
@@ -25,8 +25,8 @@ const mapStateToProps = state => ({
     todos: state.todos
 });
 
-const mapDispatchToProps = {sagaFetchTodos}
+// const mapDispatchToProps = {sagaFetchTodos}
 
 export default {
-    component: connect(mapStateToProps, mapDispatchToProps)(Todo)
+    component: connect(mapStateToProps, null)(Todo)
 }
