@@ -32,8 +32,6 @@ const store = createStore(
     // applyMiddleware(sagaMiddleware)
 );
 store.runSaga = (saga, params = {}) => {
-    console.log('saga', saga)
-    console.log('params', params)
     return sagaMiddleware.run(saga, params)
 };
 // console.log('store', store)

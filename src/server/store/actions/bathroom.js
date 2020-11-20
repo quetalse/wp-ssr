@@ -4,10 +4,11 @@ export const sagaFetchBathRoom = () => ({
     type: SAGA_FETCH_BATHROOM
 })
 
-export const successFetchBathroom = bathrooms => ({
+export const successFetchBathroom = bathroom => ({
     type: SUCCESS_FETCH_BATHROOM,
     payload: {
-        data: bathrooms
+        data: bathroom.data,
+        meta: bathroom.meta,
     }
 })
 

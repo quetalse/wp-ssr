@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { sagaFetchBathRooms } from '../../store/actions/bathrooms';
 import {allSagas} from "../../store/sagas";
 import { useParams } from "react-router-dom";
+import HeaderMeta from "../components/HeaderMeta";
 
 
 
@@ -38,7 +39,7 @@ const renderBathroom = (bathroom) => {
     )
 }
 
-const Bathroom = ({bathroom, sagaFetchBathRooms}) => {
+const Bathroom = ({data, meta}) => {
     const { id } = useParams();
     // console.log('bathrooms', bathrooms)
     // useEffect(() => {
@@ -48,21 +49,24 @@ const Bathroom = ({bathroom, sagaFetchBathRooms}) => {
 
     return (
         <div>
-            {head(bathroom)}
+            <HeaderMeta meta={meta} />
             Баня:
-            <ul>{renderBathroom(bathroom)}</ul>
+            <ul>{renderBathroom(data)}</ul>
         </div>
     )
 }
 
 const mapStateToProps = (state) =>{
+
     return {
-        bathroom: state.bathroom.data
+        data: state.bathroom.data,
+        meta: state.bathroom.meta
     }
 };
 
 export default {
     component: connect(mapStateToProps, {sagaFetchBathRooms})(Bathroom),
     saga: allSagas.bathroomSaga,
-    sagaURL: `https://jsonplaceholder.typicode.com/photos/6`
+    sagaUrl: 'https://jsonplaceholder.typicode.com/photos',
+    sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
 }

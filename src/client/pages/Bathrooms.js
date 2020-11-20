@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 
 import HeaderMeta from "../components/HeaderMeta";
 
+const routes = {
+    sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
+    sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
+}
+
 const head = (meta) => {
     return (
         <Helmet>
@@ -42,10 +47,10 @@ const renderBathrooms = (bathrooms) => {
 
 const Bathrooms = ({data, meta}) => {
     // console.log('bathrooms', bathrooms)
-    // useEffect(() => {
-    //     console.log('INSADE')
-    //     sagaFetchBathRooms()
-    // },[])
+    useEffect(() => {
+        console.log('INSADE')
+        sagaFetchBathRooms('12')
+    },[])
 
     return (
       <div>
@@ -67,6 +72,6 @@ const mapStateToProps = (state) =>{
 export default {
     component: connect(mapStateToProps, {sagaFetchBathRooms})(Bathrooms),
     saga: allSagas.bathroomsSaga,
-    sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
-    sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
+    sagaUrl: routes.sagaUrl,
+    sagaMetaUrl: routes.sagaMetaUrl
 }

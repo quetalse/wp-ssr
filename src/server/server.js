@@ -92,6 +92,8 @@ app.get('*', (req, res, next) => {
         dataUrl = `${sagaUrl}/${sagaUrlParam}`,
         metaUrl = routes.route.sagaMetaUrl || '';
 
+    console.log('dataUrl', dataUrl)
+    console.log('metaUrl', metaUrl)
     // console.log('saga', saga)
     // const promises = routes
     //     .map(({ route }) => {
@@ -168,7 +170,7 @@ app.get('*', (req, res, next) => {
 
                 const { helmet } = helmetContext;
 
-                data = data.replace('__STYLES__', `./${assetsByChunkName.main[0]}`);
+                data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
                 data = data.replace('__LOADER__', '');
                 data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
                 data = data.replace('<title></title>', helmet.title.toString());

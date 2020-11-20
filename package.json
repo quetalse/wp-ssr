@@ -11,7 +11,7 @@
     "serve": "serve ./dist",
     "build:clean": "rimraf ./build",
     "dev:build": "npm run build:clean && webpack-dev-server --config webpack/webpack.config.dev.js --mode development",
-    "prod:build": "npm run build:clean && webpack -p --config webpack/webpack.config.prod.js --mode production"
+    "prod:build": "npm run build:clean && webpack -p --config webpack/webpack.config.prod.js --watch--mode production"
   },
   "author": "",
   "license": "ISC",

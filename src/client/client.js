@@ -18,7 +18,7 @@ const axiosInstance = axios.create({
 
 })
 
-// store.runSaga(allSagas.bathroomSaga, {url: 'http://react-ssr-api.herokuapp.com/users'})
+store.runSaga(allSagas.clientBathroomsSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 

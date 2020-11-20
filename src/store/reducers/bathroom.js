@@ -3,6 +3,7 @@ import { SUCCESS_FETCH_BATHROOM, FAILURE_FETCH_BATHROOM }  from "../../server/st
 
 const initState = {
     data: [],
+    meta: {},
     loading: false,
     error: false
 };
@@ -15,7 +16,8 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 loading: false,
-                data: action.payload.data
+                data: action.payload.data,
+                meta: action.payload.meta
             }
         case FAILURE_FETCH_BATHROOM:
             return {
