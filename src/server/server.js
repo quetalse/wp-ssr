@@ -17,14 +17,14 @@ import serialize from 'serialize-javascript';
 import Routes from '../Route';
 import { store } from '../store';
 import { allSagas } from '../store/sagas';
-import { assetsByChunkName } from '../../build/stats.json';
+import { assetsByChunkName } from '../../build/app/stats.json';
 
 const app = express();
 
 app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
 
 }));
-app.use(express.static('build'));
+app.use(express.static('build/app'));
 
 // fs.open('./build/state.js', 'w', function (err) {
 //     if (err) throw err;
@@ -82,7 +82,7 @@ app.get('*', (req, res, next) => {
     const params = req.params[0].split('/');
     const id = params[2];
     const routes = matchRoutes(Routes, req.path).pop();
-    const indexFile = path.resolve('./build/template.html');
+    const indexFile = path.resolve('./build/app/template.html');
 
     // console.log('routes', routes)
 

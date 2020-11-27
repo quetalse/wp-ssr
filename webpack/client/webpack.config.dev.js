@@ -16,7 +16,7 @@ module.exports = {
     output: {
         filename: 'client.js',
         // chunkFilename: '[name].js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/app'),
         publicPath: '/',
     },
     module: {

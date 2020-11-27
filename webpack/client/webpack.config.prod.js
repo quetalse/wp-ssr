@@ -15,7 +15,7 @@ module.exports = {
     entry: './src/client/client.js',
     output: {
         filename: 'client-bundle.[chunkhash].js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/app'),
         publicPath: '/'
     },
     module: {

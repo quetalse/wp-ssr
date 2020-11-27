@@ -12,7 +12,7 @@ module.exports = {
     externals: [webpackNodeExternals()],
     output: {
         filename: 'server.js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/server'),
 
     },
     module: {
@@ -37,6 +37,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new WaitPlugin(path.resolve(process.cwd(), 'build/stats.json'))
+        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
     ]
 }

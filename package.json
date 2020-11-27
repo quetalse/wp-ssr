@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "server side rendering config react",
   "scripts": {
-    "start": "nodemon ./build/server.js",
+    "start": "nodemon ./build/server/server.js",
     "dev": "webpack-dev-server --config webpack/client/webpack.config.dev.js --mode development",
     "build:spa": "webpack -p --config webpack/spa/webpack.config.spa.js --mode production",
     "build:client": "webpack -p --config webpack/client/webpack.config.prod.js --mode production",

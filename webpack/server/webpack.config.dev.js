@@ -12,7 +12,7 @@ module.exports = {
     externals: [webpackNodeExternals(), 'react-helmet'],
     output: {
         filename: '[name].js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/server'),
     },
     module: {
         rules: [
