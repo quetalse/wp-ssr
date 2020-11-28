@@ -58,6 +58,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             inject: false,
+            minify: false,
             template: 'src/templates/base.prod.html',
             filename: 'template.html'
         }),

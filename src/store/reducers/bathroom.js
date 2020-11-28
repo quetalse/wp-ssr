@@ -1,4 +1,4 @@
-import { SUCCESS_FETCH_BATHROOM, FAILURE_FETCH_BATHROOM }  from "../../server/store/types";
+import { SUCCESS_FETCH_BATHROOM, FAILURE_FETCH_BATHROOM }  from "../types";
 
 
 const initState = {

@@ -36,6 +36,11 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            build: path.resolve(__dirname, 'build/')
+        }
+    },
     plugins: [
         new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
     ]

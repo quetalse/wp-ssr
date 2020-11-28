@@ -3,21 +3,12 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import { sagaFetchBathRoom } from '../../store/actions/bathroom';
 import {allSagas} from "../../store/sagas";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HeaderMeta from "../components/HeaderMeta";
 
 const routes = {
     sagaUrl: 'https://jsonplaceholder.typicode.com/photos',
     sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
-}
-
-const head = (bathrooms) => {
-    return (
-        <Helmet>
-            <title>{ `${bathrooms.length} Bathrooms Loaded`}</title>
-            <meta property="og:title" content="Bathrooms App"/>
-        </Helmet>
-    )
 }
 
 const renderBathroom = (bathroom) => {
@@ -28,13 +19,16 @@ const renderBathroom = (bathroom) => {
                 <div className="card">
                     <div className="card-image">
                         <img src={bathroom.url}/>
-                            <span className="card-title">{bathroom.title}</span>
                     </div>
                     <div className="card-content">
-                        <p>{bathroom.title}{bathroom.title}{bathroom.title}</p>
+                        <h1 className="center"> {bathroom.title}</h1>
+                        <p> status: {bathroom.url}</p>
+                        <p> {bathroom.title}}</p>
                     </div>
                     <div className="card-action">
-                        <a href="#">This is a link</a>
+                        <Link to={`/`}>
+                            Назад
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -45,8 +39,7 @@ const renderBathroom = (bathroom) => {
 const Bathroom = ({data, meta, sagaFetchBathRoom}) => {
     const { id } = useParams();
     useEffect(() => {
-        console.log('data', data)
-        if(!Object.keys(data).length){
+        if(!Object.keys(data).length || data.id !== Number(id) ){
             sagaFetchBathRoom({
                 dataUrl: `${routes.sagaUrl}/${id}`,
                 metaUrl: routes.sagaMetaUrl
@@ -55,10 +48,10 @@ const Bathroom = ({data, meta, sagaFetchBathRoom}) => {
     },[])
 
     return (
-        <div>
+        <div className="center">
             <HeaderMeta meta={meta} />
             Баня:
-            <ul>{renderBathroom(data)}</ul>
+            {renderBathroom(data)}
         </div>
     )
 }

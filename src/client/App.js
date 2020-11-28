@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import Header from "./components/Header";
 import './App.scss';
+
 const renderSiteMeta = (location) => {
     const canonical = location.pathname.toLowerCase();
     return (<Helmet

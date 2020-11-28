@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default () => {
     return (
@@ -11,7 +11,7 @@ export default () => {
                 >Home</Link>
                 <ul className="right">
                     <li><Link to="/about">About</Link></li>
-                    <li><Link to="/bathrooms">Bathrooms</Link></li>
+                    {/*<li><Link to="/bathrooms">Bathrooms</Link></li>*/}
                 </ul>
             </div>
         </nav>

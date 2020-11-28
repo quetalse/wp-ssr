@@ -12,19 +12,6 @@ const routes = {
     sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
 }
 
-const head = (meta) => {
-    return (
-        <Helmet>
-            <title>{meta.title}</title>
-            <meta property="og:title" content={meta.title}/>
-            <meta property="og:description" content={meta.description}/>
-            <meta property="og:keywords" content={meta.keywords}/>
-            <meta name="keywords" content={meta.keywords} />
-            <meta property="og:site_name" content={meta.name}/>
-        </Helmet>
-    )
-}
-
 const renderBathrooms = (bathrooms) => {
 
     return bathrooms.map( bathroom => {
@@ -57,10 +44,12 @@ const Bathrooms = ({data, meta, sagaFetchBathRooms}) => {
     },[])
 
     return (
-      <div>
+      <div className="center">
         <HeaderMeta meta={meta} />
-        Here list of bathrooms:
+        <h1>{meta.name}</h1>
+        {/*Here list of bathrooms:*/}
         <ul>{renderBathrooms(data)}</ul>
+        <p>{meta.description}</p>
       </div>
     )
 }
