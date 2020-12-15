@@ -10,7 +10,7 @@ export default [
         ...App,
         routes: [
             {
-                ...Bathrooms,
+                ...Home,
                 path: '/',
                 exact: true
             }, {

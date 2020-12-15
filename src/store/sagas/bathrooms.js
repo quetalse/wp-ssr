@@ -12,6 +12,8 @@ const fetchBathrooms = async (url) => {
 export function* loadBathrooms(arg) {
     try{
         const data = yield call(fetchBathrooms, arg.dataUrl);
+        console.log(data)
+
         const meta = yield call(fetchBathrooms, arg.metaUrl);
         yield put(successFetchBathrooms({data, meta}))
     }catch(e){
@@ -33,6 +35,10 @@ function* helloSaga() {
     console.log('Saga running')
 }
 
+function* clientsSaga() {
+    console.log('clientBathroomsSaga running')
+}
+
 export function* bathroomsSaga(arg) {
     yield all([
         helloSaga(),
@@ -43,7 +49,7 @@ export function* bathroomsSaga(arg) {
 // Вызывается со стороны клиента
 export function* clientBathroomsSaga(arg) {
     yield all([
-        helloSaga(),
+        clientsSaga(),
         fork(clientBathrooms)
     ])
 }

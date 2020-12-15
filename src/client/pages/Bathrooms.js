@@ -8,8 +8,10 @@ import { Link } from "react-router-dom";
 import HeaderMeta from "../components/HeaderMeta";
 
 const routes = {
-    sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
-    sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
+    // sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
+    // sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
+    sagaUrl: '/api/goods',
+    sagaMetaUrl: '/api/goods/meta'
 }
 
 const renderBathrooms = (bathrooms) => {
@@ -41,6 +43,13 @@ const Bathrooms = ({data, meta, sagaFetchBathRooms}) => {
                 metaUrl: routes.sagaMetaUrl
             })
         }
+
+        // const response = fetch("/api/users")
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         console.log('users', json.users)
+        //     })
+
     },[])
 
     return (

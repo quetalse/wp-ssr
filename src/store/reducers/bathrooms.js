@@ -9,8 +9,6 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-    // console.log("REDUCE")
-    // console.log(action)
     switch (action.type) {
         case SUCCESS_FETCH_BATHROOMS:
             return {

@@ -3,6 +3,7 @@ import {renderRoutes} from 'react-router-config';
 import { Helmet } from 'react-helmet';
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import './App.scss';
 
 const renderSiteMeta = (location) => {
@@ -25,7 +26,10 @@ const App = ({location, route}) => {
         <React.Fragment>
             {/*{renderSiteMeta(location)}*/}
             <Header/>
-            {renderRoutes(route.routes)}
+            <main className="container">
+                {renderRoutes(route.routes)}
+            </main>
+            <Footer/>
         </React.Fragment>
     )
 }

@@ -3,6 +3,7 @@ import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+import { makeServer } from "./mockServer";
 
 import { matchRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
@@ -16,6 +17,8 @@ import { assetsByChunkName } from '../../build/app/stats.json';
 
 const app = express();
 const indexFile = path.resolve('./build/app/template.html');
+
+
 
 app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
 

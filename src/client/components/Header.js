@@ -3,18 +3,20 @@ import {Link} from 'react-router-dom';
 
 export default () => {
     return (
-        <nav>
-            <div className="nav-wrapper">
-                <Link
-                    to="/"
-                    className="brand-logo"
-                >Home</Link>
-                <ul className="right">
-                    <li><Link to="/about">About</Link></li>
-                    {/*<li><Link to="/bathrooms">Bathrooms</Link></li>*/}
-                </ul>
-            </div>
-        </nav>
-
+        <header>
+            <nav>
+                <div className="nav-wrapper blue-grey lighten-1">
+                    <Link
+                        to="/"
+                        className="brand-logo center"
+                    >Бани</Link>
+                    <ul className="left">
+                        <li><Link to="/">Главная</Link></li>
+                        <li><Link to="/contacts">Контакты</Link></li>
+                        {/*<li><Link to="/bathrooms">Bathrooms</Link></li>*/}
+                    </ul>
+                </div>
+            </nav>
+        </header>
     )
 }
