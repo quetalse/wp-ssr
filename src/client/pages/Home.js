@@ -1,9 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import Select from 'react-select';
 import {Link} from 'react-router-dom';
 
 import "./Home.scss";
 
+
+const typesOptions = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+];
+
+const metroOptions = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+]
+
+const customStyles = {
+    menu: (provided, state) => {
+        console.log('provided', provided)
+        return {
+        ...provided,
+        // width: state.selectProps.width,
+        borderBottom: '1px dotted pink',
+        color: state.selectProps.menuColor,
+        padding: 20
+        }
+    },
+
+    control: (_, {selectProps: {height}}) => {
+
+        return {
+            ..._,
+            height: height
+        }
+    },
+
+    valueContainer: (_, {selectProps: {height}}) => ({
+        ..._,
+        height: height,
+        lineHeight: height
+    }),
+    input: (_, state) => ({
+        ..._,
+        height: "3rem",
+        position: "absolute",
+        paddingTop: 0
+    }),
+
+    singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = 'opacity 300ms';
+
+        return { ...provided, opacity, transition };
+    }
+}
+
 const Home = () => {
+
+    const [selected, setSelected] = useState({
+        type: null,
+        metro: null
+    });
+
+    const handleSelect = (selectedOption, select) => {
+        setSelected( {
+            ...selected,
+            [select]: selectedOption
+        } );
+    };
+
     return (
         <div className="center-align" style={{marginTop: '50px'}}>
             <div className="row">
@@ -13,22 +81,34 @@ const Home = () => {
             <div className="row inputs">
                 <div className="col s8 input-field">
                     <div className="input-tool">
-                        <label>Browser Select</label>
-                        <select className="browser-default">
-                            <option value="" disabled defaultValue>Выберите</option>
-                            <option value="1">Вариант 1</option>
-                            <option value="2">Вариант 2</option>
-                            <option value="3">Вариант 3</option>
-                        </select>
+                        <label>Тип</label>
+                        {/*<select className="browser-default">*/}
+                        {/*    <option value="" disabled defaultValue>Выберите</option>*/}
+                        {/*    <option value="1">Вариант 1</option>*/}
+                        {/*    <option value="2">Вариант 2</option>*/}
+                        {/*    <option value="3">Вариант 3</option>*/}
+                        {/*</select>*/}
+
+                        <Select
+                            styles={customStyles}
+                            height="3rem"
+                            placeholder="Выбор типа..."
+                            value={selected.type}
+                            onChange={(selectedOption) => handleSelect(selectedOption, 'type')}
+                            options={typesOptions}
+                        />
+
                     </div>
                     <div className="input-tool">
-                        <label>Browser Select</label>
-                        <select className="browser-default">
-                            <option value="" disabled defaultValue>Выберите</option>
-                            <option value="1">Вариант 1</option>
-                            <option value="2">Вариант 2</option>
-                            <option value="3">Вариант 3</option>
-                        </select>
+                        <label>Метро</label>
+                        <Select
+                            styles={customStyles}
+                            height="3rem"
+                            placeholder="Выбор метро..."
+                            value={selected.metro}
+                            onChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
+                            options={metroOptions}
+                        />
                     </div>
                 </div>
                 <div className="col s4 input-field">
