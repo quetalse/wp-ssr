@@ -3,7 +3,7 @@ import { createServer, Model } from "miragejs";
 
 export function makeServer({ environment = "test" } = {}) {
 
-    let server = createServer({
+    return createServer({
         environment,
         models: {
             user: Model,
@@ -30,9 +30,16 @@ export function makeServer({ environment = "test" } = {}) {
                     keywords:  "good work realize",
                     site_name: "great goods stuff site"
                 }
-            })
+            });
+
+            this.get("/page/meta", (schema) => {
+                return {
+                    title: "Great good",
+                    description: "Goods for productive work",
+                    keywords:  "good work realize",
+                    site_name: "great goods stuff site"
+                }
+            });
         }
     })
-
-    return server
 }

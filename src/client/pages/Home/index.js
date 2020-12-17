@@ -3,8 +3,17 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import {Link} from 'react-router-dom';
 
-import "./Home.scss";
+import "./index.scss";
+import { connect } from "react-redux";
+// import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
+// import { allSagas } from "../../store/sagas";
 
+const routes = {
+    // sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
+    // sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
+    sagaUrl: '/api/goods',
+    sagaMetaUrl: '/api/goods/meta'
+}
 
 const typesOptions = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -18,45 +27,6 @@ const metroOptions = [
     { value: 'vanilla', label: 'Vanilla' },
 ]
 
-const customStyles = {
-    menu: (provided, state) => {
-        console.log('provided', provided)
-        return {
-        ...provided,
-        // width: state.selectProps.width,
-        borderBottom: '1px dotted pink',
-        color: state.selectProps.menuColor,
-        padding: 20
-        }
-    },
-
-    control: (_, {selectProps: {height}}) => {
-
-        return {
-            ..._,
-            height: height
-        }
-    },
-
-    valueContainer: (_, {selectProps: {height}}) => ({
-        ..._,
-        height: height,
-        lineHeight: height
-    }),
-    input: (_, state) => ({
-        ..._,
-        height: "3rem",
-        position: "absolute",
-        paddingTop: 0
-    }),
-
-    singleValue: (provided, state) => {
-        const opacity = state.isDisabled ? 0.5 : 1;
-        const transition = 'opacity 300ms';
-
-        return { ...provided, opacity, transition };
-    }
-}
 
 const Home = () => {
 
@@ -82,33 +52,17 @@ const Home = () => {
                 <div className="col s8 input-field">
                     <div className="input-tool">
                         <label>Тип</label>
-                        {/*<select className="browser-default">*/}
-                        {/*    <option value="" disabled defaultValue>Выберите</option>*/}
-                        {/*    <option value="1">Вариант 1</option>*/}
-                        {/*    <option value="2">Вариант 2</option>*/}
-                        {/*    <option value="3">Вариант 3</option>*/}
-                        {/*</select>*/}
-
-                        <Select
-                            styles={customStyles}
-                            height="3rem"
-                            placeholder="Выбор типа..."
-                            value={selected.type}
-                            onChange={(selectedOption) => handleSelect(selectedOption, 'type')}
-                            options={typesOptions}
-                        />
-
                     </div>
                     <div className="input-tool">
                         <label>Метро</label>
-                        <Select
-                            styles={customStyles}
-                            height="3rem"
-                            placeholder="Выбор метро..."
-                            value={selected.metro}
-                            onChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
-                            options={metroOptions}
-                        />
+                        {/*<Select*/}
+                        {/*    styles={customStyles}*/}
+                        {/*    height="3rem"*/}
+                        {/*    placeholder="Выбор метро..."*/}
+                        {/*    value={selected.metro}*/}
+                        {/*    onChange={(selectedOption) => handleSelect(selectedOption, 'metro')}*/}
+                        {/*    options={metroOptions}*/}
+                        {/*/>*/}
                     </div>
                 </div>
                 <div className="col s4 input-field">
@@ -267,6 +221,17 @@ const Home = () => {
     )
 }
 
+const mapStateToProps = (state) =>{
+    // console.log('bathrooms', state)
+    return {
+        data: state.bathrooms.data,
+        meta: state.bathrooms.meta
+    }
+};
+
 export default {
-    component: Home
+    component: Home,
+    // saga: allSagas.bathroomsSaga,
+    // sagaUrl: routes.sagaUrl,
+    // sagaMetaUrl: routes.sagaMetaUrl
 }
