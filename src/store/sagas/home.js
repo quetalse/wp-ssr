@@ -4,20 +4,30 @@ import axios from "axios";
 import {successFetchHome, failureFetchHome} from '../actions/home';
 import { SAGA_FETCH_HOME } from "../types";
 
-const fetchHome = async (url) => {
+const fetchHome = async ({name, url}) => {
     const response = await axios(url);
-    return response.data;
+
+    // console.log('RESP', response)
+    return {
+        [name]: response.data
+    };
 }
 
-export function* loadHome(arg) {
+export function* loadHome(dataUrls) {
+    let data;
     try{
-        const data = yield call(fetchHome, arg.dataUrl);
-        console.log(data)
-
-        const meta = yield call(fetchHome, arg.metaUrl);
-        yield put(successFetchHome({data, meta}))
+        const responses = yield dataUrls.map(dataUrl => {
+            return call(fetchHome, dataUrl)
+        })
+        yield responses.map(response => {
+            data = {...data,...response}
+        })
+        // console.log('data', data)
+        // const data = yield call(fetchHome, arg.dataUrl);
+        // const meta = yield call(fetchHome, arg.dataUrl) || {};
+        yield put(successFetchHome({data}))
     }catch(e){
-        console.log(e)
+        // console.log(e)
         yield put(failureFetchHome(e))
     }
 }
@@ -27,19 +37,25 @@ function* watchHome(arg) {
 }
 function* clientHome(arg) {
     yield takeLatest(SAGA_FETCH_HOME, function* (action){
+
+        console.log('action.payload.data', action.payload.data)
+
         yield fork(loadHome, action.payload.data)
     });
 }
 
 function* helloSaga() {
-    console.log('Saga running')
+    // console.log('Saga running')
 }
 
 function* clientsSaga() {
-    console.log('clientBathroomsSaga running')
+    // console.log('clientHomesSaga running')
 }
 
-export function* bathroomsSaga(arg) {
+export function* homeSaga(arg) {
+
+    // console.log('ARG', arg)
+
     yield all([
         helloSaga(),
         fork(watchHome, arg)
@@ -47,9 +63,9 @@ export function* bathroomsSaga(arg) {
 }
 
 // Вызывается со стороны клиента
-export function* clientBathroomsSaga(arg) {
+export function* clientHomeSaga(arg) {
     yield all([
         clientsSaga(),
-        fork(clientBathrooms)
+        fork(clientHome)
     ])
 }

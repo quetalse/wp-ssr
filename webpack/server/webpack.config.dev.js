@@ -4,14 +4,18 @@ const { merge } = require('webpack-merge');
 const baseConfig = require('../base/webpack.config.base');
 const webpackNodeExternals = require('webpack-node-externals');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const {StatsWriterPlugin} = require('webpack-stats-plugin');
+const WaitPlugin = require('../waitPlugin')
+
 
 module.exports = {
-    target: 'node',
     mode: 'development',
+    target: 'node',
+    watch: true,
     entry: './src/server/server.js',
-    externals: [webpackNodeExternals(), 'react-helmet'],
+    externals: [webpackNodeExternals()],
     output: {
-        filename: '[name].js',
+        filename: 'server.js',
         path: path.resolve(process.cwd(), 'build/server'),
     },
     module: {
@@ -57,6 +61,7 @@ module.exports = {
         ]
     },
     plugins: [
+
         new CopyWebpackPlugin([
             // { from: 'app/_images', to: '_images' },
             // { from: 'app/_static/**', to: '.' },
@@ -65,6 +70,8 @@ module.exports = {
             // window: path.resolve(path.join(__dirname, './../window.mock')),
             // document: 'global/document',
         }),
+        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
+
     ],
     resolve: {
         modules: [

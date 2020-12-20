@@ -42,6 +42,7 @@ module.exports = {
         }
     },
     plugins: [
+
         new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
     ]
 }

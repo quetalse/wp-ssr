@@ -14,7 +14,7 @@ import configureStore from "../store";
 import {allSagas} from '../store/sagas'
 
 if (process.env.NODE_ENV === "development") {
-    makeServer({ environment: "development" })
+    // makeServer({ environment: "development" })
 }
 
 const axiosInstance = axios.create({
@@ -23,8 +23,9 @@ const axiosInstance = axios.create({
 
 const store = configureStore();
 
-store.runSaga(allSagas.clientBathroomsSaga, {})
-store.runSaga(allSagas.clientBathroomSaga, {})
+// store.runSaga(allSagas.clientBathroomsSaga, {})
+// store.runSaga(allSagas.clientBathroomSaga, {})
+store.runSaga(allSagas.clientHomeSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 

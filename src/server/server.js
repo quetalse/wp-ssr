@@ -19,6 +19,7 @@ const app = express();
 const indexFile = path.resolve('./build/app/template.html');
 
 
+makeServer({ environment: "development" })
 
 app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
 
@@ -32,13 +33,17 @@ app.get('*', (req, res, next) => {
     const routes = matchRoutes(Routes, req.path).pop();
     const store = configureStore();
 
-    const saga = routes.route.saga || function* (){},
-          sagaUrl = routes.route.sagaUrl || '',
-          sagaUrlParam = routes.match.params.id || '',
-          dataUrl = `${sagaUrl}/${sagaUrlParam}`,
-          metaUrl = routes.route.sagaMetaUrl || '';
+    // console.log('routes', routes)
 
-    store.runSaga(saga, {dataUrl, metaUrl}).done
+    const saga = routes.route.saga || function* (){}
+    //       sagaUrl = routes.route.sagaUrl || '',
+    //       sagaUrlParam = routes.match.params.id || '',
+    //       dataUrl = `${sagaUrl}/${sagaUrlParam}`,
+    //       metaUrl = routes.route.sagaMetaUrl || '';
+
+    const dataUrls = routes.route.serverSagaData;
+
+    store.runSaga(saga, dataUrls).done
     .then(() => {
             const context = {};
             const helmetContext = {};

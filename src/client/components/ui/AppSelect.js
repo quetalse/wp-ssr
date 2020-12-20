@@ -1,28 +1,14 @@
 import React from 'react';
 import Select from 'react-select';
 
-import {Link} from 'react-router-dom';
-
 const customStyles = {
-    menu: (provided, state) => {
-        console.log('provided', provided)
-        return {
-            ...provided,
-            // width: state.selectProps.width,
-            borderBottom: '1px dotted pink',
-            // color: state.selectProps.menuColor,
-            padding: 20
-        }
-    },
-
-    control: (_, {selectProps: {height}}) => {
-
-        return {
-            ..._,
-            height: height
-        }
-    },
-
+    menu: (provided, state) => ({
+        ...provided, padding: 4
+    }),
+    control: (_, {selectProps: {height}}) => ({
+        ..._,
+        height: height
+    }),
     valueContainer: (_, {selectProps: {height}}) => ({
         ..._,
         height: height,
@@ -38,20 +24,22 @@ const customStyles = {
     singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = 'opacity 300ms';
-
         return { ...provided, opacity, transition };
     }
 }
 
-export default ({ selectedOption, handleChange, options }) => {
+ const AppSelect = ({ selectedOption, handleChange, placeholder, options }) => {
     return (
         <Select
+            isDisabled={true}
             styles={customStyles}
             height="3rem"
-            placeholder="Выбор типа..."
+            placeholder={placeholder}
             value={selectedOption}
             onChange={handleChange}
             options={options}
         />
     )
 }
+
+export default AppSelect;
