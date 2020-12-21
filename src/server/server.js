@@ -42,6 +42,10 @@ app.get('*', (req, res, next) => {
     //       metaUrl = routes.route.sagaMetaUrl || '';
 
     const dataUrls = routes.route.serverSagaData;
+    const {keysSsrIgnore} = routes.route;
+    const {stateKey} = routes.route;
+
+    console.log('keysSsrIgnore', keysSsrIgnore)
 
     store.runSaga(saga, dataUrls).done
     .then(() => {
@@ -61,12 +65,26 @@ app.get('*', (req, res, next) => {
 
                 const { helmet } = helmetContext;
 
+                let initalData = store.getState();
+
+                // console.log(initalData[stateKey])
+                keysSsrIgnore.forEach((key) => {
+                    // console.log(key)
+                    if(initalData[stateKey].data[key]){
+                        delete initalData[stateKey].data[key]
+                    }
+                });
+                //
+                // console.log(initalData[stateKey])
+
+
                 data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
                 data = data.replace('__LOADER__', '');
                 data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
                 data = data.replace('<title></title>', helmet.title.toString());
                 data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-                data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>`);
+                // data = data.replace('<script>__INITIAL_DATA__</script>', `<!--<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>-->`);
+                data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(initalData)}</script>`);
                 data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
 
                 return res.send(data)

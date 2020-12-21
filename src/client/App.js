@@ -22,13 +22,14 @@ const renderSiteMeta = (location) => {
 }
 
 const App = ({location, route}) => {
+
+
+
     return (
         <React.Fragment>
             {/*{renderSiteMeta(location)}*/}
             <Header/>
-            <main className="container">
-                {renderRoutes(route.routes)}
-            </main>
+            <main className="container">{renderRoutes(route.routes)}</main>
             <Footer/>
         </React.Fragment>
     )

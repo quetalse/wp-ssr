@@ -13,7 +13,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const serverConfig = require('./server/webpack.config.dev.js');
 
 const clientConfig = {
-    mode: 'production',
+    mode: 'development',
     watch: true,
     entry: './src/client/client.js',
     output: {
@@ -69,7 +69,7 @@ const clientConfig = {
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
+                NODE_ENV: JSON.stringify('development')
             }
         }),
         new StatsWriterPlugin({

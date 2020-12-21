@@ -22,18 +22,14 @@ const routes = {
         // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=fa4e8ab0'},
         {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=fa4e8ab0'}
     ],
-    dataUrls: [
-        // '/api/page/home',
-        'https://my.api.mockaroo.com/home.json?key=d9a5a7e0',
-        'https://my.api.mockaroo.com/count.json?key=d9a5a7e0',
-        // '/api/page/home?top-categories',
-    ]
-    // sagaMetaUrl: '/api/goods/meta'
+    keysSsrIgnore: ['static', 'count', 'topCategories' ]
 }
 
 const Home = ({data, sagaFetchHome}) => {
 
     // const {static: {title, description, h1, slogan, text}, count: {count}} = data;
+
+    // console.log('process', process.env)
 
     const [selected, setSelected] = useState({
         type: null,
@@ -65,10 +61,9 @@ const Home = ({data, sagaFetchHome}) => {
     // const {h1, slogan, count, text, topCategories} = data;
     // console.log(data)
 
-    return (
-        Object.keys(data).length === 0 ? '' :
-        <div className="center-align" style={{marginTop: '50px'}}>
+    return (<div className="center-align" style={{marginTop: '50px'}}>
             <div className="row">
+                Hi
                 {/*<h1>{h1}</h1>*/}
                 {/*<p>{slogan} {count}</p>*/}
             </div>
@@ -76,8 +71,8 @@ const Home = ({data, sagaFetchHome}) => {
             {/*<RandomBath/>*/}
             <div className="row top-categories">
                 <TopCategory category="type"/>
-                <TopCategory category="purpose"/>
-                <TopCategory category="service"/>
+                {/*<TopCategory category="purpose"/>*/}
+                {/*<TopCategory category="service"/>*/}
             </div>
             <div className="row">
                 {/*<p className="left-align">{text}</p>*/}
@@ -98,6 +93,8 @@ export default {
     component: connect(mapStateToProps, {sagaFetchHome})(Home),
     saga: allSagas.homeSaga,
     dataUrls: routes.dataUrls,
-    serverSagaData: routes.serverSagaData
+    serverSagaData: routes.serverSagaData,
+    keysSsrIgnore: routes.keysSsrIgnore,
+    stateKey: 'home'
     // sagaMetaUrl: routes.sagaMetaUrl
 }
