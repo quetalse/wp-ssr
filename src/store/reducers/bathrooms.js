@@ -11,10 +11,16 @@ const initState = {
 export default (state = initState, action) => {
     switch (action.type) {
         case SUCCESS_FETCH_BATHROOMS:
+
+            console.log('state.data', state.data)
+
             return {
                 ...state,
                 loading: false,
-                data: action.payload.data,
+                data: {
+                    ...state.data,
+                    ...action.payload.data
+                },
                 meta: action.payload.meta
             }
         case FAILURE_FETCH_BATHROOMS:

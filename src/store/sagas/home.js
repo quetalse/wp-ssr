@@ -1,4 +1,4 @@
-import { takeLatest, all, call, fork, put } from 'redux-saga/effects';
+import { takeEvery, all, call, fork, put } from 'redux-saga/effects';
 import axios from "axios";
 
 import {successFetchHome, failureFetchHome} from '../actions/home';
@@ -27,7 +27,7 @@ export function* loadHome(dataUrls) {
         // const meta = yield call(fetchHome, arg.dataUrl) || {};
         yield put(successFetchHome({data}))
     }catch(e){
-        // console.log(e)
+        console.log(e)
         yield put(failureFetchHome(e))
     }
 }
@@ -36,7 +36,7 @@ function* watchHome(arg) {
     yield fork(loadHome, arg)
 }
 function* clientHome(arg) {
-    yield takeLatest(SAGA_FETCH_HOME, function* (action){
+    yield takeEvery(SAGA_FETCH_HOME, function* (action){
 
         console.log('action.payload.data', action.payload.data)
 

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppSelect from "../../components/ui/AppSelect";
+import { sagaFetchHome } from "../../../store/actions/home";
 
 const typesOptions = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -19,6 +20,16 @@ const Form = () => {
         type: null,
         metro: null
     });
+
+    useEffect(() => {
+            if(!collections){
+                const url = routes.filter((route)=>{
+                    return route.name === 'topCategories'
+                });
+                dispatch(sagaFetchHome(url))
+            }
+        },[]
+    );
 
     const handleSelect = (selectedOption, select) => {
         setSelected( {

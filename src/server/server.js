@@ -45,8 +45,6 @@ app.get('*', (req, res, next) => {
     const {keysSsrIgnore} = routes.route;
     const {stateKey} = routes.route;
 
-    console.log('keysSsrIgnore', keysSsrIgnore)
-
     store.runSaga(saga, dataUrls).done
     .then(() => {
             const context = {};
@@ -65,15 +63,15 @@ app.get('*', (req, res, next) => {
 
                 const { helmet } = helmetContext;
 
-                let initalData = store.getState();
+                // let initalData = store.getState();
 
                 // console.log(initalData[stateKey])
-                keysSsrIgnore.forEach((key) => {
-                    // console.log(key)
-                    if(initalData[stateKey].data[key]){
-                        delete initalData[stateKey].data[key]
-                    }
-                });
+                // keysSsrIgnore.forEach((key) => {
+                //     // console.log(key)
+                //     if(initalData[stateKey].data[key]){
+                //         delete initalData[stateKey].data[key]
+                //     }
+                // });
                 //
                 // console.log(initalData[stateKey])
 
@@ -83,8 +81,8 @@ app.get('*', (req, res, next) => {
                 data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
                 data = data.replace('<title></title>', helmet.title.toString());
                 data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-                // data = data.replace('<script>__INITIAL_DATA__</script>', `<!--<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>-->`);
-                data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(initalData)}</script>`);
+                data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>`);
+                // data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(initalData)}</script>`);
                 data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
 
                 return res.send(data)

@@ -13,7 +13,10 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 loading: false,
-                data: action.payload.data,
+                data: {
+                    ...state.data,
+                    ...action.payload.data
+                },
                 meta: action.payload.meta
             }
         case FAILURE_FETCH_HOME:

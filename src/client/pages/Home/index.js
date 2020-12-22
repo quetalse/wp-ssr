@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-
+import Skeleton from "react-loading-skeleton";
 import Form from "./Form";
 import RandomBath from "./RandomBath";
-import TopCategory from "./TopCategory";
+import TopCategories from "./TopCategory";
 import Select from 'react-select';
 import {Link} from 'react-router-dom';
 
 import "./index.scss";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { allSagas } from "../../../store/sagas";
 import { sagaFetchHome} from "../../../store/actions/home";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
@@ -18,64 +18,49 @@ const routes = {
     // sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
     sagaUrl: '/api/page/home',
     serverSagaData: [
-        // { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=fa4e8ab0'},
+        { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=fa4e8ab0'},
         // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=fa4e8ab0'},
         {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=fa4e8ab0'}
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories' ]
 }
 
-const Home = ({data, sagaFetchHome}) => {
+const Home = ({}) => {
+    const dispatch = useDispatch();
 
-    // const {static: {title, description, h1, slogan, text}, count: {count}} = data;
-
-    // console.log('process', process.env)
-
-    const [selected, setSelected] = useState({
-        type: null,
-        metro: null
+    const home = useSelector(state => {
+        if(!state.home.data.static){return null}
+        return state.home.data.static
     });
 
-    useEffect(() => {
+    console.log('home', home)
 
-        // if(!data.length) {
-        //     sagaFetchHome({
-        //         dataUrls: routes.dataUrls,
-        //         // metaUrl: routes.sagaMetaUrl
-        //     })
-        // }
-        // const response = fetch("/api/users")
-        //     .then((res) => res.json())
-        //     .then((json) => {
-        //         console.log('users', json.users)
-        //     })
+    useEffect(() => {
+        if(!home){
+            const url = routes.serverSagaData.filter((route)=>{
+                return route.name === 'static'
+            });
+            dispatch(sagaFetchHome(url))
+        }
     },[])
 
-    const handleSelect = (selectedOption, select) => {
-        setSelected( {
-            ...selected,
-            [select]: selectedOption
-        } );
-    };
 
-    // const {h1, slogan, count, text, topCategories} = data;
-    // console.log(data)
+    let h1 = home ? home.h1 : <Skeleton count={1} width={160}/>;
+    let slogan = home ? home.slogan : <Skeleton count={2}/>;
+    let text = home ? home.text : <Skeleton count={4}/>;
 
     return (<div className="center-align" style={{marginTop: '50px'}}>
             <div className="row">
-                Hi
-                {/*<h1>{h1}</h1>*/}
-                {/*<p>{slogan} {count}</p>*/}
+                <h1>{h1}</h1>
+                <p>{slogan}</p>
             </div>
-            {/*<Form/>*/}
+            <Form/>
             {/*<RandomBath/>*/}
             <div className="row top-categories">
-                <TopCategory category="type"/>
-                {/*<TopCategory category="purpose"/>*/}
-                {/*<TopCategory category="service"/>*/}
+                <TopCategories routes={routes.serverSagaData}/>
             </div>
             <div className="row">
-                {/*<p className="left-align">{text}</p>*/}
+                <p className="left-align">{text}</p>
             </div>
         </div>
     )
@@ -90,7 +75,8 @@ const mapStateToProps = (state) =>{
 };
 
 export default {
-    component: connect(mapStateToProps, {sagaFetchHome})(Home),
+    // component: connect(mapStateToProps, {sagaFetchHome})(Home),
+    component: Home,
     saga: allSagas.homeSaga,
     dataUrls: routes.dataUrls,
     serverSagaData: routes.serverSagaData,
