@@ -8,11 +8,11 @@ const WaitPlugin = require('../waitPlugin')
 module.exports = {
     mode: 'production',
     target: 'node',
-    entry: './src/server.js',
+    entry: './src/server/server.js',
     externals: [webpackNodeExternals()],
     output: {
         filename: 'server.js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/server'),
 
     },
     module: {
@@ -36,7 +36,13 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            build: path.resolve(__dirname, 'build/')
+        }
+    },
     plugins: [
-        new WaitPlugin(path.resolve(process.cwd(), 'build/stats.json'))
+
+        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
     ]
 }

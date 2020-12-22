@@ -6,17 +6,16 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const baseConfig = require('../base/webpack.config.base');
-const {StatsWriterPlugin} = require('webpack-stats-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     target: 'web',
     mode: 'development',
-    entry: './src/client.js',
+    entry: './src/client/client.js',
     output: {
         filename: 'client.js',
         // chunkFilename: '[name].js',
-        path: path.resolve(process.cwd(), 'build'),
+        path: path.resolve(process.cwd(), 'build/app'),
         publicPath: '/',
     },
     module: {
@@ -57,7 +56,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
-            template: 'src/base.dev.html',
+            template: 'src/templates/base.dev.html',
             filename: 'index.html'
         }),
         new CircularDependencyPlugin({
@@ -67,8 +66,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new ProgressBarPlugin(),
         new CopyWebpackPlugin([
-            { from: 'src/images', to: 'images' },
-            // { from: 'src/static', to: 'static' },
+            { from: 'src/_images', to: 'images' },
+            // { from: 'src/_static/state.js', to: './' },
         ]),
         new webpack.ProvidePlugin({
             // make fetch available
@@ -76,7 +75,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
             },
         }),
         new webpack.NamedModulesPlugin()
