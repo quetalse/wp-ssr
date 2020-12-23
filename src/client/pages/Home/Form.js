@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import AppSelect from "../../components/ui/AppSelect";
 import { sagaFetchHome } from "../../../store/actions/home";
+
 
 const typesOptions = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -14,7 +16,22 @@ const metroOptions = [
     { value: 'vanilla', label: 'Vanilla' },
 ]
 
-const Form = () => {
+const Form = ({routes}) => {
+    const dispatch = useDispatch();
+
+    const types = useSelector(state => {
+        if(!state.home.data.types){
+            return null
+        }
+        return state.home.data.types
+    });
+
+    const metro = useSelector(state => {
+        if(!state.home.data.metro){
+            return null
+        }
+        return state.home.data.metro
+    });
 
     const [selected, setSelected] = useState({
         type: null,
@@ -22,12 +39,10 @@ const Form = () => {
     });
 
     useEffect(() => {
-            if(!collections){
-                const url = routes.filter((route)=>{
-                    return route.name === 'topCategories'
-                });
-                dispatch(sagaFetchHome(url))
-            }
+            const url = routes.filter((route)=>{
+                return route.name === 'types' || route.name === 'metro'
+            });
+            dispatch(sagaFetchHome(url))
         },[]
     );
 
@@ -44,26 +59,30 @@ const Form = () => {
                 <div className="input-tool">
                     <label>Тип</label>
                     <AppSelect
+                        instanceId="types-select"
+                        isDisabled={!types}
                         selectedOption={selected.type}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'type')}
                         placeholder="Выбор типа"
-                        options={typesOptions}
+                        options={types || {}}
                     />
                 </div>
                 <div className="input-tool">
                     <label>Метро</label>
                     <AppSelect
+                        instanceId="metro-select"
+                        isDisabled={!metro}
                         selectedOption={selected.metro}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
                         placeholder="Выбор метро"
-                        options={typesOptions}
+                        options={metro || {}}
                     />
                 </div>
             </div>
             <div className="col s4 input-field">
                 <button
                     className="btn waves-effect waves-light input-tool"
-                    disabled={true}
+                    disabled={!(metro&&types)}
                 >
                     Поиск <span>(5)</span>
                 </button>

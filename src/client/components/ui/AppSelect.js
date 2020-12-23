@@ -28,10 +28,12 @@ const customStyles = {
     }
 }
 
- const AppSelect = ({ selectedOption, handleChange, placeholder, options }) => {
+ const AppSelect = ({instanceId, isDisabled, selectedOption, handleChange, placeholder, options }) => {
+
     return (
         <Select
-            isDisabled={true}
+            instanceId={instanceId}
+            isDisabled={isDisabled}
             styles={customStyles}
             height="3rem"
             placeholder={placeholder}

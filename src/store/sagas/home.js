@@ -58,7 +58,7 @@ export function* homeSaga(arg) {
 
     yield all([
         helloSaga(),
-        fork(watchHome, arg)
+        watchHome(arg)
     ])
 }
 
@@ -66,6 +66,6 @@ export function* homeSaga(arg) {
 export function* clientHomeSaga(arg) {
     yield all([
         clientsSaga(),
-        fork(clientHome)
+        clientHome()
     ])
 }

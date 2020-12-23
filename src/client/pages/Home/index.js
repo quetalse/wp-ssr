@@ -20,6 +20,8 @@ const routes = {
     serverSagaData: [
         { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=fa4e8ab0'},
         // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=fa4e8ab0'},
+        {name: 'types', url: 'https://my.api.mockaroo.com/types.json?key=fa4e8ab0'},
+        {name: 'metro', url: 'https://my.api.mockaroo.com/metro.json?key=fa4e8ab0'},
         {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=fa4e8ab0'}
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories' ]
@@ -32,8 +34,6 @@ const Home = ({}) => {
         if(!state.home.data.static){return null}
         return state.home.data.static
     });
-
-    console.log('home', home)
 
     useEffect(() => {
         if(!home){
@@ -54,7 +54,7 @@ const Home = ({}) => {
                 <h1>{h1}</h1>
                 <p>{slogan}</p>
             </div>
-            <Form/>
+            <Form routes={routes.serverSagaData}/>
             {/*<RandomBath/>*/}
             <div className="row top-categories">
                 <TopCategories routes={routes.serverSagaData}/>
