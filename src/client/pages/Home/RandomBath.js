@@ -1,140 +1,79 @@
-import React, { useState } from 'react';
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import React, { useState, useEffect } from 'react';
+import Skeleton from './skeletons/RandomBath';
+import { useDispatch, useSelector } from "react-redux";
+import { sagaFetchHome } from "../../../store/actions/home";
 
-const RandomBath = () => {
-
-    const [selected, setSelected] = useState({
-        type: null,
-        metro: null
-    });
-
-    const handleSelect = (selectedOption, select) => {
-        setSelected( {
-            ...selected,
-            [select]: selectedOption
-        });
-    };
-
+const RandomBath = ({bathroomCard}) => {
     return (
-        <div className="row">
-            <div className="random-card-offers">
-                <div className="card">
-                    <div className="card-image">
-                        <img src="http://sk-pestovo.ru/assets/images/articles/sauna-v-dome.jpg"/>
-                        {/*<img src="http://sk-pestovo.ru/assets/images/brus-types-1.png"/>*/}
-                        <span className="card-head card-price">300 р</span>
-                        <span className="card-head card-mark">5</span>
-                    </div>
-                    <div className="card-content left-align">
-                        <p className="content-title">Название</p>
-                        <p className="content-type">Тип 4</p>
-                        <ul className="content-stations">
-                            <li className="valign-wrapper station">
-                                Метро 1 <img className="secondary-content" width="10px"
-                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>
+        <div className="card">
+            <div className="card-image">
+                <img src="http://sk-pestovo.ru/assets/images/articles/sauna-v-dome.jpg"/>
+                <span className="card-head card-price">{bathroomCard[4]} р.</span>
+                <span className="card-head card-mark">{bathroomCard[3]}</span>
+            </div>
+            <div className="card-content left-align">
+                <p className="content-title">{bathroomCard[0]}</p>
+                <p className="content-type">{bathroomCard[1]}</p>
+                <ul className="content-stations">
+                    {bathroomCard[2].map((metro, index) => {
+                        return (
+                            <li key={index} className="valign-wrapper station">{metro[0]} ({metro[1]})
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"
+                                    className="secondary-content" width="10px"/>
                             </li>
-                            <li className="valign-wrapper station">
-                                Метро 2 <img className="secondary-content" width="10px"
-                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="card">
-                    <SkeletonTheme color="#78909c" highlightColor="#94a7b0">
-                        <div className="card-image">
-                            <Skeleton height={134}/>
-                        </div>
-                        <div className="card-content left-align">
-                            <p className="content-title"><Skeleton /></p>
-                            <p className="content-type"><Skeleton /></p>
-                            <ul className="content-stations">
-                                <Skeleton />
-                                <Skeleton />
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 1 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 2 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                            </ul>
-                        </div>
-                    </SkeletonTheme>
-                </div>
-                <div className="card">
-                    <SkeletonTheme color="#78909c" highlightColor="#94a7b0">
-                        <div className="card-image">
-                            <Skeleton height={134}/>
-                        </div>
-                        <div className="card-content left-align">
-                            <p className="content-title"><Skeleton /></p>
-                            <p className="content-type"><Skeleton /></p>
-                            <ul className="content-stations">
-                                <Skeleton />
-                                <Skeleton />
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 1 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 2 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                            </ul>
-                        </div>
-                    </SkeletonTheme>
-                </div>
-                <div className="card">
-                    <SkeletonTheme color="#78909c" highlightColor="#94a7b0">
-                        <div className="card-image">
-                            <Skeleton height={134}/>
-                        </div>
-                        <div className="card-content left-align">
-                            <p className="content-title"><Skeleton /></p>
-                            <p className="content-type"><Skeleton /></p>
-                            <ul className="content-stations">
-                                <Skeleton />
-                                <Skeleton />
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 1 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 2 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                            </ul>
-                        </div>
-                    </SkeletonTheme>
-                </div>
-                <div className="card">
-                    <SkeletonTheme color="#78909c" highlightColor="#94a7b0">
-                        <div className="card-image">
-                            <Skeleton height={134}/>
-                        </div>
-                        <div className="card-content left-align">
-                            <p className="content-title"><Skeleton /></p>
-                            <p className="content-type"><Skeleton /></p>
-                            <ul className="content-stations">
-                                <Skeleton />
-                                <Skeleton />
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 1 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                                {/*<li className="valign-wrapper station">*/}
-                                {/*    Метро 2 <img className="secondary-content" width="10px"*/}
-                                {/*                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"/>*/}
-                                {/*</li>*/}
-                            </ul>
-                        </div>
-                    </SkeletonTheme>
-                </div>
+                        )
+                    })}
+                </ul>
             </div>
         </div>
     )
 }
 
-export default RandomBath;
+const RandomBathrooms = ({routes}) => {
+    const dispatch = useDispatch();
+
+    const randomBathrooms = useSelector(state => {
+        if(!state.home.data.randomBathrooms){
+            return null
+        }
+        return state.home.data.randomBathrooms.randomBathrooms
+    });
+
+    useEffect(() => {
+            if(!randomBathrooms){
+                const url = routes.filter((route)=>{
+                    return route.name === 'randomBathrooms'
+                });
+                dispatch(sagaFetchHome(url))
+            }
+        },[]
+    );
+
+    const generateCards = (array, skeleton= false) => {
+        return array.map((bath, index) => {
+                if(!skeleton) {
+                    return (
+                      <div key={index}>
+                          <RandomBath key={index} bathroomCard={bath}/>
+                      </div>
+                    )
+                }
+                else {
+                    return (
+                        <div key={index}>
+                            <Skeleton key={index}/>
+                        </div>
+                    )
+                }
+            })
+    }
+
+    return (
+        <React.Fragment>
+            {randomBathrooms ? generateCards(randomBathrooms) : generateCards([1, 2, 3, 4], true)}
+        </React.Fragment>
+    )
+}
+
+export default RandomBathrooms;

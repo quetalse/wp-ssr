@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from "react-loading-skeleton";
 import Form from "./Form";
-import RandomBath from "./RandomBath";
+import RandomBathrooms from "./RandomBath";
 import TopCategories from "./TopCategory";
 import Select from 'react-select';
 import {Link} from 'react-router-dom';
@@ -22,6 +22,7 @@ const routes = {
         // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=fa4e8ab0'},
         {name: 'types', url: 'https://my.api.mockaroo.com/types.json?key=fa4e8ab0'},
         {name: 'metro', url: 'https://my.api.mockaroo.com/metro.json?key=fa4e8ab0'},
+        {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=fa4e8ab0'},
         {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=fa4e8ab0'}
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories' ]
@@ -55,7 +56,9 @@ const Home = ({}) => {
                 <p>{slogan}</p>
             </div>
             <Form routes={routes.serverSagaData}/>
-            {/*<RandomBath/>*/}
+            <div className="row random-card-offers">
+                <RandomBathrooms routes={routes.serverSagaData}/>
+            </div>
             <div className="row top-categories">
                 <TopCategories routes={routes.serverSagaData}/>
             </div>
@@ -75,7 +78,6 @@ const mapStateToProps = (state) =>{
 };
 
 export default {
-    // component: connect(mapStateToProps, {sagaFetchHome})(Home),
     component: Home,
     saga: allSagas.homeSaga,
     dataUrls: routes.dataUrls,
