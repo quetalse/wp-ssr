@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import AppSelect from "../../components/ui/AppSelect";
 import { sagaFetchHome } from "../../../store/actions/home";
+import DatePicker from 'react-datepicker';
 
+import './react-datepicker.scss';
 
 const typesOptions = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -18,6 +20,7 @@ const metroOptions = [
 
 const Form = ({routes}) => {
     const dispatch = useDispatch();
+    const ref = React.createRef();
 
     const types = useSelector(state => {
         if(!state.home.data.types){
@@ -33,6 +36,7 @@ const Form = ({routes}) => {
         return state.home.data.metro
     });
 
+    const [startDate, setStartDate] = useState(new Date());
     const [selected, setSelected] = useState({
         type: null,
         metro: null
@@ -52,10 +56,14 @@ const Form = ({routes}) => {
             [select]: selectedOption
         });
     };
+    const CustomDateInput = forwardRef(({ onClick, value }, ref) => (
+        <button className="btn waves-effect waves-light input-tool" onClick={(e) => {  e.preventDefault(); onClick() }}  ref={ref} >{value}</button>
+    ))
 
     return (
         <form className="row inputs">
-            <div className="col s8 input-field">
+
+            <div className="col s6 input-field">
                 <div className="input-tool">
                     <label>Тип</label>
                     <AppSelect
@@ -79,7 +87,14 @@ const Form = ({routes}) => {
                     />
                 </div>
             </div>
-            <div className="col s4 input-field">
+            <div className="col s3 input-field">
+                <DatePicker
+                    selected={startDate}
+                    onChange={date => setStartDate(date)}
+                    customInput={<CustomDateInput ref={ref} />}
+                />
+            </div>
+            <div className="col s3 input-field">
                 <button
                     className="btn waves-effect waves-light input-tool"
                     disabled={!(metro&&types)}

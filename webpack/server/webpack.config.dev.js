@@ -34,7 +34,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: 'null-loader'
             },
             // {
@@ -82,6 +82,8 @@ module.exports = {
             '.js',
             '.jsx',
             '.react.js',
+            '.css',
+            '.scss',
         ],
         mainFields: [
             'browser',

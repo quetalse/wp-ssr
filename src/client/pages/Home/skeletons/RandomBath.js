@@ -12,10 +12,7 @@ const RandomBath = () => {
                     <p className="content-title"><Skeleton/></p>
                     <p className="content-type"><Skeleton/></p>
                     <ul className="content-stations">
-                        <li className="valign-wrapper station">
-                            <Skeleton />
-                            <Skeleton />
-                        </li>
+                        <Skeleton count={2} />
                     </ul>
                 </div>
             </div>

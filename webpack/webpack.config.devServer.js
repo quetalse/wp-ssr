@@ -37,10 +37,12 @@ const clientConfig = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader', 'sass-loader']
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },

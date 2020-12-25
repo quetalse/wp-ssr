@@ -29,9 +29,7 @@ store.runSaga(allSagas.clientHomeSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 
-console.log('renderMethod', renderMethod)
-
-ReactDOM.hydrate(
+renderMethod(
     <HelmetProvider>
     <Provider store={store}>
         <BrowserRouter>
