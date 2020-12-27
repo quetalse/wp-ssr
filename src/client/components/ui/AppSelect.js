@@ -30,6 +30,8 @@ const customStyles = {
 
  const AppSelect = ({instanceId, isDisabled, selectedOption, handleChange, placeholder, options }) => {
 
+    let value = selectedOption.label === null ? null : selectedOption
+
     return (
         <Select
             instanceId={instanceId}
@@ -37,7 +39,7 @@ const customStyles = {
             styles={customStyles}
             height="3rem"
             placeholder={placeholder}
-            value={selectedOption}
+            value={value}
             onChange={handleChange}
             options={options}
         />

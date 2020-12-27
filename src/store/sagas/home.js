@@ -22,7 +22,7 @@ export function* loadHome(dataUrls) {
         yield responses.map(response => {
             data = {...data,...response}
         })
-        // console.log('data', data)
+        console.log('data', data)
         // const data = yield call(fetchHome, arg.dataUrl);
         // const meta = yield call(fetchHome, arg.dataUrl) || {};
         yield put(successFetchHome({data}))

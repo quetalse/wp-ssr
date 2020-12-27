@@ -24,49 +24,82 @@ const Form = ({routes, history}) => {
     const dispatch = useDispatch();
     const ref = React.createRef();
 
+    const [startDate, setStartDate] = useState(new Date());
+    const [count, setCount] = useState({
+        data: false,
+        load: false
+    });
+    const [selected, setSelected] = useState({
+        type: {
+            label: null,
+            value: null
+        },
+        metro: {
+            label: null,
+            value: null
+        }
+    });
+
     const types = useSelector(state => {
         if(!state.home.data.types){
-            return null
+            // return null
+            return typesOptions
         }
-        return state.home.data.types
+        // return state.home.data.types
+        return typesOptions
     });
-
     const metro = useSelector(state => {
         if(!state.home.data.metro){
-            return null
+            // return null
+            return metroOptions
         }
-        return state.home.data.metro
+        // return state.home.data.metro
+        return metroOptions
     });
-
-    const [startDate, setStartDate] = useState(new Date());
-    const [selected, setSelected] = useState({
-        type: null,
-        metro: null
-    });
+    // const count = useSelector(state => {
+    //     if(!state.home.data.count){
+    //         return null
+    //     }
+    //     return state.home.data.count.count
+    // });
 
     useEffect(() => {
             const url = routes.filter((route)=>{
                 return route.name === 'types' || route.name === 'metro'
             });
             dispatch(sagaFetchHome(url))
-        },[]
-    );
+        },[]);
 
-    const handleSelect = (selectedOption, select) => {
-        setSelected( {
-            ...selected,
-            [select]: selectedOption
-        });
+    const handleSelect = async (selectedOption, selectKey) => {
+
+        if(selected[selectKey].label !== selectedOption.label){
+            setSelected( {
+                ...selected,
+                [selectKey]: selectedOption
+            });
+            setCount({
+                data: false,
+                load: true
+            });
+            const type = selectKey === 'type' ? selectedOption.label : selected['type'].label;
+            const metro = selectKey === 'metro' ? selectedOption.label : selected['metro'].label;
+
+            // const response = await fetch('https://my.api.mockaroo.com/count.json?key=06826450');
+            const response = await fetch(`api/presearch?type=${type}&metro=${metro}&only_count`);
+            let data = await response.json();
+            setCount({
+                data: data.count,
+                load: false
+            });
+        }
     };
-
     const searchHandler = (e) => {
         e.preventDefault();
         let date = moment(startDate).format("DD/MM/YYYY"),
             type = selected.type.value || null,
             metro = selected.type.metro || null;
-        history.push(`/search?type[${type}]&metro[${metro}]&date[${date}]`);
+        history.push(`/search?type=[${type}]&metro=[${metro}]&date=[${date}]`);
     }
-
     const CustomDateInput = forwardRef(({ onClick, value }, ref) => (
         <div>
             <label htmlFor="datePicker">Дата</label>
@@ -76,11 +109,10 @@ const Form = ({routes, history}) => {
                    ref={ref}
                    defaultValue={value}/>
         </div>
-    ))
+    ));
 
     return (
         <form className="row inputs">
-
             <div className="col s6 input-field">
                 <div className="input-tool">
                     <label>Тип</label>
@@ -123,8 +155,9 @@ const Form = ({routes, history}) => {
                     className="btn waves-effect waves-light input-tool"
                     onClick={searchHandler}
                     disabled={!(selected.type || selected.metro)}
-                >
-                    Поиск <span>(5)</span>
+                >Поиск
+                    {!count.load || <img width="20px" style={{'top': '4px'}} src="/images/loading.gif" alt="Загрузка"/>}
+                    {count.data ? `(${count.data})` : ''}
                 </button>
             </div>
         </form>

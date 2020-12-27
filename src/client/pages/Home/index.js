@@ -13,20 +13,27 @@ import { sagaFetchHome} from "../../../store/actions/home";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
+const serverSagaData = [
+    // { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+    {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
+    {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
+    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
+    // {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+]
+
 const routes = {
     // sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',
     // sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
     sagaUrl: '/api/page/home',
-    serverSagaData: [
-        { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+    serverSagaData,
+    clientSagaData: [
         {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
-        {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
-        {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
-        {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-        {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+        ...serverSagaData
     ],
-    keysSsrIgnore: ['static', 'count', 'topCategories' ]
-}
+    keysSsrIgnore: ['static', 'count', 'topCategories']
+};
+
+
 
 const Home = ({history}) => {
 
@@ -56,12 +63,12 @@ const Home = ({history}) => {
                 <h1>{h1}</h1>
                 <p>{slogan}</p>
             </div>
-            <Form routes={routes.serverSagaData} history={history}/>
+            <Form routes={routes.clientSagaData} history={history}/>
             <div className="row random-card-offers">
-                <RandomBathrooms routes={routes.serverSagaData}/>
+                <RandomBathrooms routes={routes.clientSagaData}/>
             </div>
             <div className="row top-categories">
-                <TopCategories routes={routes.serverSagaData}/>
+                <TopCategories routes={routes.clientSagaData}/>
             </div>
             <div className="row">
                 <p className="left-align">{text}</p>
