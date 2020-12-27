@@ -18,17 +18,18 @@ const routes = {
     // sagaMetaUrl: 'https://jsonplaceholder.typicode.com/users/1'
     sagaUrl: '/api/page/home',
     serverSagaData: [
-        // { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
-        // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
-        // {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
-        // {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
-        // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-        // {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+        { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+        {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
+        {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
+        {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
+        {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
+        {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories' ]
 }
 
-const Home = ({}) => {
+const Home = ({history}) => {
+
     const dispatch = useDispatch();
 
     const home = useSelector(state => {
@@ -55,7 +56,7 @@ const Home = ({}) => {
                 <h1>{h1}</h1>
                 <p>{slogan}</p>
             </div>
-            <Form routes={routes.serverSagaData}/>
+            <Form routes={routes.serverSagaData} history={history}/>
             <div className="row random-card-offers">
                 <RandomBathrooms routes={routes.serverSagaData}/>
             </div>

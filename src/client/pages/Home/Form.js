@@ -2,10 +2,12 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import AppSelect from "../../components/ui/AppSelect";
 import { sagaFetchHome } from "../../../store/actions/home";
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import ru from "date-fns/locale/ru";
+import moment from 'moment';
 
 import './react-datepicker.scss';
-
+registerLocale('ru', ru);
 const typesOptions = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -18,7 +20,7 @@ const metroOptions = [
     { value: 'vanilla', label: 'Vanilla' },
 ]
 
-const Form = ({routes}) => {
+const Form = ({routes, history}) => {
     const dispatch = useDispatch();
     const ref = React.createRef();
 
@@ -56,8 +58,24 @@ const Form = ({routes}) => {
             [select]: selectedOption
         });
     };
+
+    const searchHandler = (e) => {
+        e.preventDefault();
+        let date = moment(startDate).format("DD/MM/YYYY"),
+            type = selected.type.value || null,
+            metro = selected.type.metro || null;
+        history.push(`/search?type[${type}]&metro[${metro}]&date[${date}]`);
+    }
+
     const CustomDateInput = forwardRef(({ onClick, value }, ref) => (
-        <button className="btn waves-effect waves-light input-tool" onClick={(e) => {  e.preventDefault(); onClick() }}  ref={ref} >{value}</button>
+        <div>
+            <label htmlFor="datePicker">Дата</label>
+            <input id="datePicker"
+                   className="datepicker"
+                   onClick={(e) => {  e.preventDefault(); onClick() }}
+                   ref={ref}
+                   defaultValue={value}/>
+        </div>
     ))
 
     return (
@@ -89,15 +107,22 @@ const Form = ({routes}) => {
             </div>
             <div className="col s3 input-field">
                 <DatePicker
+                    style={{'margin': '0 auto'}}
+                    dateFormat="dd/MM/yyyy"
+                    locale="ru"
                     selected={startDate}
                     onChange={date => setStartDate(date)}
-                    customInput={<CustomDateInput ref={ref} />}
+                    closeOnScroll={true}
+                    popperPlacement="bottom"
+                    minDate={new Date()}
+                    customInput={<CustomDateInput ref={ref}/>}
                 />
             </div>
             <div className="col s3 input-field">
                 <button
                     className="btn waves-effect waves-light input-tool"
-                    disabled={!(metro&&types)}
+                    onClick={searchHandler}
+                    disabled={!(selected.type || selected.metro)}
                 >
                     Поиск <span>(5)</span>
                 </button>
