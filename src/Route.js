@@ -1,4 +1,5 @@
 import Home from './client/pages/Home';
+import Search from './client/pages/Search';
 import About from "./client/pages/About";
 import NotFound from "./client/pages/NotFound";
 import Bathrooms from "./client/pages/Bathrooms";
@@ -13,7 +14,13 @@ export default [
                 ...Home,
                 path: '/',
                 exact: true
-            }, {
+            },
+            {
+                ...Search,
+                path: '/search',
+                exact: true,
+            },
+            {
                 ...Bathrooms,
                 path: '/bathrooms',
                 exact: true,
