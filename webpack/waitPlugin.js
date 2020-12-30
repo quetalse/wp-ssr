@@ -9,7 +9,7 @@ class WaitPlugin extends WebpackBeforeBuildPlugin {
             let start = Date.now()
 
             function poll() {
-                console.log('im start')
+                console.log(`${(Date.now() - start)/1000} second left`)
                 if (fs.existsSync(file)) {
                     callback()
                 } else if (Date.now() - start > timeout) {

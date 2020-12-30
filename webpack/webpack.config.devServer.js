@@ -70,9 +70,8 @@ const clientConfig = {
         new CompressionPlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
+            __CLIENT__: true,
+            __SERVER__: false,
         }),
         new StatsWriterPlugin({
             stats: {
@@ -82,6 +81,7 @@ const clientConfig = {
         }),
         new CopyWebpackPlugin([
             { from: 'src/_images', to: 'images' },
+            { from: 'src/_data', to: '../data' },
             // { from: 'src/_static', to: './' },
         ]),
         new MiniCssExtractPlugin({

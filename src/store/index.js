@@ -30,6 +30,7 @@ export default function configureStore () {
         // applyMiddleware(sagaMiddleware)
     );
     store.runSaga = (saga, params = {}) => {
+        console.log('params', params)
         return sagaMiddleware.run(saga, params)
     };
     store.close = () => store.dispatch(END);

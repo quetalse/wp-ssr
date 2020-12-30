@@ -3,7 +3,7 @@ import { createServer, Model } from "miragejs";
 
 export function makeServer({ environment = "test" } = {}) {
 
-    console.log('Start mock')
+    // console.log('Start mock')
     return createServer({
         environment,
         models: {

@@ -23,8 +23,6 @@ const renderSiteMeta = (location) => {
 
 const App = ({location, route}) => {
 
-
-
     return (
         <React.Fragment>
             {/*{renderSiteMeta(location)}*/}

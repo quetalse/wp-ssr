@@ -23,19 +23,18 @@ const axiosInstance = axios.create({
 
 const store = configureStore();
 
-// store.runSaga(allSagas.clientBathroomsSaga, {})
-// store.runSaga(allSagas.clientBathroomSaga, {})
-store.runSaga(allSagas.clientHomeSaga, {})
+
+store.runSaga(allSagas.clientRootSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 
 renderMethod(
     <HelmetProvider>
-    <Provider store={store}>
-        <BrowserRouter>
-            {renderRoutes(Routes)}
-        </BrowserRouter>
-    </Provider>
+        <Provider store={store}>
+            <BrowserRouter>
+                {renderRoutes(Routes)}
+            </BrowserRouter>
+        </Provider>
     </HelmetProvider>
 ,
 document.querySelector('#root'));

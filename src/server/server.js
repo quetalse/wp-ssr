@@ -18,6 +18,8 @@ import { assetsByChunkName } from '../../build/app/stats.json';
 const app = express();
 const indexFile = path.resolve('./build/app/template.html');
 
+global.__SERVER__ = true;
+global.__CLIENT__ = false;
 
 makeServer({ environment: "development" })
 
@@ -25,9 +27,16 @@ app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
 
 }));
 
-app.use(express.static('build/app'));
+app.use(express.static('build/'));
 
 app.get('*', (req, res, next) => {
+
+    global.__URL__ = req.protocol + '://' + req.get('host');
+    // console.log('__URL__', __URL__)
+    // console.log('req.protocol', req.protocol)
+    // console.log('eq.get(\'host\'', req.get('host'))
+    // console.log('req.originalUrl', req.originalUrl)
+
     const params = req.params[0].split('/');
     const id = params[2];
     const routes = matchRoutes(Routes, req.path).pop();
@@ -45,8 +54,11 @@ app.get('*', (req, res, next) => {
     const {keysSsrIgnore} = routes.route;
     const {stateKey} = routes.route;
 
-    store.runSaga(saga, dataUrls).done
-    .then(() => {
+    console.log('saga', saga)
+    console.log('dataUrls', dataUrls)
+
+
+    store.runSaga(saga, dataUrls).done.then(() => {
             const context = {};
             const helmetContext = {};
             const content = renderer(req, store, context, helmetContext);
@@ -65,7 +77,7 @@ app.get('*', (req, res, next) => {
 
                 // let initalData = store.getState();
 
-                // console.log(initalData[stateKey])
+                console.log(store.getState())
                 // keysSsrIgnore.forEach((key) => {
                 //     // console.log(key)
                 //     if(initalData[stateKey].data[key]){
@@ -75,15 +87,14 @@ app.get('*', (req, res, next) => {
                 //
                 // console.log(initalData[stateKey])
 
-
-                data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
+                data = data.replace('__STYLES__', `/app/${assetsByChunkName.main[0]}`);
                 data = data.replace('__LOADER__', '');
                 data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
                 data = data.replace('<title></title>', helmet.title.toString());
                 data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
                 data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>`);
                 // data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(initalData)}</script>`);
-                data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
+                data = data.replace('__CLIENT__SCRIPTS__', `/app/${assetsByChunkName.main[1]}`);
 
                 return res.send(data)
             })

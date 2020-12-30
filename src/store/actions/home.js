@@ -1,21 +1,20 @@
-import { SAGA_FETCH_HOME, SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME, EXCLUDE_FIELD_STATE } from "../types";
+import { SAGA_FETCH_HOME, SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME } from "../types";
 
 export const sagaFetchHome = (data) => ({
     type: SAGA_FETCH_HOME,
     payload: {data}
 })
 
-export const excludeFieldState = field => ({
-  type:  EXCLUDE_FIELD_STATE,
-  payload: field
-})
-
-export const successFetchHome = home => {
-    // console.log('home', home)
+export const successFetchHome = data => {
+    console.log('098', {
+        ...data,
+        // meta: home.meta,
+        meta: {},
+    })
     return {
         type: SUCCESS_FETCH_HOME,
         payload: {
-            data: home.data,
+            data: data,
             // meta: home.meta,
             meta: {},
         }

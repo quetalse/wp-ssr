@@ -21,6 +21,10 @@ const metroOptions = [
 ]
 
 const Form = ({routes, history}) => {
+    if(__CLIENT__ && !__SERVER__){
+        // console.log('CLIENT!')
+    }
+
     const dispatch = useDispatch();
     const ref = React.createRef();
 
@@ -40,18 +44,28 @@ const Form = ({routes, history}) => {
         }
     });
 
+    const getOptions = (array) => {
+         return array.map((item) => ({
+                value: item[0],
+                label: item[1],
+                icon:  item[2]
+            })
+         )
+    };
+
     const types = useSelector(state => {
         if(!state.home.data.types){
             return null
             // return typesOptions
         }
-        return state.home.data.types
+        return getOptions(state.home.data.types);
+        // return state.home.data.types
         // return typesOptions
     });
     const metro = useSelector(state => {
         if(!state.home.data.metro){
-            // return null
-            return metroOptions
+            return null
+            // return metroOptions
         }
         return state.home.data.metro
         // return metroOptions
@@ -64,10 +78,21 @@ const Form = ({routes, history}) => {
     // });
 
     useEffect(() => {
-            const url = routes.filter((route)=>{
+            let url = routes.filter((route)=>{
                 return route.name === 'types' || route.name === 'metro'
             });
-            dispatch(sagaFetchHome(url))
+
+        // console.log('!__CLIENT__ && __SERVER__', __CLIENT__, __SERVER__)
+            if(!__CLIENT__ && __SERVER__){
+                // url = url.map((route) => ({
+                //     ...route,
+                //     url: __URL__+ url
+                // }))
+                // console.log('url', __URL__+ url)
+                // console.log('__URL__', __URL__)
+            }
+
+            // dispatch(sagaFetchHome(url))
         },[]);
 
     const handleSelect = async (selectedOption, selectKey) => {
@@ -154,7 +179,7 @@ const Form = ({routes, history}) => {
                 <button
                     className="btn waves-effect waves-light input-tool"
                     onClick={searchHandler}
-                    disabled={!(selected.type || selected.metro)}
+                    disabled={!(types || metro)}
                 >Поиск
                     {!count.load || <img width="20px" style={{'top': '4px'}} src="/images/loading.gif" alt="Загрузка"/>}
                     {count.data ? `(${count.data})` : ''}

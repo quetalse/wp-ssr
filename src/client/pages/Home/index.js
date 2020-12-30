@@ -10,14 +10,18 @@ import "./index.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { allSagas } from "../../../store/sagas";
 import { sagaFetchHome} from "../../../store/actions/home";
+import Head from "../../components/Head";
+import Foot from "../../components/Foot";
+import HeaderMeta from "../../components/HeaderMeta";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
 const serverSagaData = [
-    { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
-    {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
-    {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
-    {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
+    { name: 'page', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+    { name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
+    // {name: 'types', url: ' http://localhost:3000/data/classifiers/type.json'},
+    // {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
+    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
     {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
 ]
 
@@ -27,7 +31,7 @@ const routes = {
     sagaUrl: '/api/page/home',
     serverSagaData,
     clientSagaData: [
-        {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
+
         ...serverSagaData
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories']
@@ -53,41 +57,27 @@ const Home = ({history}) => {
         }
     },[])
 
-
-    let h1 = home ? home.h1 : <Skeleton count={1} width={160}/>;
-    let slogan = home ? home.slogan : <Skeleton count={2}/>;
-    let text = home ? home.text : <Skeleton count={4}/>;
-
-    return (<div className="center-align" style={{marginTop: '50px'}}>
-            <div className="row">
-                <h1>{h1}</h1>
-                <p>{slogan}</p>
+    return (
+        <React.Fragment>
+            <HeaderMeta />
+            <div className="center-align" style={{marginTop: '50px'}}>
+                <Head/>
+                <Form routes={routes.clientSagaData} history={history}/>
+                <div className="row random-card-offers">
+                    <RandomBathrooms routes={routes.clientSagaData}/>
+                </div>
+                <div className="row top-categories">
+                    <TopCategories routes={routes.clientSagaData}/>
+                </div>
+                <Foot/>
             </div>
-            <Form routes={routes.clientSagaData} history={history}/>
-            <div className="row random-card-offers">
-                <RandomBathrooms routes={routes.clientSagaData}/>
-            </div>
-            <div className="row top-categories">
-                <TopCategories routes={routes.clientSagaData}/>
-            </div>
-            <div className="row">
-                <p className="left-align">{text}</p>
-            </div>
-        </div>
+        </React.Fragment>
     )
 }
 
-const mapStateToProps = (state) =>{
-    // console.log('home', state)
-    return {
-        data: state.home.data,
-        // meta: state.bathrooms.meta
-    }
-};
-
 export default {
     component: Home,
-    saga: allSagas.homeSaga,
+    saga: allSagas.rootSaga,
     dataUrls: routes.dataUrls,
     serverSagaData: routes.serverSagaData,
     keysSsrIgnore: routes.keysSsrIgnore,

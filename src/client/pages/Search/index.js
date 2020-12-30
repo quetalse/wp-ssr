@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton from "./skeletons/BathroomCard";
+import Head from '../../components/Head';
 
 import Select from 'react-select';
 import {Link} from 'react-router-dom';
@@ -26,11 +27,11 @@ const metroOptions = [
 ]
 
 const serverSagaData = [
-    { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
-    {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
-    {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
-    {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-    {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+    // { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+    // {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
+    // {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
+    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
+    // {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
 ]
 
 const routes = {
@@ -39,7 +40,7 @@ const routes = {
     sagaUrl: '/api/page/home',
     serverSagaData,
     clientSagaData: [
-        {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
+        // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
         ...serverSagaData
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories']
@@ -103,10 +104,7 @@ const Search = ({history}) => {
     let showAdditionalText = additional ? 'Скрыть услуги' : 'Смотреть все услуги';
 
     return (<div className="" style={{marginTop: '50px'}}>
-            <div className="row">
-                <h1>Поиск</h1>
-                <p>Найдено резульататов: </p>
-            </div>
+            <Head/>
             <div className="row">
                 <div className="col s3" style={{backgroundColor: '#90a4ae'}}>
                     <div className="input-field">

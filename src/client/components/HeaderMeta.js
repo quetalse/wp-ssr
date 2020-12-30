@@ -1,19 +1,28 @@
 import React from 'react';
 import {Helmet} from "react-helmet-async";
+import {useSelector} from "react-redux";
 
-export default ({meta}) => {
+export default () => {
+
+    console.log('Meta')
+
+    const page = useSelector( state => {
+        if(!state.home.data.page){return null}
+        return state.home.data.page
+    });
+
     return (
       <Helmet>
-        <title>{meta.title}</title>
-        <meta property="og:title" content={meta.title}/>
+        <title>{page.title}</title>
+        <meta property="og:title" content={page.title}/>
 
-        <meta property="og:description" content={meta.description}/>
-        <meta name="description" content={meta.description}/>
+        <meta property="og:description" content={page.description}/>
+        <meta name="description" content={page.description}/>
 
-        <meta property="og:keywords" content={meta.keywords}/>
-        <meta name="keywords" content={meta.keywords}/>
+        <meta property="og:keywords" content={page.keywords}/>
+        <meta name="keywords" content={page.keywords}/>
 
-        <meta property="og:site_name" content={meta.site_name}/>
+        <meta property="og:site_name" content={page.site_name}/>
       </Helmet>
     )
 }
