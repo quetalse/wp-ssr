@@ -42,19 +42,19 @@ const Form = ({routes, history}) => {
 
     const types = useSelector(state => {
         if(!state.home.data.types){
-            // return null
-            return typesOptions
+            return null
+            // return typesOptions
         }
-        // return state.home.data.types
-        return typesOptions
+        return state.home.data.types
+        // return typesOptions
     });
     const metro = useSelector(state => {
         if(!state.home.data.metro){
             // return null
             return metroOptions
         }
-        // return state.home.data.metro
-        return metroOptions
+        return state.home.data.metro
+        // return metroOptions
     });
     // const count = useSelector(state => {
     //     if(!state.home.data.count){

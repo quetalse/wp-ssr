@@ -14,11 +14,11 @@ import { sagaFetchHome} from "../../../store/actions/home";
 // import { allSagas } from "../../store/sagas";
 
 const serverSagaData = [
-    // { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
+    { name: 'static', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
     {name: 'types', url: 'https://my.api.mockaroo.com/typesSelect.json?key=06826450'},
     {name: 'metro', url: 'https://my.api.mockaroo.com/metroSelect.json?key=06826450'},
-    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-    // {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+    {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
+    {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
 ]
 
 const routes = {
