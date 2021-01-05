@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sagaFetchHome } from '../../../store/actions/home';
-import Skeleton from "./skeletons/TopCategory";
+import Skeleton from "../../components/skeletons/TopCategory";
+import AppCollection from "../../components/ui/AppCollection";
 
 const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
@@ -32,9 +33,9 @@ const TopCategories = ({routes}) => {
             </React.Fragment>
             :
             <React.Fragment>
-                <TopCategory category={collections['type']}/>
-                <TopCategory category={collections['purpose']}/>
-                <TopCategory category={collections['service']}/>
+                <AppCollection category={collections['type']} topCategories={true}/>
+                <AppCollection category={collections['purpose']} topCategories={true}/>
+                <AppCollection category={collections['service']} topCategories={true}/>
             </React.Fragment>
     )
 }

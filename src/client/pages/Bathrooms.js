@@ -5,7 +5,7 @@ import { sagaFetchBathRooms } from '../../store/actions/bathrooms';
 import {allSagas} from "../../store/sagas";
 import { Link } from "react-router-dom";
 
-import HeaderMeta from "../components/HeaderMeta";
+import HeaderMeta from "../components/Meta";
 
 const routes = {
     // sagaUrl: 'https://jsonplaceholder.typicode.com/photos?_limit=20',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Select from 'react-select';
 
 const customStyles = {
@@ -28,21 +28,33 @@ const customStyles = {
     }
 }
 
- const AppSelect = ({instanceId, isDisabled, selectedOption, handleChange, placeholder, options }) => {
+ const AppSelect = ({label, instanceId, isDisabled, selectedOption, handleChange, placeholder, preOptions }) => {
 
-    let value = selectedOption.label === null ? null : selectedOption
+     const getOptions = (array) => {
+         return array.map((item) => ({
+                 value: item[0],
+                 label: item[1],
+                 icon:  item[2]
+             })
+         )
+     };
+    const value = selectedOption.label === null ? null : selectedOption;
+    const options = preOptions ? getOptions(preOptions) : {};
 
     return (
-        <Select
-            instanceId={instanceId}
-            isDisabled={isDisabled}
-            styles={customStyles}
-            height="3rem"
-            placeholder={placeholder}
-            value={value}
-            onChange={handleChange}
-            options={options}
-        />
+        <Fragment>
+            <label>{label}</label>
+            <Select
+                instanceId={instanceId}
+                isDisabled={isDisabled}
+                styles={customStyles}
+                height="3rem"
+                placeholder={placeholder}
+                value={value}
+                onChange={handleChange}
+                options={options}
+            />
+        </Fragment>
     )
 }
 

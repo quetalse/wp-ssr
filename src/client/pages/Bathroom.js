@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { sagaFetchBathRoom } from '../../store/actions/bathroom';
 import {allSagas} from "../../store/sagas";
 import { Link, useParams } from "react-router-dom";
-import HeaderMeta from "../components/HeaderMeta";
+import HeaderMeta from "../components/Meta";
 
 const routes = {
     sagaUrl: 'https://jsonplaceholder.typicode.com/photos',

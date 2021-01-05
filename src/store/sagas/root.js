@@ -40,7 +40,7 @@ export function* loadRoot(dataUrls) {
         yield responses.map(response => {
             data = {...data,...response}
         })
-        console.log('data', data)
+        // console.log('data', data)
         // const data = yield call(fetchHome, arg.dataUrl);
         // const meta = yield call(fetchHome, arg.dataUrl) || {};
         yield put(successFetchHome(data))
@@ -51,13 +51,13 @@ export function* loadRoot(dataUrls) {
 }
 
 function* watchRoot(arg) {
-    console.log('arg', arg)
+    // console.log('arg', arg)
     yield fork(loadRoot, arg)
 }
 function* clientRoot(arg) {
     yield takeEvery(SAGA_FETCH_HOME, function* (action){
 
-        // console.log('action.payload.data', action.payload.data)
+        console.log('action.payload.data', action.payload.data)
 
         yield fork(loadRoot, action['payload'].data)
     });
@@ -73,12 +73,10 @@ function* clientsSaga() {
 
 export function* rootSaga(arg) {
 
-
-
-    yield all([
-        helloSaga(),
-        watchRoot(arg)
-    ])
+    // yield all([
+    //     helloSaga(),
+    //     watchRoot(arg)
+    // ])
 
     // yield all[
     //     call(watchRoot, arg)
@@ -87,12 +85,10 @@ export function* rootSaga(arg) {
 
 // Вызывается со стороны клиента
 export function* clientRootSaga(arg) {
-    // console.log('clientHomeSaga')
+    console.log('clientHomeSaga')
     // yield all([
     //     clientsSaga(),
     //     clientHome()
     // ])
-    yield all[
-        call(clientRoot)
-    ]
+    yield call(clientRoot)
 }

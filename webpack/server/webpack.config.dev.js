@@ -70,6 +70,16 @@ module.exports = {
             // window: path.resolve(path.join(__dirname, './../window.mock')),
             // document: 'global/document',
         }),
+        new webpack.DefinePlugin({
+            __CLIENT__: true,
+            __SERVER__: false,
+            'process.env':
+                {
+                    PUBLIC_URL: '""',
+                    REACT_APP_HOST: '"localhost"',
+                    REACT_APP_PORT: '"8080"'
+                }
+        }),
         new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
 
     ],

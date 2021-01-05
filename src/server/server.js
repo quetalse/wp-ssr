@@ -1,5 +1,5 @@
 import '@babel/polyfill';
-
+import open from 'open';
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
@@ -20,6 +20,8 @@ const indexFile = path.resolve('./build/app/template.html');
 
 global.__SERVER__ = true;
 global.__CLIENT__ = false;
+
+const PORT = 3000;
 
 makeServer({ environment: "development" })
 
@@ -42,7 +44,6 @@ app.get('*', (req, res, next) => {
     const routes = matchRoutes(Routes, req.path).pop();
     const store = configureStore();
 
-    // console.log('routes', routes)
 
     const saga = routes.route.saga || function* (){}
     //       sagaUrl = routes.route.sagaUrl || '',
@@ -54,8 +55,8 @@ app.get('*', (req, res, next) => {
     const {keysSsrIgnore} = routes.route;
     const {stateKey} = routes.route;
 
-    console.log('saga', saga)
-    console.log('dataUrls', dataUrls)
+    // console.log('saga', saga)
+    // console.log('dataUrls', dataUrls)
 
 
     store.runSaga(saga, dataUrls).done.then(() => {
@@ -77,7 +78,7 @@ app.get('*', (req, res, next) => {
 
                 // let initalData = store.getState();
 
-                console.log(store.getState())
+                // console.log(store.getState())
                 // keysSsrIgnore.forEach((key) => {
                 //     // console.log(key)
                 //     if(initalData[stateKey].data[key]){
@@ -105,6 +106,13 @@ app.get('*', (req, res, next) => {
     store.close();
 });
 
-app.listen(3000, () => {
-    console.log('😎 Server on port 3000');
-})
+app.listen(PORT, () => {
+    console.log(`😎 Server on port ${PORT}`);
+});
+
+
+// (async () => {
+    // open(`http://localhost:${PORT}`, {app: 'google-chrome'});
+// })();
+
+

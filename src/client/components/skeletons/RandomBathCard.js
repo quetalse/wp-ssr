@@ -1,7 +1,7 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-const RandomBath = () => {
+const RandomBathCard = () => {
     return (
           <SkeletonTheme color="#a4b4bc" highlightColor="#94a7b0">
             <div className="card">
@@ -22,4 +22,4 @@ const RandomBath = () => {
 
 }
 
-export default RandomBath;
+export default RandomBathCard;

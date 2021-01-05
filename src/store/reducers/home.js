@@ -10,7 +10,6 @@ const initState = {
 export default (state = initState, action) => {
     switch (action.type) {
         case SUCCESS_FETCH_HOME:
-            console.log('action.payload.data', action.payload)
             return {
                 ...state,
                 loading: false,
