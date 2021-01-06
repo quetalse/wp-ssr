@@ -101,9 +101,10 @@ export function* loadRoot(dataUrls) {
         //     data = {...data,...response}
         // })
 
-
+        console.time('START');
         const data = yield call(dataExtract, dataUrls);
-        // console.log('DATA', data)
+        console.timeEnd('START');
+        console.log('DATA', data)
         // const data = yield call(fetchHome, arg.dataUrl);
         // const meta = yield call(fetchHome, arg.dataUrl) || {};
         yield put(successFetchHome(data))

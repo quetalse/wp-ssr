@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
-import { sagaFetchHome } from '../../store/actions/home';
+import { dropField, sagaFetchHome } from '../../store/actions/home';
 
 const HeaderMain = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
     const {page, count} = useSelector(state => {
-        if(!state.data.page[forPage]) return{}
-        return state.data.page[forPage]
+        if(!state.data.page) return {}
+        console.log('STATE, ',forPage, state)
+        return state.data.page
     });
 
     useEffect(() => {
@@ -18,6 +19,9 @@ const HeaderMain = ({forPage, routes}) => {
             });
             dispatch(sagaFetchHome(url))
         }
+        return function() {
+            dispatch(dropField(['page']))
+        };
     },[]);
 
     return (

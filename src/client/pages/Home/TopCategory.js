@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sagaFetchHome } from '../../../store/actions/home';
 import Skeleton from "../../components/skeletons/TopCategory";
 import AppCollection from "../../components/ui/AppCollection";
+import BathCard from "../../components/bathCards/BathCard";
+import _arraySkeleton from "../../components/skeletons/_arraySkeleton";
 
 const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
@@ -24,42 +26,26 @@ const TopCategories = ({routes}) => {
             }
         },[]
     );
-
-    return ( !collections ?
-            <React.Fragment>
-                <Skeleton/>
-                <Skeleton/>
-                <Skeleton/>
-            </React.Fragment>
-            :
-            <React.Fragment>
-                <AppCollection category={collections['type']} topCategories={true}/>
-                <AppCollection category={collections['purpose']} topCategories={true}/>
-                <AppCollection category={collections['service']} topCategories={true}/>
-            </React.Fragment>
-    )
-}
-
-const TopCategory = ({category}) => {
-
-    const listItems = () => {
-        return category.list.map((item, index) => (
-            <li className="collection-item" key={index + 1}>
-                <Link to={item.url}>{item.text}</Link>
-            </li>
-        ));
+    const renderTopCategories = () => {
+        if (collections){
+            return Object.entries(collections).map((category, index) => (
+                <div className="col s4" key={index}>
+                    <AppCollection  category={category[1]} topCategories={true}/>
+                </div>
+            ))
+        }else{
+            return _arraySkeleton(3, () => (
+                <div className="col s4">
+                    <Skeleton/>
+                </div>
+            ))
+        }
     }
 
     return (
-        <div className="col s4">
-            <ul className="collection with-header">
-                <li className="collection-header" key={0}>
-                    <h4>{category.title}</h4>
-                </li>
-                {listItems()}
-                <Link to={category.all}>Посмотреть все</Link>
-            </ul>
-        </div>
+            <Fragment>
+                {renderTopCategories()}
+            </Fragment>
     )
 }
 

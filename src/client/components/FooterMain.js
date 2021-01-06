@@ -5,8 +5,8 @@ import Skeleton from "react-loading-skeleton";
 const FooterMain = ({forPage}) => {
 
     const {page} = useSelector(state => {
-        if(!state.data.page[forPage]) return{}
-        return state.data.page[forPage]
+        if(!state.data.page) return{}
+        return state.data.page
     });
 
     return (

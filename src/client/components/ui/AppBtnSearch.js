@@ -5,7 +5,7 @@ const AppBtnSearch = ({text, disabled, onClick, countLoader, countValue}) => {
 
     return (
         <button
-            // style={{width: '100%'}}
+            style={{width: '100%', color: '#000000', height: '3rem', backgroundColor: '#F0F0F0'}}
             className="btn waves-effect waves-light input-tool"
             onClick={onClick}
             disabled={disabled}

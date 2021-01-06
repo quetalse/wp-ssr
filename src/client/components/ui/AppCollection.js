@@ -1,23 +1,11 @@
 import React, { useState } from 'react';
 import {Link} from "react-router-dom";
+import Skeleton from "../../components/skeletons/TopCategory";
 
 const AppCollection = ({category, topCategories}) => {
 
-    const listItemContent = (url, text) => {
-        if(topCategories){
-            return <Link to={url}>{text}</Link>
-        }else{
-            return (
-                <label>
-                    <input type="checkbox" className="filled-in"/>
-                    <span>{text}</span>
-                </label>
-            )
-        }
-    }
-
-    const listItems = () => {
-        return category.list.map((item, index) => (
+    const listItems = (array) => {
+        return array.map((item, index) => (
             <li className="collection-item" key={index + 1}>
                 {topCategories ? (<Link to={item.url}>{item.text}</Link>) :
                     (
@@ -32,15 +20,15 @@ const AppCollection = ({category, topCategories}) => {
     }
 
     return (
-        <div className="col s4">
+        !category ? <Skeleton/> : (
             <ul className="collection with-header">
                 <li className="collection-header" key={0}>
-                    <h4>{category.title}</h4>
+                    <h4>{category.title || "Заголовок"}</h4>
                 </li>
-                {listItems()}
-                <Link to={category.all}>Посмотреть все</Link>
+                {topCategories ? listItems(category.list) : listItems(category)}
+                <Link to={category.all || "/"}>Посмотреть все</Link>
             </ul>
-        </div>
+        )
     )
 }
 

@@ -3,7 +3,6 @@ import open from 'open';
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-import { makeServer } from "./mockServer";
 
 import { matchRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
@@ -23,12 +22,7 @@ global.__CLIENT__ = false;
 
 const PORT = 3000;
 
-makeServer({ environment: "development" })
-
-app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
-
-}));
-
+app.use(require('express-status-monitor')());
 app.use(express.static('build/'));
 
 app.get('*', (req, res, next) => {

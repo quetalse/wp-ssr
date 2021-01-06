@@ -34,6 +34,8 @@ export default (state = initState, action) => {
                 }
             })
 
+            console.log('dropFields', dropFields)
+
             return {
                 ...state,
                 data: {

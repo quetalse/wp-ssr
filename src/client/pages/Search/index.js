@@ -22,13 +22,10 @@ const _apiBase = process.env.__API_BASE__;
 const serverSagaData = [
     {
         name: 'page',
-        url: [{
-            name: 'search',
-            url: [
-                {name: 'page',  url: `${_apiBase}/api/page/search`},
-                {name: 'count', url: `${_apiBase}/api/page/search?count`}
-            ]
-        }]
+        url: [
+            {name: 'page',  url: `${_apiBase}/api/page/search`},
+            {name: 'count', url: `${_apiBase}/api/page/search?count`}
+        ]
     }
 ]
 
@@ -38,7 +35,17 @@ const routes = {
     sagaUrl: '/api/page/home',
     serverSagaData,
     clientSagaData: [
-        // {name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
+        {
+            name: 'classifiers',
+            url:[
+                {name: 'types', url: 'http://localhost:3000/data/classifiers/type.json'},
+                {name: 'metro', url: 'http://localhost:3000/data/classifiers/metro.json'},
+                {name: 'purpose', url: 'http://localhost:3000/data/classifiers/purpose.json'},
+                {name: 'services', url: 'http://localhost:3000/data/classifiers/services.json'},
+                {name: 'aqua', url: 'http://localhost:3000/data/classifiers/aqua.json'},
+                {name: 'entertainment', url: 'http://localhost:3000/data/classifiers/entertainment.json'}
+            ]
+        },
         ...serverSagaData
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories']
@@ -57,6 +64,7 @@ const Search = ({history}) => {
     const classifiers = useSelector(state => {
         return state.data.classifiers
     });
+
     useEffect(() => {
         if(!classifiers){
             const url = routes.clientSagaData.filter((route)=>{
@@ -71,8 +79,8 @@ const Search = ({history}) => {
         <div className="" style={{marginTop: '50px'}}>
             <HeaderMain forPage="search" routes={routes.clientSagaData}/>
             <div className="row">
-                <div className="col s3" style={{backgroundColor: '#90a4ae'}}>
-                    {/*<Form routes={routes.clientSagaData} history={history}/>*/}
+                <div className="col s3">
+                    <Form routes={routes.clientSagaData} history={history}/>
                 </div>
                 <div className="col s9">
                     <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>

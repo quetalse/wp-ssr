@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react';``
 import {Link} from 'react-router-dom';
 
-const BathCard = () => {
+const BathCard = ({bath}) => {
 
     const [additional, setAdditional] = useState(false);
     const showAdditional = () => {
         setAdditional(!additional)
     }
-
     let showAdditionalText = additional ? 'Скрыть услуги' : 'Смотреть все услуги';
 
     return (
         <div className="row card bathroom-card">
             <div className="row bathroom-card-main">
                 <div className="col s3 bathroom-card-head card-image">
-                    <img className="" width="250" src="http://sk-pestovo.ru/assets/images/articles/sauna-v-dome.jpg"/>
+                    <img className="" width="250" src={bath[5]}/>
                     {/*<span className="card-head card-price">300 р.</span>*/}
-                    <span className="bathroom-card-rating">5 rate</span>
+                    <span className="bathroom-card-rating">{bath[3]} rate</span>
                 </div>
                 <div className="col s9 bathroom-card-content left-align">
-                    <span className="content-price">300 р.</span>
-                    <p className="content-title">Название</p>
+                    <span className="content-price">{bath[4]} р.</span>
+                    <p className="content-title">{bath[0]}</p>
                     <ul className="content-stations">
                         <li className="valign-wrapper station">
-                            <Link to="google.com">Посмотреть все</Link>
+                            <Link to="google.com">Местоположение</Link>
                         </li>
                         <li className="valign-wrapper station">
-                            <Link to="google.com">Посмотреть все</Link>
-                            <Link to="google.com">Посмотреть все</Link>
+                            {
+                                bath[2].map((metro) => (
+                                    <span key={metro[0]}>
+                                        <Link to="google.com">{metro[0]}</Link>-{metro[1]}м.
+                                    </span>))
+                            }
                         </li>
                         <li className="valign-wrapper station">
                             <span>Вместимость 5 чел.</span>

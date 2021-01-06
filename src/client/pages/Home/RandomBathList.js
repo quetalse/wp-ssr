@@ -6,7 +6,9 @@ import RandomBathCard from "../../components/bathCards/RandomBathCard";
 
 const RandomBathList= ({routes}) => {
     const dispatch = useDispatch();
-    const randomBathrooms = useSelector(state => state.data.randomBathrooms);
+    const randomBathrooms = useSelector(state => {
+        return state.data.randomBathrooms
+    });
 
     useEffect(() => {
             if(!randomBathrooms){

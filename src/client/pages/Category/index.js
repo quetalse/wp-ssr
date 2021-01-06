@@ -1,33 +1,35 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import Skeleton from "react-loading-skeleton";
+import React, { useEffect, useState } from 'react';
+import Skeleton from "../../components/skeletons/BathroomCard";
+import HeaderMain from '../../components/HeaderMain';
+
+import BathList from "./BathList";
 import Form from "./Form";
-import RandomBathList from "./RandomBathList";
-import TopCategories from "./TopCategory";
+import FooterMain from "../../components/FooterMain";
 import Select from 'react-select';
 import {Link} from 'react-router-dom';
 
 import "./index.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { allSagas } from "../../../store/sagas";
-import { sagaFetchClassifiers } from "../../../store/actions/home";
-import HeaderMain from "../../components/HeaderMain";
-import FooterMain from "../../components/FooterMain";
-import Meta from "../../components/Meta";
+import {sagaFetchClassifiers, sagaFetchHome} from "../../../store/actions/home";
+import DatePicker from "react-datepicker";
+import AppSelect from "../../components/ui/AppSelect";
+import {rootSaga} from "../../../store/sagas/root";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
 const _apiBase = process.env.__API_BASE__;
-
-// Данные и формат для загрузки на сервере(формируем state на сервере)
 const serverSagaData = [
     {
         name: 'page',
-        url: [
-            {name: 'page',  url: `${_apiBase}/api/page/home`},
-            {name: 'count', url: `${_apiBase}/api/page/home?count`},
-        ]
-    },
-    {name: 'topCategories', url: `${_apiBase}/api/page/home?top-categories`}
+        url: [{
+            name: 'search',
+            url: [
+                {name: 'page',  url: `${_apiBase}/api/page/search`},
+                {name: 'count', url: `${_apiBase}/api/page/search?count`}
+            ]
+        }]
+    }
 ]
 
 const routes = {
@@ -47,20 +49,24 @@ const routes = {
                 {name: 'entertainment', url: 'http://localhost:3000/data/classifiers/entertainment.json'}
             ]
         },
-        {name: 'randomBathrooms', url: `${_apiBase}/api/random-baths?count`},
         ...serverSagaData
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories']
 };
 
-const Home = ({history}) => {
+
+const Search = ({history}) => {
+
+    const params = new URLSearchParams(history.location.search);
+    const type = params.get('type');
+    const metro = params.get('metro');
+    // console.log('type', type)
+    // console.log('metro', metro)
 
     const dispatch = useDispatch();
     const classifiers = useSelector(state => {
         return state.data.classifiers
     });
-
-    // console.log('classifiers', classifiers)
 
     useEffect(() => {
         if(!classifiers){
@@ -71,30 +77,28 @@ const Home = ({history}) => {
         }
     },[])
 
+
     return (
-        <Fragment>
-            <Meta server={true} client={false} />
-            <div className="center-align" style={{marginTop: '50px'}}>
-                <HeaderMain forPage="home" routes={routes.clientSagaData}/>
-                <Form routes={routes.clientSagaData} history={history}/>
-                <div className="row random-card-offers">
-                    <RandomBathList routes={routes.clientSagaData}/>
+        <div className="" style={{marginTop: '50px'}}>
+            <HeaderMain forPage="search" routes={routes.clientSagaData}/>
+            <div className="row">
+                <div className="col s3">
+                    <Form routes={routes.clientSagaData} history={history}/>
                 </div>
-                <div className="row top-categories">
-                    <TopCategories routes={routes.clientSagaData}/>
+                <div className="col s9">
+                    <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
                 </div>
-                <FooterMain forPage="home"/>
             </div>
-        </Fragment>
+            <FooterMain forPage="search"/>
+        </div>
     )
 }
 
 export default {
-    component: Home,
+    component: Search,
     saga: allSagas.rootSaga,
     dataUrls: routes.dataUrls,
     serverSagaData: routes.serverSagaData,
     keysSsrIgnore: routes.keysSsrIgnore,
     stateKey: 'home'
-    // sagaMetaUrl: routes.sagaMetaUrl
 }

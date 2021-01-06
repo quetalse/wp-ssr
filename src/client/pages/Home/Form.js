@@ -52,16 +52,14 @@ const Form = ({routes, history}) => {
                 ...selected,
                 [selectKey]: selectedOption
             });
+
             setCount({
                 value: false,
                 loader: true
             });
+
             const type = selectKey === 'type' ? selectedOption.value : selected['type'].value;
             const metro = selectKey === 'metro' ? selectedOption.value : selected['metro'].value;
-
-            console.log('selectedOption', selectedOption)
-
-            // const response = await fetch('https://my.api.mockaroo.com/count.json?key=06826450');
             const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
             const data = await response.json();
             setCount({
