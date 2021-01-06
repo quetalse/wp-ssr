@@ -6,7 +6,7 @@ import AppSelect from "../../components/ui/AppSelect";
 import AppBtnSearch from "../../components/ui/AppBtnSearch";
 import AppDatePicker from "../../components/ui/AppDatePicker";
 
-import { sagaFetchHome } from "../../../store/actions/home";
+import { dropField, sagaFetchHome } from "../../../store/actions/home";
 
 const Form = ({routes, history}) => {
 
@@ -28,17 +28,22 @@ const Form = ({routes, history}) => {
         }
     });
 
-    const types = useSelector(state => state.home.data.types)
-    const metro = useSelector(state => state.home.data.metro)
+    // const types = useSelector(state => state.home.data.types)
+    const {types, metro} = useSelector(state => {
+        if(!state.data.classifiers) return {}
+        return state.data.classifiers
+    })
+    // const metro = useSelector(state => state.home.data.metro)
+    // const metro = useSelector(state => state.home.data.classifiers)
 
-    useEffect(() => {
-        if(!types || !metro) {
-            let url = routes.filter((route) => {
-                return route.name === 'types' || route.name === 'metro'
-            });
-            dispatch(sagaFetchHome(url))
-        }
-    },[]);
+    // useEffect(() => {
+    //     if(!types || !metro) {
+    //         let url = routes.filter((route) => {
+    //             return route.name === 'types' || route.name === 'metro'
+    //         });
+    //         dispatch(sagaFetchHome(url))
+    //     }
+    // },[]);
 
     const handleSelect = async (selectedOption, selectKey) => {
 
@@ -51,12 +56,14 @@ const Form = ({routes, history}) => {
                 value: false,
                 loader: true
             });
-            const type = selectKey === 'type' ? selectedOption.label : selected['type'].label;
-            const metro = selectKey === 'metro' ? selectedOption.label : selected['metro'].label;
+            const type = selectKey === 'type' ? selectedOption.value : selected['type'].value;
+            const metro = selectKey === 'metro' ? selectedOption.value : selected['metro'].value;
+
+            console.log('selectedOption', selectedOption)
 
             // const response = await fetch('https://my.api.mockaroo.com/count.json?key=06826450');
-            const response = await fetch(`api/presearch?type=${type}&metro=${metro}&only_count`);
-            let data = await response.json();
+            const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
+            const data = await response.json();
             setCount({
                 value: data.count,
                 loader: false
@@ -68,6 +75,7 @@ const Form = ({routes, history}) => {
         let date = moment(startDate).format("DD/MM/YYYY"),
             type = selected.type.value || null,
             metro = selected.metro.value || null;
+        // dispatch(dropField(['page', 'count']));
         history.push(`/search?type=${type}&metro=${metro}&date=[${date}]`);
     }
 

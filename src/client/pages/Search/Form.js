@@ -40,7 +40,7 @@ const Form = ({routes, history}) => {
     });
     const types = useSelector(state => state.home.data.types)
 
-    console.log('types', types)
+    // console.log('types', types)
 
     useEffect(() => {
         if(!types) {

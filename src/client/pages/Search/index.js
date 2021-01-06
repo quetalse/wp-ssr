@@ -11,31 +11,25 @@ import {Link} from 'react-router-dom';
 import "./index.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { allSagas } from "../../../store/sagas";
-import { sagaFetchHome} from "../../../store/actions/home";
+import {sagaFetchClassifiers, sagaFetchHome} from "../../../store/actions/home";
 import DatePicker from "react-datepicker";
 import AppSelect from "../../components/ui/AppSelect";
 import {rootSaga} from "../../../store/sagas/root";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
-const typesOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
-const metroOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-]
-
+const _apiBase = process.env.__API_BASE__;
 const serverSagaData = [
-    // { name: 'page', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
-    // { name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
-    {name: 'types', url: ' http://localhost:3000/data/classifiers/type.json'},
-    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-    // {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+    {
+        name: 'page',
+        url: [{
+            name: 'search',
+            url: [
+                {name: 'page',  url: `${_apiBase}/api/page/search`},
+                {name: 'count', url: `${_apiBase}/api/page/search?count`}
+            ]
+        }]
+    }
 ]
 
 const routes = {
@@ -60,35 +54,31 @@ const Search = ({history}) => {
     // console.log('metro', metro)
 
     const dispatch = useDispatch();
-
-    const home = useSelector(state => {
-        return state.home.data.static
+    const classifiers = useSelector(state => {
+        return state.data.classifiers
     });
-
-
-
     useEffect(() => {
-        // if(!home){
-        //     const url = routes.serverSagaData.filter((route)=>{
-        //         return route.name === 'static'
-        //     });
-        //     dispatch(sagaFetchHome(url))
-        // }
+        if(!classifiers){
+            const url = routes.clientSagaData.filter((route)=>{
+                return route.name === 'classifiers'
+            });
+            dispatch(sagaFetchClassifiers(url))
+        }
     },[])
 
 
     return (
         <div className="" style={{marginTop: '50px'}}>
-            <HeaderMain routes={routes.clientSagaData}/>
+            <HeaderMain forPage="search" routes={routes.clientSagaData}/>
             <div className="row">
                 <div className="col s3" style={{backgroundColor: '#90a4ae'}}>
-                    <Form routes={routes.clientSagaData} history={history}/>
+                    {/*<Form routes={routes.clientSagaData} history={history}/>*/}
                 </div>
                 <div className="col s9">
-                    <BathList/>
+                    <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
                 </div>
             </div>
-            <FooterMain/>
+            <FooterMain forPage="search"/>
         </div>
     )
 }

@@ -10,7 +10,7 @@
     "build:server": "webpack -p --config webpack/server/webpack.config.prod.js --mode production",
     "serve": "serve ./dist",
     "build:clean": "rimraf ./build",
-    "devServer:build": "npm run build:clean && webpack --config webpack/webpack.config.devServer.js",
+    "devServer:build": "npm run build:clean && webpack --config webpack/webpack.config.devServer.js --progress --colors",
     "devClient:build": "npm run build:clean && webpack-dev-server --config webpack/webpack.config.devClient.js --mode development",
     "prod:build": "npm run build:clean && webpack -p --config webpack/webpack.config.prod.js --watch--mode production"
   },

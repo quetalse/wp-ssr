@@ -3,21 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import { sagaFetchHome } from '../../store/actions/home';
 
-const HeaderMain = ({routes}) => {
+const HeaderMain = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
-    const {page, count} = useSelector(state => state.home.data);
+    const {page, count} = useSelector(state => {
+        if(!state.data.page[forPage]) return{}
+        return state.data.page[forPage]
+    });
 
     useEffect(() => {
         if(!page || !count){
             let url = routes.filter((route) => {
-                return route.name === 'page' || route.name === 'count'
+                return route.name === "page"
             });
             dispatch(sagaFetchHome(url))
         }
     },[]);
-
-    // const =
 
     return (
         <div className="row">

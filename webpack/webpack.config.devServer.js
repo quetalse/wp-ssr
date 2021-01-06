@@ -72,6 +72,10 @@ const clientConfig = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
+            // __API_BASE__: 'https://82aacd85-7669-460f-b866-98f6bf0f4d69.mock.pstmn.io',
+            'process.env': {
+                '__API_BASE__': JSON.stringify('https://82aacd85-7669-460f-b866-98f6bf0f4d69.mock.pstmn.io') // '"production"'
+            }
         }),
         new StatsWriterPlugin({
             stats: {

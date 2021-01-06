@@ -9,10 +9,10 @@ const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
 
     const collections = useSelector(state => {
-        if(!state.home.data.topCategories){
+        if(!state.data.topCategories){
             return null
         }
-        return state.home.data.topCategories
+        return state.data.topCategories
     });
 
     useEffect(() => {

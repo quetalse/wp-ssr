@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Skeleton from "react-loading-skeleton";
 import Form from "./Form";
 import RandomBathList from "./RandomBathList";
@@ -9,20 +9,28 @@ import {Link} from 'react-router-dom';
 import "./index.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { allSagas } from "../../../store/sagas";
-import { sagaFetchHome} from "../../../store/actions/home";
+import { sagaFetchClassifiers } from "../../../store/actions/home";
 import HeaderMain from "../../components/HeaderMain";
 import FooterMain from "../../components/FooterMain";
 import Meta from "../../components/Meta";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
+const _apiBase = process.env.__API_BASE__;
+
+// Данные и формат для загрузки на сервере(формируем state на сервере)
 const serverSagaData = [
-    // { name: 'page', url: 'https://my.api.mockaroo.com/home.json?key=06826450'},
-    // { name: 'count', url: 'https://my.api.mockaroo.com/count.json?key=06826450'},
-    {name: 'types', url: ' http://localhost:3000/data/classifiers/type.json'},
-    {name: 'metro', url: 'http://localhost:3000/data/classifiers/metro.json'},
-    // {name: 'randomBathrooms', url: 'https://my.api.mockaroo.com/randomBathrooms.json?key=06826450'},
-    {name: 'topCategories', url:'https://my.api.mockaroo.com/topCategories.json?key=06826450'}
+    {
+        name: 'page',
+        url: [{
+                name: 'home',
+                url: [
+                    {name: 'page',  url: `${_apiBase}/api/page/home`},
+                    {name: 'count', url: `${_apiBase}/api/page/home?count`},
+                ]
+            }]
+    },
+    {name: 'topCategories', url: `${_apiBase}/api/page/home?top-categories`}
 ]
 
 const routes = {
@@ -31,36 +39,44 @@ const routes = {
     sagaUrl: '/api/page/home',
     serverSagaData,
     clientSagaData: [
+        {
+            name: 'classifiers',
+            url:[
+                {name: 'types', url: 'http://localhost:3000/data/classifiers/type.json'},
+                {name: 'metro', url: 'http://localhost:3000/data/classifiers/metro.json'},
+                {name: 'purpose', url: 'http://localhost:3000/data/classifiers/purpose.json'},
+                {name: 'services', url: 'http://localhost:3000/data/classifiers/services.json'}
+            ]
+        },
+        {name: 'randomBathrooms', url: `${_apiBase}/api/random-baths?count`},
         ...serverSagaData
     ],
     keysSsrIgnore: ['static', 'count', 'topCategories']
 };
 
-
-
 const Home = ({history}) => {
 
     const dispatch = useDispatch();
-
-    const home = useSelector(state => {
-        if(!state.home.data.static){return null}
-        return state.home.data.static
+    const classifiers = useSelector(state => {
+        return state.data.classifiers
     });
 
+    // console.log('classifiers', classifiers)
+
     useEffect(() => {
-        if(!home){
-            const url = routes.serverSagaData.filter((route)=>{
-                return route.name === 'static'
+        if(!classifiers){
+            const url = routes.clientSagaData.filter((route)=>{
+                return route.name === 'classifiers'
             });
-            dispatch(sagaFetchHome(url))
+            dispatch(sagaFetchClassifiers(url))
         }
     },[])
 
     return (
-        <React.Fragment>
+        <Fragment>
             <Meta server={true} client={false} />
             <div className="center-align" style={{marginTop: '50px'}}>
-                <HeaderMain routes={routes.clientSagaData}/>
+                <HeaderMain forPage="home" routes={routes.clientSagaData}/>
                 <Form routes={routes.clientSagaData} history={history}/>
                 <div className="row random-card-offers">
                     <RandomBathList routes={routes.clientSagaData}/>
@@ -68,9 +84,9 @@ const Home = ({history}) => {
                 <div className="row top-categories">
                     <TopCategories routes={routes.clientSagaData}/>
                 </div>
-                <FooterMain/>
+                <FooterMain forPage="home"/>
             </div>
-        </React.Fragment>
+        </Fragment>
     )
 }
 

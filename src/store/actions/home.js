@@ -1,7 +1,23 @@
-import { SAGA_FETCH_HOME, SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME } from "../types";
+import {DROP_FIELD, SAGA_FETCH_CLASSIFIERS, SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME, SAGA_FETCH_HOME} from "../types";
+
+export const dropField = (data) => {
+    console.log('data', data)
+    return {
+        type: DROP_FIELD,
+        payload: data
+    }
+}
+
+export const sagaFetchClassifiers = (data) => {
+    // console.log('data', data)
+    return {
+        type: SAGA_FETCH_CLASSIFIERS,
+        payload: {data}
+    }
+}
 
 export const sagaFetchHome = (data) => {
-    console.log('data', data)
+
     return {
         type: SAGA_FETCH_HOME,
         payload: {data}
@@ -9,6 +25,7 @@ export const sagaFetchHome = (data) => {
 }
 
 export const successFetchHome = data => {
+    // console.log('data', data)
     return {
         type: SUCCESS_FETCH_HOME,
         payload: {

@@ -4,7 +4,7 @@ const RandomBathCard = ({bath}) => {
     return (
         <div className="card">
             <div className="card-image">
-                <img src="http://sk-pestovo.ru/assets/images/articles/sauna-v-dome.jpg"/>
+                <img src={bath[5]}/>
                 <span className="card-head card-price">{bath[4]} р.</span>
                 <span className="card-head card-mark">{bath[3]}</span>
             </div>
@@ -16,7 +16,7 @@ const RandomBathCard = ({bath}) => {
                         return (
                             <li key={index} className="valign-wrapper station">{metro[0]} ({metro[1]})
                                 <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Moscow_Metro.svg/1280px-Moscow_Metro.svg.png"
+                                    src="app/images/icons/metro.png"
                                     className="secondary-content" width="10px"/>
                             </li>
                         )

@@ -73,12 +73,10 @@ module.exports = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
-            'process.env':
-                {
-                    PUBLIC_URL: '""',
-                    REACT_APP_HOST: '"localhost"',
-                    REACT_APP_PORT: '"8080"'
-                }
+            __API_BASE__: 'https://82aacd85-7669-460f-b866-98f6bf0f4d69.mock.pstmn.io',
+            'process.env': {
+                '__API_BASE__': JSON.stringify('https://82aacd85-7669-460f-b866-98f6bf0f4d69.mock.pstmn.io') // '"production"'
+            }
         }),
         new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
 

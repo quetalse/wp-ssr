@@ -6,9 +6,7 @@ import RandomBathCard from "../../components/bathCards/RandomBathCard";
 
 const RandomBathList= ({routes}) => {
     const dispatch = useDispatch();
-    const randomBathrooms = useSelector(state => state.home.data.randomBathrooms);
-
-    console.log('rand', randomBathrooms)
+    const randomBathrooms = useSelector(state => state.data.randomBathrooms);
 
     useEffect(() => {
             if(!randomBathrooms){
@@ -41,7 +39,7 @@ const RandomBathList= ({routes}) => {
 
     return (
         <Fragment>
-            {randomBathrooms ? generateCards(randomBathrooms.randomBathrooms) : generateCards([1, 2, 3, 4], true)}
+            {randomBathrooms ? generateCards(randomBathrooms) : generateCards([1, 2, 3, 4], true)}
         </Fragment>
     )
 }

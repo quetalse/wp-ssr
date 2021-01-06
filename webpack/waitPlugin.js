@@ -4,7 +4,7 @@ const WebpackBeforeBuildPlugin = require('before-build-webpack')
 const fs = require('fs')
 
 class WaitPlugin extends WebpackBeforeBuildPlugin {
-    constructor(file, interval = 100, timeout = 20000) {
+    constructor(file, interval = 100, timeout = 30000) {
         super(function(stats, callback) {
             let start = Date.now()
 

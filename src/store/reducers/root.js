@@ -1,4 +1,4 @@
-import { SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME, EXCLUDE_FIELD_STATE } from "../types";
+import { DROP_FIELD,SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME, EXCLUDE_FIELD_STATE } from "../types";
 
 const initState = {
     data: {},
@@ -25,16 +25,21 @@ export default (state = initState, action) => {
                 loading: false,
                 error: action.payload.data
             }
-        case EXCLUDE_FIELD_STATE:
-            let updateState = {...state};
-            let {data} = updateState
-            delete data[action.payload]
-
-            console.log('data', data)
-            console.log('action.payload', action.payload)
+        case DROP_FIELD:
+            let dropFields = {};
+            action.payload.forEach((field) => {
+                dropFields = {
+                    ...dropFields,
+                    [field]: undefined
+                }
+            })
 
             return {
-                ...state
+                ...state,
+                data: {
+                    ...state.data,
+                    ...dropFields
+                },
             }
         default:
             return state

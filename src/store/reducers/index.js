@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
 import bathrooms from './bathrooms';
 import bathroom from './bathroom';
-import home from './home';
+import root from './root';
 
 export default  combineReducers({
-    bathrooms,
-    bathroom,
-    home
+    // bathrooms,
+    // bathroom,
+    root
 })

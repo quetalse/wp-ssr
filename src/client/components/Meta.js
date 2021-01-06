@@ -6,7 +6,7 @@ export default () => {
 
     const page = useSelector( state => {
         // if(!state.home.data.page){return null}
-        return state.home.data.page
+        return state.data.page
     });
 
     const title = page ? page.title : '',
