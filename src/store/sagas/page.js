@@ -13,7 +13,6 @@ function* loadPageData(dataUrls) {
         const data = yield call(dataExtract, dataUrls);
         yield put(successFetchPage(data))
     }catch(e){
-        console.log('Ошибка', e.message)
         yield put(failureFetchPage(e.message))
     }
 }

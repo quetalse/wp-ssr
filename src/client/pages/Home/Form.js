@@ -33,7 +33,7 @@ const Form = ({routes, history}) => {
         return state.classifiers
     })
 
-    console.log('data', data)
+    // console.log('data', data)
 
     const handleSelect = async (selectedOption, selectKey) => {
 

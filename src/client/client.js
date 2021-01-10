@@ -5,9 +5,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
 import {HelmetProvider} from 'react-helmet-async';
-
 import { makeServer } from "../server/mockServer";
-
 import Routes from '../Route';
 import configureStore from "../store";
 import {allSagas} from '../store/sagas'

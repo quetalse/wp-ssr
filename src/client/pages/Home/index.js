@@ -79,12 +79,12 @@ const Home = ({history}) => {
                 <HeaderMain forPage="home" routes={routes.clientSagaData}/>
                 <Form routes={routes.clientSagaData} history={history}/>
                 <div className="row random-card-offers">
-                    {/*<RandomBathList routes={routes.clientSagaData}/>*/}
+                    <RandomBathList routes={routes.clientSagaData}/>
                 </div>
                 <div className="row top-categories">
                     <TopCategories routes={routes.clientSagaData}/>
                 </div>
-                {/*<FooterMain forPage="home"/>*/}
+                <FooterMain forPage="home"/>
             </div>
         </Fragment>
     )

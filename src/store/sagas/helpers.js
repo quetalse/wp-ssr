@@ -1,5 +1,5 @@
 import { call } from 'redux-saga/effects';
-import {fetchData} from "../api";
+import { fetchData } from "../api";
 
 export function* dataExtract(dataUrls, name = false){
     let data;
@@ -20,7 +20,6 @@ export function* dataExtract(dataUrls, name = false){
         return data;
 
     }catch (e) {
-        console.log('ERROR', e.message)
         throw new Error(e.message)
     }
 }

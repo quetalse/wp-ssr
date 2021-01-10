@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { sagaFetchHome } from "../../../store/actions/home";
 import Skeleton from '../../components/skeletons/RandomBathCard';
@@ -6,16 +6,24 @@ import RandomBathCard from "../../components/bathCards/RandomBathCard";
 
 const RandomBathList= ({routes}) => {
     const dispatch = useDispatch();
-    const randomBathrooms = useSelector(state => {
-        return state.data.randomBathrooms
+    const [randomBathrooms, setRandomBathrooms] = useState({
+        data: null,
+        loading: false,
+        error: false
     });
 
-    useEffect(() => {
-            if(!randomBathrooms){
-                const url = routes.filter((route)=>{
-                    return route.name === 'randomBathrooms'
-                });
-                dispatch(sagaFetchHome(url))
+    useEffect(async () => {
+            let url = routes.filter((route) => {
+                return route.name === "randomBathrooms"
+            });
+
+            setRandomBathrooms((state) =>({...state, loading: true}))
+            try{
+                const response = await fetch(url[0].url);
+                const data = await response.json();
+                setRandomBathrooms((state) =>({...state, data}))
+            }catch (error) {
+                setRandomBathrooms((state) =>({...state, error}))
             }
         },[]
     );
@@ -41,7 +49,7 @@ const RandomBathList= ({routes}) => {
 
     return (
         <Fragment>
-            {randomBathrooms ? generateCards(randomBathrooms) : generateCards([1, 2, 3, 4], true)}
+            {randomBathrooms.data ? generateCards(randomBathrooms.data) : generateCards([1, 2, 3, 4], true)}
         </Fragment>
     )
 }

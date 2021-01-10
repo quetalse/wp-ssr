@@ -2,6 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sagaFetchHome } from '../../../store/actions/home';
+import { sagaFetchTopCategories } from '../../../store/actions/topCategories';
+
 import Skeleton from "../../components/skeletons/TopCategory";
 import AppCollection from "../../components/ui/AppCollection";
 import BathCard from "../../components/bathCards/BathCard";
@@ -10,26 +12,24 @@ import _arraySkeleton from "../../components/skeletons/_arraySkeleton";
 const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
 
-    const collections = useSelector(state => {
-        if(!state.data.topCategories){
-            return null
-        }
-        return state.data.topCategories
-    });
+    const {data, error, loading} = useSelector(state => {
+        // if(!state.data.classifiers) return {}
+        return state.topCategories
+    })
 
     useEffect(() => {
-            if(!collections){
+            if(!data && !loading){
                 const url = routes.filter((route)=>{
                     return route.name === 'topCategories'
                 });
-                dispatch(sagaFetchHome(url))
+                dispatch(sagaFetchTopCategories(url))
             }
         },[]
     );
 
     const renderTopCategories = () => {
-        if (collections){
-            return Object.entries(collections).map((category, index) => (
+        if (data){
+            return Object.entries(data).map((category, index) => (
                 <div className="col s4" key={index}>
                     <AppCollection  category={category[1]} topCategories={true}/>
                 </div>
