@@ -1,5 +1,4 @@
 import '@babel/polyfill';
-import axios from 'axios'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
@@ -17,12 +16,7 @@ if (process.env.NODE_ENV === "development") {
     // makeServer({ environment: "development" })
 }
 
-const axiosInstance = axios.create({
-    baseURL: '/api', // get '/api/user' for request
-})
-
 const store = configureStore();
-
 
 store.runSaga(allSagas.clientRootSaga, {})
 

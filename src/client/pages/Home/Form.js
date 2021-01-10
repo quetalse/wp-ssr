@@ -28,22 +28,12 @@ const Form = ({routes, history}) => {
         }
     });
 
-    // const types = useSelector(state => state.home.data.types)
-    const {types, metro} = useSelector(state => {
-        if(!state.data.classifiers) return {}
-        return state.data.classifiers
+    const {data, error, loading} = useSelector(state => {
+        // if(!state.data.classifiers) return {}
+        return state.classifiers
     })
-    // const metro = useSelector(state => state.home.data.metro)
-    // const metro = useSelector(state => state.home.data.classifiers)
 
-    // useEffect(() => {
-    //     if(!types || !metro) {
-    //         let url = routes.filter((route) => {
-    //             return route.name === 'types' || route.name === 'metro'
-    //         });
-    //         dispatch(sagaFetchHome(url))
-    //     }
-    // },[]);
+    console.log('data', data)
 
     const handleSelect = async (selectedOption, selectKey) => {
 
@@ -84,22 +74,22 @@ const Form = ({routes, history}) => {
                     <AppSelect
                         label="Тип"
                         instanceId="types-select"
-                        isDisabled={!types}
+                        isDisabled={!data}
                         selectedOption={selected.type}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'type')}
                         placeholder="Выбор типа"
-                        preOptions={types} // нераспрарсеные options
+                        preOptions={data ? data.types : null} // нераспрарсеные options
                     />
                 </div>
                 <div className="input-tool">
                     <AppSelect
                         label="Метро"
                         instanceId="metro-select"
-                        isDisabled={!metro}
+                        isDisabled={!data}
                         selectedOption={selected.metro}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
                         placeholder="Выбор метро"
-                        preOptions={metro} // нераспрарсеные options
+                        preOptions={data ? data.metro : null} // нераспрарсеные options
                     />
                 </div>
             </div>
@@ -114,7 +104,7 @@ const Form = ({routes, history}) => {
             <div className="col s3 input-field">
                 <AppBtnSearch
                     text="Поиск"
-                    disabled={!(types || metro)}
+                    disabled={!data}
                     onClick={searchHandler}
                     countLoader={count.loader}
                     countValue={count.value}

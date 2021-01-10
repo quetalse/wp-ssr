@@ -56,14 +56,15 @@ const routes = {
 const Home = ({history}) => {
 
     const dispatch = useDispatch();
-    const classifiers = useSelector(state => {
-        return state.data.classifiers
+    const {data, error, loading} = useSelector(state => {
+        console.log('STATE', state)
+        return state.classifiers
     });
 
     // console.log('classifiers', classifiers)
 
     useEffect(() => {
-        if(!classifiers){
+        if(!data && !loading){
             const url = routes.clientSagaData.filter((route)=>{
                 return route.name === 'classifiers'
             });
@@ -78,12 +79,12 @@ const Home = ({history}) => {
                 <HeaderMain forPage="home" routes={routes.clientSagaData}/>
                 <Form routes={routes.clientSagaData} history={history}/>
                 <div className="row random-card-offers">
-                    <RandomBathList routes={routes.clientSagaData}/>
+                    {/*<RandomBathList routes={routes.clientSagaData}/>*/}
                 </div>
                 <div className="row top-categories">
                     <TopCategories routes={routes.clientSagaData}/>
                 </div>
-                <FooterMain forPage="home"/>
+                {/*<FooterMain forPage="home"/>*/}
             </div>
         </Fragment>
     )

@@ -1,7 +1,7 @@
 import {DROP_FIELD, SAGA_FETCH_CLASSIFIERS, SUCCESS_FETCH_HOME, FAILURE_FETCH_HOME, SAGA_FETCH_HOME} from "../types";
 
 export const dropField = (data) => {
-    console.log('data', data)
+    // console.log('data', data)
     return {
         type: DROP_FIELD,
         payload: data

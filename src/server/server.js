@@ -72,7 +72,7 @@ app.get('*', (req, res, next) => {
 
                 // let initalData = store.getState();
 
-                // console.log(store.getState())
+                console.log('getState', store.getState())
                 // keysSsrIgnore.forEach((key) => {
                 //     // console.log(key)
                 //     if(initalData[stateKey].data[key]){

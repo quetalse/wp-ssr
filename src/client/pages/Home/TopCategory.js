@@ -26,6 +26,7 @@ const TopCategories = ({routes}) => {
             }
         },[]
     );
+
     const renderTopCategories = () => {
         if (collections){
             return Object.entries(collections).map((category, index) => (
@@ -43,9 +44,9 @@ const TopCategories = ({routes}) => {
     }
 
     return (
-            <Fragment>
-                {renderTopCategories()}
-            </Fragment>
+        <Fragment>
+            {renderTopCategories()}
+        </Fragment>
     )
 }
 

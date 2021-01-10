@@ -25,7 +25,7 @@ export default function configureStore () {
     }
 
     const store = createStore(
-        root,
+        reducers,
         state,
         composeEnhancers(applyMiddleware(...middleware))
         // applyMiddleware(sagaMiddleware)
