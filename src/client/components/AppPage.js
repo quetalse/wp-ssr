@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import { dropField, sagaFetchHome } from '../../store/actions/home';
 import {Helmet} from "react-helmet-async";
 
-export const HeaderMain = ({forPage, routes}) => {
+const HeaderMain = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => (state.page));
@@ -45,3 +45,5 @@ export const HeaderMain = ({forPage, routes}) => {
         </div>
     )
 }
+
+export default HeaderMain;

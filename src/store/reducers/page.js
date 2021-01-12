@@ -1,4 +1,4 @@
-import {LOAD_FETCH_PAGE, SUCCESS_FETCH_PAGE, FAILURE_FETCH_PAGE }  from "../types";
+import {LOAD_FETCH_PAGE, SUCCESS_FETCH_PAGE, FAILURE_FETCH_PAGE, DROP_FIELD} from "../types";
 
 const initState = {
     data: null,
@@ -32,6 +32,29 @@ export default (state = initState, action) => {
                 data: null,
                 error: action.payload.data
             }
+        case DROP_FIELD:
+            let dropFields = {};
+            action.payload.forEach((field) => {
+                dropFields = {
+                    ...dropFields,
+                    [field]: undefined
+                }
+            })
+            console.log({
+                ...state,
+                data: {
+                    ...state.data,
+                    ...dropFields
+                },
+            })
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    ...dropFields
+                },
+            }
+
         default:
             return state
     }

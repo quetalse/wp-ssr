@@ -31,7 +31,7 @@ const TopCategories = ({routes}) => {
         if (data){
             return Object.entries(data).map((category, index) => (
                 <div className="col s4" key={index}>
-                    <AppCollection  category={category[1]} topCategories={true}/>
+                    <AppCollection classifier={category[1]} topCategories={true}/>
                 </div>
             ))
         }else{

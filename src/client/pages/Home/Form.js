@@ -11,8 +11,8 @@ import { dropField, sagaFetchHome } from "../../../store/actions/home";
 const Form = ({routes, history}) => {
 
     const dispatch = useDispatch();
-    const [startDate, setStartDate] = useState(new Date());
-    const [count, setCount] = useState({
+    const [datePicker, setDatePicker] = useState(new Date());
+    const [btnCounter, setBtnCounter] = useState({
         value: false,
         loader: false
     });
@@ -28,10 +28,6 @@ const Form = ({routes, history}) => {
         }
     });
 
-    const {data, error, loading} = useSelector(state => {
-        // if(!state.data.classifiers) return {}
-        return state.classifiers
-    })
 
     // console.log('data', data)
 
@@ -43,7 +39,7 @@ const Form = ({routes, history}) => {
                 [selectKey]: selectedOption
             });
 
-            setCount({
+            setBtnCounter({
                 value: false,
                 loader: true
             });
@@ -52,44 +48,34 @@ const Form = ({routes, history}) => {
             const metro = selectKey === 'metro' ? selectedOption.value : selected['metro'].value;
             const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
             const data = await response.json();
-            setCount({
+            setBtnCounter({
                 value: data.count,
                 loader: false
             });
         }
     };
-    const searchHandler = (e) => {
-        e.preventDefault();
-        let date = moment(startDate).format("DD/MM/YYYY"),
-            type = selected.type.value || null,
-            metro = selected.metro.value || null;
-        // dispatch(dropField(['page', 'count']));
-        history.push(`/search?type=${type}&metro=${metro}&date=[${date}]`);
-    }
 
     return (
         <form className="row inputs">
             <div className="col s6 input-field">
                 <div className="input-tool">
                     <AppSelect
+                        classifier="types"
                         label="Тип"
                         instanceId="types-select"
-                        isDisabled={!data}
                         selectedOption={selected.type}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'type')}
                         placeholder="Выбор типа"
-                        preOptions={data ? data.types : null} // нераспрарсеные options
                     />
                 </div>
                 <div className="input-tool">
                     <AppSelect
+                        classifier="metro"
                         label="Метро"
                         instanceId="metro-select"
-                        isDisabled={!data}
                         selectedOption={selected.metro}
                         handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
                         placeholder="Выбор метро"
-                        preOptions={data ? data.metro : null} // нераспрарсеные options
                     />
                 </div>
             </div>
@@ -97,17 +83,16 @@ const Form = ({routes, history}) => {
                 <AppDatePicker
                     label="Дата"
                     mode="popup"
-                    startDate={startDate}
-                    setStartDate={setStartDate}
+                    startDate={datePicker}
+                    setStartDate={setDatePicker}
                 />
             </div>
             <div className="col s3 input-field">
                 <AppBtnSearch
                     text="Поиск"
-                    disabled={!data}
-                    onClick={searchHandler}
-                    countLoader={count.loader}
-                    countValue={count.value}
+                    btnCounter={btnCounter}
+                    selected={selected}
+                    datePicker={datePicker}
                 />
             </div>
         </form>

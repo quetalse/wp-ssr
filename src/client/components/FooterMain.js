@@ -7,7 +7,7 @@ const FooterMain = ({forPage}) => {
 
     return (
         <div className="row">
-            <p className="left-align">{data ? data.page.text : <Skeleton count={4}/>}</p>
+            {/*<p className="left-align">{data ? data.page.text : <Skeleton count={4}/>}</p>*/}
         </div>
     )
 }

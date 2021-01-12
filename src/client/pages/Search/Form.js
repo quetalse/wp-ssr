@@ -14,8 +14,8 @@ import {Link} from "react-router-dom";
 
 const Form = ({routes, history}) => {
 
-    const dispatch = useDispatch();
-    const [count, setCount] = useState({
+    const [datePicker, setDatePicker] = useState(new Date());
+    const [btnCounter, setBtnCounter] = useState({
         value: false,
         loader: false
     });
@@ -29,11 +29,10 @@ const Form = ({routes, history}) => {
             value: null
         }
     });
-    const {types, metro, purpose, services, aqua, entertainment} = useSelector(state => {
-        if(!state.data.classifiers) return {}
-        return state.data.classifiers
+    const {data, error, loading} = useSelector(state => {
+        return state.classifiers
     })
-
+    // types, metro, purpose, services, aqua, entertainment
     // useEffect(() => {
     //     if(!types) {
     //         let url = routes.filter((route) => {
@@ -51,7 +50,7 @@ const Form = ({routes, history}) => {
                 [selectKey]: selectedOption
             });
 
-            setCount({
+            setBtnCounter({
                 value: false,
                 loader: true
             });
@@ -62,7 +61,7 @@ const Form = ({routes, history}) => {
             // const response = await fetch('https://my.api.mockaroo.com/count.json?key=06826450');
             const response = await fetch(`${process.env.__API_BASE__}/api/presearch?location=[${location}]&metro=[${metro}]&purpose=[1]&only_count`);
             const data = await response.json();
-            setCount({
+            setBtnCounter({
                 value: data.count,
                 loader: false
             });
@@ -75,46 +74,45 @@ const Form = ({routes, history}) => {
                 <AppDatePicker
                     label="Дата"
                     mode="inline"
+                    startDate={datePicker}
+                    setStartDate={setDatePicker}
                 />
             </div>
             <div className="input-tool">
                 <AppSelect
+                    classifier="metro"
                     label="Метро"
                     instanceId="metro-select"
-                    isDisabled={!metro}
                     selectedOption={selected.metro}
                     handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
                     placeholder="Выбор метро"
-                    preOptions={metro}
                 />
             </div>
             <div className="input-tool">
                 <AppSelect
+                    classifier="types"
                     label="Местоположение"
                     instanceId="location-select"
-                    isDisabled={!types}
                     selectedOption={selected.location}
                     handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}
                     placeholder="Выбор местоположения"
-                    preOptions={types}
                 />
             </div>
             <div className="">
-                <AppCollection category={purpose} topCategories={false}/>
+                <AppCollection classifier="purpose" topCategories={false}/>
             </div>
             <div className="">
-                <AppCollection category={services} topCategories={false}/>
+                <AppCollection classifier="services" topCategories={false}/>
             </div>
             <div className="">
-                <AppCollection category={aqua} topCategories={false}/>
+                <AppCollection classifier="aqua" topCategories={false}/>
             </div>
             <div className="input-field">
                 <AppBtnSearch
                     text="Поиск"
-                    disabled={!(metro || metro)}
-                    onClick={() => {console.log('click')}}
-                    countLoader={count.loader}
-                    countValue={count.value}
+                    btnCounter={btnCounter}
+                    selected={selected}
+                    datePicker={datePicker}
                 />
             </div>
         </form>

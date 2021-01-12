@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import Skeleton from "../../components/skeletons/TopCategory";
 
-const AppCollection = ({category, topCategories}) => {
+const AppCollection = ({classifier, topCategories}) => {
+    let render;
+    if (!topCategories){
+        const {data, error, loading} = useSelector(state => {
+            return state.classifiers
+        });
 
-    const listItems = (array) => {
+        render = () => {
+            return (
+                <Fragment>
+                    {error && false}
+                    {loading && <Skeleton/>}
+                    {data && collection(data[classifier])}
+                </Fragment>
+            )
+        }
+    }else{
+        render = () => {
+            return (
+                <Fragment>
+                    {collection(classifier)}
+                </Fragment>
+            )
+        }
+    }
+
+    const collectionItems = (array) => {
         return array.map((item, index) => (
             <li className="collection-item" key={index + 1}>
                 {topCategories ? (<Link to={item.url}>{item.text}</Link>) :
@@ -17,18 +42,24 @@ const AppCollection = ({category, topCategories}) => {
                 }
             </li>
         ));
+    };
+
+    const collection = (classifier) => {
+        return (
+            <ul className="collection with-header">
+                <li className="collection-header" key={0}>
+                    <h4>{classifier.title || "Заголовок"}</h4>
+                </li>
+                {topCategories ? collectionItems(classifier.list) : collectionItems(classifier)}
+                <Link to={classifier.all || "/"}>Посмотреть все</Link>
+            </ul>
+        )
     }
 
     return (
-        !category ? <Skeleton/> : (
-            <ul className="collection with-header">
-                <li className="collection-header" key={0}>
-                    <h4>{category.title || "Заголовок"}</h4>
-                </li>
-                {topCategories ? listItems(category.list) : listItems(category)}
-                <Link to={category.all || "/"}>Посмотреть все</Link>
-            </ul>
-        )
+        <Fragment>
+            {render()}
+        </Fragment>
     )
 }
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Skeleton from "../../components/skeletons/BathroomCard";
-import HeaderMain from '../../components/HeaderMain';
+import React, {Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { HeaderMain } from '../../components/HeaderMain';
 
 import BathList from "./BathList";
 import Form from "./Form";
@@ -9,12 +9,18 @@ import Select from 'react-select';
 import {Link} from 'react-router-dom';
 
 import "./index.scss";
-import { connect, useDispatch, useSelector } from "react-redux";
+
 import { allSagas } from "../../../store/sagas";
-import {sagaFetchClassifiers, sagaFetchHome} from "../../../store/actions/home";
+import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
 import DatePicker from "react-datepicker";
 import AppSelect from "../../components/ui/AppSelect";
 import {rootSaga} from "../../../store/sagas/root";
+import Meta from "../../components/Meta";
+import {AppCrash} from "../../components/AppError";
+import {AppLoader} from "../../components/AppLoader";
+import RandomBathList from "../Home/RandomBathList";
+import TopCategories from "../Home/TopCategory";
+import {sagaFetchPage} from "../../../store/actions/page";
 // import { sagaFetchBathRooms } from "../../store/actions/bathrooms";
 // import { allSagas } from "../../store/sagas";
 
@@ -59,14 +65,27 @@ const Search = ({history}) => {
     const metro = params.get('metro');
     // console.log('type', type)
     // console.log('metro', metro)
-
+    console.log('history.location.pathname', history.location.pathname)
     const dispatch = useDispatch();
-    const classifiers = useSelector(state => {
-        return state.data.classifiers
+    const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
+    const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
+        // console.log('STATE', state)
+        return state.classifiers
     });
 
+    console.log('pageData', pageData)
+
     useEffect(() => {
-        if(!classifiers){
+        if(!pageData && !pageLoading){
+            const url = routes.clientSagaData.filter((route)=>{
+                return route.name === 'page'
+            });
+            dispatch(sagaFetchPage(url))
+        }
+    },[])
+
+    useEffect(() => {
+        if(!classifiersData && !classifiersLoading){
             const url = routes.clientSagaData.filter((route)=>{
                 return route.name === 'classifiers'
             });
@@ -76,18 +95,31 @@ const Search = ({history}) => {
 
 
     return (
-        <div className="" style={{marginTop: '50px'}}>
-            <HeaderMain forPage="search" routes={routes.clientSagaData}/>
-            <div className="row">
-                <div className="col s3">
-                    <Form routes={routes.clientSagaData} history={history}/>
-                </div>
-                <div className="col s9">
-                    <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
-                </div>
-            </div>
-            <FooterMain forPage="search"/>
-        </div>
+        <Fragment>
+            {pageError && (
+                <Fragment>
+                    <Meta/>
+                    <AppCrash error={pageError}/>
+                </Fragment>
+            )}
+            {pageLoading && <AppLoader/>}
+            {pageData !== null && (
+                <Fragment>
+                    <div className="" style={{marginTop: '50px'}}>
+                        <HeaderMain forPage="search" routes={routes.clientSagaData}/>
+                        <div className="row">
+                            <div className="col s3">
+                                <Form routes={routes.clientSagaData} history={history}/>
+                            </div>
+                            <div className="col s9">
+                                <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+                            </div>
+                        </div>
+                        <FooterMain forPage="search"/>
+                    </div>
+                </Fragment>)
+            }
+        </Fragment>
     )
 }
 

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Select from 'react-select';
+import {useSelector} from "react-redux";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -28,7 +29,11 @@ const customStyles = {
     }
 }
 
- const AppSelect = ({label, instanceId, isDisabled, selectedOption, handleChange, placeholder, preOptions }) => {
+ const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
+
+     const {data, error, loading} = useSelector(state => {
+         return state.classifiers
+     });
 
      const getOptions = (array) => {
          return array.map((item) => ({
@@ -39,21 +44,27 @@ const customStyles = {
          )
      };
     const value = selectedOption.label === null ? null : selectedOption;
-    const options = preOptions ? getOptions(preOptions) : {};
+    const options = data ? getOptions(data[classifier]) : {};
+    const content = () => {
+        return (
+            <Fragment>
+             <label>{label}</label>
+             <Select
+                 instanceId={instanceId}
+                 isDisabled={!data}
+                 styles={customStyles}
+                 height="3rem"
+                 placeholder={placeholder}
+                 value={value}
+                 onChange={handleChange}
+                 options={options}
+             />
+            </Fragment>)
+    }
 
     return (
         <Fragment>
-            <label>{label}</label>
-            <Select
-                instanceId={instanceId}
-                isDisabled={isDisabled}
-                styles={customStyles}
-                height="3rem"
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-                options={options}
-            />
+            { error ? false : content() }
         </Fragment>
     )
 }
