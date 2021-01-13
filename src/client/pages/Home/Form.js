@@ -28,6 +28,16 @@ const Form = ({routes, history}) => {
         }
     });
 
+    useEffect(() => {
+        return () => {
+            console.log("Location:", location.pathname)
+        };
+        // return () => {
+        //     console.log('drop')
+        //     dispatch(dropField(['page']))
+        //     // console.log(' drop page', page)
+        // };
+    }, [])
 
     // console.log('data', data)
 

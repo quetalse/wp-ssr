@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
+import {dropField} from "../../../store/actions/home";
 
 const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker}) => {
-
+    const dispatch = useDispatch();
     const history = useHistory();
     const {data, error, loading} = useSelector(state => {
         return state.classifiers
+    });
+
+    const page = useSelector(state => {
+        return state.page
     });
 
     const searchHandler = (e) => {

@@ -6,7 +6,7 @@ import TopCategories from "./TopCategory";
 import { AppLoader } from "../../components/AppLoader";
 import { AppCrash } from "../../components/AppError";
 import Select from 'react-select';
-import {Link} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 import "./index.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -57,8 +57,9 @@ const routes = {
     keysSsrIgnore: ['static', 'count', 'topCategories']
 };
 
-const Home = ({history}) => {
+const Home = ({}) => {
 
+    const history = useHistory();
     console.log('history.location.pathname', history.location.pathname)
 
     const dispatch = useDispatch();
@@ -86,13 +87,17 @@ const Home = ({history}) => {
         }
     },[])
 
-    useEffect(() => {
-        return () => {
-            console.log('drop')
-            dispatch(dropField(['page']))
-            // console.log(' drop page', page)
-        };
-    }, [])
+    // useEffect(() => {
+    //     return history.listen((location) => {
+    //         console.log("Location:", location.pathname)
+    //             dispatch(dropField(['page']))
+    //     });
+    //     // return () => {
+    //     //     console.log('drop')
+    //     //     dispatch(dropField(['page']))
+    //     //     // console.log(' drop page', page)
+    //     // };
+    // }, [])
 
     return (
         <Fragment>

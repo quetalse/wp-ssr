@@ -1,7 +1,7 @@
 import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Router, useHistory} from 'react-router-dom';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
 import {HelmetProvider} from 'react-helmet-async';
@@ -19,13 +19,14 @@ const store = configureStore();
 store.runSaga(allSagas.clientRootSaga, {})
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
+// const history = useHistory()
 
 renderMethod(
     <HelmetProvider>
         <Provider store={store}>
-            <BrowserRouter>
+            <Router history={history}>
                 {renderRoutes(Routes)}
-            </BrowserRouter>
+            </Router>
         </Provider>
     </HelmetProvider>
 ,
