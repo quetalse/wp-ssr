@@ -60,7 +60,6 @@ const routes = {
 const Home = ({}) => {
 
     const history = useHistory();
-    console.log('history.location.pathname', history.location.pathname)
 
     const dispatch = useDispatch();
     const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
@@ -87,17 +86,14 @@ const Home = ({}) => {
         }
     },[])
 
-    // useEffect(() => {
-    //     return history.listen((location) => {
-    //         console.log("Location:", location.pathname)
-    //             dispatch(dropField(['page']))
-    //     });
-    //     // return () => {
-    //     //     console.log('drop')
-    //     //     dispatch(dropField(['page']))
-    //     //     // console.log(' drop page', page)
-    //     // };
-    // }, [])
+    useEffect(() => {
+
+        return () => {
+            console.log('drop')
+            dispatch(dropField(['page']))
+            // console.log(' drop page', page)
+        };
+    }, [])
 
     return (
         <Fragment>

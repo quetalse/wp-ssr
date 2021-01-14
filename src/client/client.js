@@ -24,9 +24,9 @@ const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate
 renderMethod(
     <HelmetProvider>
         <Provider store={store}>
-            <Router history={history}>
+            <BrowserRouter>
                 {renderRoutes(Routes)}
-            </Router>
+            </BrowserRouter>
         </Provider>
     </HelmetProvider>
 ,

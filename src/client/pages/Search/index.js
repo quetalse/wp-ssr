@@ -65,7 +65,7 @@ const Search = ({history}) => {
     const metro = params.get('metro');
     // console.log('type', type)
     // console.log('metro', metro)
-    console.log('history.location.pathname', history.location.pathname)
+
     const dispatch = useDispatch();
     const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
     const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
