@@ -13,6 +13,7 @@ import Routes from '../Route';
 import configureStore from '../store';
 import { assetsByChunkName } from '../../build/app/stats.json';
 
+import { rootSaga } from "../store/sagas/root";
 
 const app = express();
 const indexFile = path.resolve('./build/app/template.html');
@@ -39,19 +40,15 @@ app.get('*', (req, res, next) => {
     const store = configureStore();
 
 
-    const saga = routes.route.saga || function* (){}
+    // const saga = routes.route.saga || function* (){}
+    const saga = rootSaga
+
     //       sagaUrl = routes.route.sagaUrl || '',
     //       sagaUrlParam = routes.match.params.id || '',
     //       dataUrl = `${sagaUrl}/${sagaUrlParam}`,
     //       metaUrl = routes.route.sagaMetaUrl || '';
 
     const dataUrls = routes.route.serverSagaData;
-    const {keysSsrIgnore} = routes.route;
-    const {stateKey} = routes.route;
-
-    // console.log('saga', saga)
-    // console.log('dataUrls', dataUrls)
-
 
     store.runSaga(saga, dataUrls).done.then(() => {
             const context = {};
@@ -72,7 +69,7 @@ app.get('*', (req, res, next) => {
 
                 // let initalData = store.getState();
 
-                console.log('getState', store.getState())
+                // console.log('getState', store.getState())
                 // keysSsrIgnore.forEach((key) => {
                 //     // console.log(key)
                 //     if(initalData[stateKey].data[key]){

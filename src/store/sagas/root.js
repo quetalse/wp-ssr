@@ -1,5 +1,5 @@
 import { all, fork } from 'redux-saga/effects';
-import { pageSaga } from './page';
+import {clientPagePushRoute, clientPageSaga, pageSaga} from './page';
 import { classifiersSaga, clientClassifiersSaga } from "./classifiers";
 import { clientTopCategoriesSaga, topCategoriesSaga } from "./topCategories";
 
@@ -36,7 +36,9 @@ export function* rootSaga(arg) {
 // Вызывается со стороны клиента
 export function* clientRootSaga() {
     yield all([
+        clientPageSaga(),
         clientClassifiersSaga(),
-        clientTopCategoriesSaga()
+        clientTopCategoriesSaga(),
+        clientPagePushRoute()
     ])
 }

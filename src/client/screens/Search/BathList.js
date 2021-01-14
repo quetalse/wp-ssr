@@ -5,7 +5,7 @@ import Skeleton from "../../components/skeletons/BathroomCard";
 import _arraySkeleton from "../../components/skeletons/_arraySkeleton";
 import {sagaFetchClassifiers} from "../../../store/actions/home";
 
-const BathList = ({route, count}) => {
+export const BathList = ({route, count}) => {
 
     const [bathList, setBathList] = useState(null);
 
@@ -32,5 +32,3 @@ const BathList = ({route, count}) => {
         </div>
     )
 }
-
-export default BathList;

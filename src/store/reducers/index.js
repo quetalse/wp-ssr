@@ -5,10 +5,7 @@ import topCategories from "./topCategories";
 import root from "./root";
 
 export default combineReducers({
-    // bathrooms,
-    // bathroom,
     page,
     topCategories,
     classifiers
-    // root
 })

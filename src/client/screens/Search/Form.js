@@ -12,7 +12,7 @@ import moment from 'moment';
 
 import {Link} from "react-router-dom";
 
-const Form = ({routes, history}) => {
+export const Form = ({routes, history}) => {
 
     const [datePicker, setDatePicker] = useState(new Date());
     const [btnCounter, setBtnCounter] = useState({
@@ -118,5 +118,3 @@ const Form = ({routes, history}) => {
         </form>
     )
 }
-
-export default Form;

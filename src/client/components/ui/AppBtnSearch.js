@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {dropField} from "../../../store/actions/home";
+import { pushRoute } from "../../../store/actions/page";
 
 const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker}) => {
     const dispatch = useDispatch();
@@ -26,7 +27,9 @@ const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker})
 
         pushUrl += `date=[${dateStr}]`;
 
-        history.push(`/search?${pushUrl}`);
+        dispatch(pushRoute({ url: `/search?${pushUrl}`, history}));
+
+        // history.push(`/search?${pushUrl}`);
     }
 
     return (

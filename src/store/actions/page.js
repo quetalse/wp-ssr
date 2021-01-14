@@ -1,4 +1,11 @@
-import {SAGA_FETCH_PAGE, LOAD_FETCH_PAGE, SUCCESS_FETCH_PAGE, FAILURE_FETCH_PAGE, DROP_FIELD} from "../types";
+import {
+    SAGA_FETCH_PAGE,
+    LOAD_FETCH_PAGE,
+    SUCCESS_FETCH_PAGE,
+    FAILURE_FETCH_PAGE,
+    DROP_FIELD,
+    PUSH_ROUTE_PAGE
+} from "../types";
 
 // export const dropField = (data) => {
 //     // console.log('data', data)
@@ -45,6 +52,13 @@ export const dropField = (data) => {
     // console.log('data', data)
     return {
         type: DROP_FIELD,
+        payload: data
+    }
+}
+
+export const pushRoute = data => {
+    return {
+        type: PUSH_ROUTE_PAGE,
         payload: data
     }
 }

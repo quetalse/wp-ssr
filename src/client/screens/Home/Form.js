@@ -8,7 +8,7 @@ import AppDatePicker from "../../components/ui/AppDatePicker";
 
 import { dropField, sagaFetchHome } from "../../../store/actions/home";
 
-const Form = ({routes, history}) => {
+export const Form = ({routes, history}) => {
 
     const dispatch = useDispatch();
     const [datePicker, setDatePicker] = useState(new Date());
@@ -98,5 +98,3 @@ const Form = ({routes, history}) => {
         </form>
     )
 }
-
-export default Form;

@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import { dropField, sagaFetchHome } from '../../store/actions/home';
 import {Helmet} from "react-helmet-async";
 
-export const HeaderMain = ({forPage, routes}) => {
+export const AppHeaderPage = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => (state.page));

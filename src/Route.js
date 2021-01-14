@@ -1,9 +1,8 @@
 import App from './client/App';
-import Home from './client/pages/Home';
-import Search from './client/pages/Search';
-import Category from './client/pages/Category';
-import About from "./client/pages/About";
-import NotFound from "./client/pages/NotFound";
+import Home from './client/screens/Home';
+import Search from './client/screens/Search';
+import About from "./client/screens/About";
+import NotFound from "./client/screens/NotFound";
 
 export default [
     {
@@ -19,10 +18,10 @@ export default [
                 path: '/search',
                 exact: true,
             },
-            {
-                ...Category,
-                path: '/category',
-            },
+            // {
+            //     ...Category,
+            //     path: '/category',
+            // },
             {
                 ...About,
                 path: '/about',

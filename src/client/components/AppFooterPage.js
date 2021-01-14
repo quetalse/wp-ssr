@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import {useSelector} from "react-redux";
 import Skeleton from "react-loading-skeleton";
 
-const FooterMain = ({forPage}) => {
+export const AppFooterPage = ({forPage}) => {
     const {data, error, loading} = useSelector(state => (state.page));
 
     return (
@@ -11,5 +11,3 @@ const FooterMain = ({forPage}) => {
         </div>
     )
 }
-
-export default FooterMain;

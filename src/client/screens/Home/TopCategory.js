@@ -9,7 +9,7 @@ import AppCollection from "../../components/ui/AppCollection";
 import BathCard from "../../components/bathCards/BathCard";
 import _arraySkeleton from "../../components/skeletons/_arraySkeleton";
 
-const TopCategories = ({routes}) => {
+export const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
 
     const {data, error, loading} = useSelector(state => {
@@ -49,5 +49,3 @@ const TopCategories = ({routes}) => {
         </Fragment>
     )
 }
-
-export default TopCategories;

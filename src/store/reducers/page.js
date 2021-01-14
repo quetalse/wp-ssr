@@ -34,25 +34,17 @@ export default (state = initState, action) => {
             }
         case DROP_FIELD:
             let dropFields = {};
+
             action.payload.forEach((field) => {
                 dropFields = {
                     ...dropFields,
                     [field]: undefined
                 }
             })
-            console.log({
-                ...state,
-                data: {
-                    ...state.data,
-                    ...dropFields
-                },
-            })
+
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    ...dropFields
-                },
+                data: null,
             }
 
         default:
