@@ -32,7 +32,6 @@ function* clientLoadPageData(dataUrls) {
     });
 }
 
-
 export function* clientPageSaga() {
     yield call(clientLoadPageData);
 }

@@ -22,7 +22,10 @@ export default (state = initState, action) => {
                 ...state,
                 loading: false,
                 error: false,
-                data: action.payload.data,
+                data: {
+                    ...state.data,
+                    ...action.payload.data
+                },
             }
         case FAILURE_FETCH_PAGE:
             console.log('action.payload.data', action.payload.data)

@@ -22,17 +22,29 @@ global.__SERVER__ = true;
 global.__CLIENT__ = false;
 
 const PORT = 3000;
+const _apiBase = process.env.__API_BASE__;
 
 app.use(require('express-status-monitor')());
 app.use(express.static('build/'));
 
 app.get('*', (req, res, next) => {
 
-    global.__URL__ = req.protocol + '://' + req.get('host');
+    // console.log('req', req.originalUrl)
+    // console.log('res', res)
+    // global.__URL__ = req.protocol + '://' + req.get('host');
     // console.log('__URL__', __URL__)
     // console.log('req.protocol', req.protocol)
     // console.log('eq.get(\'host\'', req.get('host'))
     // console.log('req.originalUrl', req.originalUrl)
+
+    const appPage = [{
+        name: 'page',
+        url: [
+            {name: 'page',  url: `${_apiBase}/api/page${req.originalUrl}`},
+        ]
+    }]
+
+    // console.log('appPage', appPage);
 
     const params = req.params[0].split('/');
     const id = params[2];
@@ -50,7 +62,9 @@ app.get('*', (req, res, next) => {
 
     const dataUrls = routes.route.serverSagaData;
 
-    store.runSaga(saga, dataUrls).done.then(() => {
+    // console.log('dataUrls', dataUrls);
+
+    store.runSaga(saga, [...dataUrls, ...appPage]).done.then(() => {
             const context = {};
             const helmetContext = {};
             const content = renderer(req, store, context, helmetContext);
