@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 
 // const clientConfig = require('./client/webpack.config.dev.js');
@@ -72,9 +73,11 @@ const clientConfig = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
-            __API_BASE__: 'https://8af49cb2-5722-46c3-8b7f-8ce214afde20.mock.pstmn.io',
+            __API_BASE_SWAGGER__: 'http://45.89.66.172',
+            __API_BASE__: 'https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io',
             'process.env': {
-                '__API_BASE__': JSON.stringify('https://8af49cb2-5722-46c3-8b7f-8ce214afde20.mock.pstmn.io') // '"production"'
+                '__API_BASE__': JSON.stringify('https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io'), // '"production"'
+                '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
             }
         }),
         new StatsWriterPlugin({
@@ -90,7 +93,8 @@ const clientConfig = {
         ]),
         new MiniCssExtractPlugin({
             filename: 'client-styles.[chunkhash].css'
-        })
+        }),
+        new Dotenv()
     ],
     devtool: 'inline-source-map' // для отладки в браузере
 }

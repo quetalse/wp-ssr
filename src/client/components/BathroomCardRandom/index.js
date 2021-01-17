@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RandomBathCard = ({bath}) => {
+export const BathroomCardRandom = ({bath}) => {
     return (
         <div className="card">
             <div className="card-image">
@@ -26,5 +26,3 @@ const RandomBathCard = ({bath}) => {
         </div>
     )
 }
-
-export default RandomBathCard;

@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
-import { dropField, sagaFetchHome } from '../../store/actions/home';
 import {Helmet} from "react-helmet-async";
 
-export const AppHeaderPage = ({forPage, routes}) => {
+export const PageInfoHeader = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => (state.page));

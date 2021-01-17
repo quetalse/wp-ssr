@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-export const Header = () => {
+export const NavMenu = () => {
     return (
         <header>
             <nav>
@@ -13,7 +13,7 @@ export const Header = () => {
                     <ul className="left">
                         <li><Link to="/">Главная</Link></li>
                         <li><Link to="/contacts">Контакты</Link></li>
-                        {/*<li><Link to="/bathrooms">Bathrooms</Link></li>*/}
+                        <li><Link to="/bathrooms">Категории</Link></li>
                     </ul>
                 </div>
             </nav>

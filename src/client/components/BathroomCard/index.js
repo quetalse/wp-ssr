@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';``
+import React, { useState } from 'react';``
 import {Link} from 'react-router-dom';
 
-const BathCard = ({bath}) => {
+export const BathroomCard = ({bath}) => {
 
     const [additional, setAdditional] = useState(false);
     const showAdditional = () => {
@@ -118,5 +118,3 @@ const BathCard = ({bath}) => {
         </div>
     )
 }
-
-export default BathCard;

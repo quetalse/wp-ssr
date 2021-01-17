@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
-import {dropField} from "../../../store/actions/home";
-import { pushRoute } from "../../../store/actions/page";
+import {dropField} from "../../../../store/actions/home";
+import { pushRoute } from "../../../../store/actions/page";
 
-const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker}) => {
+export const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {data, error, loading} = useSelector(state => {
@@ -44,5 +44,3 @@ const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker})
         </button>
     )
 }
-
-export default AppBtnSearch;

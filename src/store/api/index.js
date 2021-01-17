@@ -1,8 +1,20 @@
 import fetch from "node-fetch";
-import topCategories from "../reducers/topCategories";
+import { Base64 } from 'js-base64';
+
+let username = process.env.SWAGGER_USER;
+let password = process.env.SWAGGER_PSWD;
 
 export const fetchData = async (haveName = false, {name, url}) => {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        agent: null,
+        headers: {
+            "Content-Type": 'text/json',
+            'Authorization': 'Basic ' + Base64.encode(`${username}:${password}`),
+        },
+    });
     const result = await response.json();
 
     if(response.status >= 400){

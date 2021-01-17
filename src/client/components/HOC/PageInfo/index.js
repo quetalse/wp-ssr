@@ -2,14 +2,14 @@ import React, {Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 /** ACTIONS **/
-import { sagaFetchPage } from "../../store/actions/page";
+import { sagaFetchPage } from "../../../../store/actions/page";
 
 /** APP COMPONENTS **/
-import { AppMeta } from "./AppMeta";
-import { AppCrash } from "./AppError";
-import { AppLoader } from "./AppLoader";
+import { PageMeta } from "../../PageMeta";
+import { AppError } from "../../UI/AppError";
+import { AppLoader } from "../../UI/AppLoader";
 
-export const AppPage = ({children, clientSagaData}) => {
+export const PageInfo = ({children, clientSagaData}) => {
 
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => state.page);
@@ -27,8 +27,8 @@ export const AppPage = ({children, clientSagaData}) => {
         <Fragment>
             {error && (
                 <Fragment>
-                    <AppMeta/>
-                    <AppCrash error={error}/>
+                    <PageMeta/>
+                    <AppError error={error}/>
                 </Fragment>
             )}
             {loading && <AppLoader/>}

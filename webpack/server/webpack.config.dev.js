@@ -6,6 +6,7 @@ const webpackNodeExternals = require('webpack-node-externals');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {StatsWriterPlugin} = require('webpack-stats-plugin');
 const WaitPlugin = require('../waitPlugin')
+const Dotenv = require('dotenv-webpack');
 
 
 module.exports = {
@@ -73,12 +74,15 @@ module.exports = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
-            __API_BASE__: 'https://8af49cb2-5722-46c3-8b7f-8ce214afde20.mock.pstmn.io',
+            __API_BASE__: 'https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io',
+            __API_BASE_SWAGGER__: JSON.stringify('http://45.89.66.172'),
             'process.env': {
-                '__API_BASE__': JSON.stringify('https://8af49cb2-5722-46c3-8b7f-8ce214afde20.mock.pstmn.io') // '"production"'
+                '__API_BASE__': JSON.stringify('https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io'), // '"production"'
+                '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
             }
         }),
-        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
+        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json')),
+        new Dotenv()
 
     ],
     resolve: {

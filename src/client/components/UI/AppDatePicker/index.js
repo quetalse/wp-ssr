@@ -6,7 +6,7 @@ import './react-datepicker.scss';
 
 registerLocale('ru', ru);
 
-const AppDatePicker = ({label, mode, startDate, setStartDate}) => {
+export const AppDatePicker = ({label, mode, startDate, setStartDate}) => {
 
     const ref = React.createRef();
     // const [startDate, setStartDate] = useState(new Date());
@@ -41,5 +41,3 @@ const AppDatePicker = ({label, mode, startDate, setStartDate}) => {
         </Fragment>
     )
 }
-
-export default AppDatePicker;

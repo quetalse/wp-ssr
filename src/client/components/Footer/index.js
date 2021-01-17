@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-export default () => {
+export const Footer = () => {
     return (
         <footer className="page-footer blue-grey lighten-1">
             <div className="container">

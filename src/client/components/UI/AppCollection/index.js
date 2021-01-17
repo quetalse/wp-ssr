@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import Skeleton from "../../components/skeletons/TopCategory";
+import Skeleton from "../../../components/skeletons/TopCategory";
 
-const AppCollection = ({classifier, topCategories}) => {
+export const AppCollection = ({classifier, topCategories}) => {
     let render;
     if (!topCategories){
         const {data, error, loading} = useSelector(state => {
@@ -62,5 +62,3 @@ const AppCollection = ({classifier, topCategories}) => {
         </Fragment>
     )
 }
-
-export default AppCollection;

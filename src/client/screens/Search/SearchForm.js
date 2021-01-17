@@ -1,10 +1,10 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import AppSelect from "../../components/ui/AppSelect";
-import AppDatePicker from "../../components/ui/AppDatePicker";
-import AppCollection from "../../components/ui/AppCollection";
-import AppBtnSearch from "../../components/ui/AppBtnSearch";
+import { AppSelect } from "../../components/UI/AppSelect";
+import { AppDatePicker } from "../../components/UI/AppDatePicker";
+import { AppCollection } from "../../components/UI/AppCollection";
+import { AppBtnSearch } from "../../components/UI/AppBtnSearch";
 
 import { sagaFetchHome } from "../../../store/actions/home";
 
@@ -12,7 +12,7 @@ import moment from 'moment';
 
 import {Link} from "react-router-dom";
 
-export const Form = ({routes, history}) => {
+export const SearchForm = ({routes, history}) => {
 
     const [datePicker, setDatePicker] = useState(new Date());
     const [btnCounter, setBtnCounter] = useState({

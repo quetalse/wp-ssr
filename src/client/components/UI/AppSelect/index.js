@@ -29,7 +29,7 @@ const customStyles = {
     }
 }
 
- const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
+export const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
 
      const {data, error, loading} = useSelector(state => {
          return state.classifiers
@@ -68,5 +68,3 @@ const customStyles = {
         </Fragment>
     )
 }
-
-export default AppSelect;

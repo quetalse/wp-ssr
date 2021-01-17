@@ -5,9 +5,8 @@ import { sagaFetchHome } from '../../../store/actions/home';
 import { sagaFetchTopCategories } from '../../../store/actions/topCategories';
 
 import Skeleton from "../../components/skeletons/TopCategory";
-import AppCollection from "../../components/ui/AppCollection";
-import BathCard from "../../components/bathCards/BathCard";
-import _arraySkeleton from "../../components/skeletons/_arraySkeleton";
+import { AppCollection } from "../../components/UI/AppCollection";
+import { _arraySkeleton } from "../../components/skeletons/_arraySkeleton";
 
 export const TopCategories = ({routes}) => {
     const dispatch = useDispatch();

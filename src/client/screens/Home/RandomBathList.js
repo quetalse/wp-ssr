@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { sagaFetchHome } from "../../../store/actions/home";
 import Skeleton from '../../components/skeletons/RandomBathCard';
-import RandomBathCard from "../../components/bathCards/RandomBathCard";
+import { BathroomCardRandom } from "../../components/BathroomCardRandom";
 
 export const RandomBathList= ({routes}) => {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export const RandomBathList= ({routes}) => {
                 if(!skeleton) {
                     return (
                       <div key={index}>
-                          <RandomBathCard key={index} bath={bath}/>
+                          <BathroomCardRandom key={index} bath={bath}/>
                       </div>
                     )
                 }

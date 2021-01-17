@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import {useSelector} from "react-redux";
 import Skeleton from "react-loading-skeleton";
 
-export const AppFooterPage = ({forPage}) => {
+export const PageInfoFooter = ({forPage}) => {
     const {data, error, loading} = useSelector(state => (state.page));
 
     return (

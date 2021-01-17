@@ -24,6 +24,7 @@ global.__CLIENT__ = false;
 const PORT = 3000;
 const _apiBase = process.env.__API_BASE__;
 
+
 app.use(require('express-status-monitor')());
 app.use(express.static('build/'));
 
@@ -36,6 +37,7 @@ app.get('*', (req, res, next) => {
     // console.log('req.protocol', req.protocol)
     // console.log('eq.get(\'host\'', req.get('host'))
     // console.log('req.originalUrl', req.originalUrl)
+
 
     const appPage = [{
         name: 'page',

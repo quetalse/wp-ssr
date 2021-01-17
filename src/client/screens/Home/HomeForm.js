@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import moment from 'moment';
 
-import AppSelect from "../../components/ui/AppSelect";
-import AppBtnSearch from "../../components/ui/AppBtnSearch";
-import AppDatePicker from "../../components/ui/AppDatePicker";
+import { AppSelect } from "../../components/UI/AppSelect";
+import { AppBtnSearch } from "../../components/UI/AppBtnSearch";
+import { AppDatePicker } from "../../components/UI/AppDatePicker";
 
 import { dropField, sagaFetchHome } from "../../../store/actions/home";
 
-export const Form = ({routes, history}) => {
+export const HomeForm = ({routes, history}) => {
 
     const dispatch = useDispatch();
     const [datePicker, setDatePicker] = useState(new Date());
@@ -46,7 +46,9 @@ export const Form = ({routes, history}) => {
 
             const type = selectKey === 'type' ? selectedOption.value : selected['type'].value;
             const metro = selectKey === 'metro' ? selectedOption.value : selected['metro'].value;
-            const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
+            console.log('__API_BASE_SWAGGER__', process.env.SWAGGER_HOST)
+            // const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
+            const response = await fetch(`${process.env.SWAGGER_HOST}/api/pre-search?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
             const data = await response.json();
             setBtnCounter({
                 value: data.count,

@@ -7,23 +7,25 @@ import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
 import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
+/** HOC COMPONENTS **/
+import { PageInfo } from "../../components/HOC/PageInfo";
+
 /** APP COMPONENTS **/
-import { AppPage } from "../../components/AppPage";
-import { AppMeta } from "../../components/AppMeta";
-import { AppCrash } from "../../components/AppError";
-import { AppLoader } from "../../components/AppLoader";
-import { AppHeaderPage } from "../../components/AppHeaderPage";
-import { AppFooterPage } from "../../components/AppFooterPage";
+import { PageMeta } from "../../components/PageMeta";
+// import { AppError } from "../../components/UI/AppError";
+// import { AppLoader } from "../../components/AppLoader";
+import { PageInfoHeader } from "../../components/PageInfoHeader";
+import { PageInfoFooter } from "../../components/PageInfoFooter";
 
 /** LOCAL COMPONENTS **/
-import { Form } from "./Form";
+import { HomeForm } from "./HomeForm";
 import { RandomBathList } from "./RandomBathList";
 import { TopCategories } from "./TopCategory";
 
 import "./index.scss";
 
 const {clientSagaData, serverSagaData} = homeDataUrls;
-const Home = ({}) => {
+const Home = () => {
 
     const dispatch = useDispatch();
     // const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
@@ -56,35 +58,22 @@ const Home = ({}) => {
 
 
     return (
-        // <Fragment>
-        //     {pageError && (
-        //         <Fragment>
-        //             <AppMeta server={true} client={false} />
-        //             <AppCrash error={pageError}/>
-        //         </Fragment>
-        //     )}
-        //     {pageLoading && <AppLoader/>}
-        //     {pageData !== null && (
-        <AppPage clientSagaData={clientSagaData}>
+        <PageInfo clientSagaData={clientSagaData}>
             <Fragment>
-                <AppMeta server={true} client={false} />
+                <PageMeta/>
                 <div className="center-align" style={{marginTop: '50px'}}>
-                    <AppHeaderPage forPage="home" routes={clientSagaData}/>
-                    <Form routes={clientSagaData}/>
+                    <PageInfoHeader forPage="home" routes={clientSagaData}/>
+                    <HomeForm routes={clientSagaData}/>
                     <div className="row random-card-offers">
                         <RandomBathList routes={clientSagaData}/>
                     </div>
                     <div className="row top-categories">
                         <TopCategories routes={clientSagaData}/>
                     </div>
-                    <AppFooterPage forPage="home"/>
+                    <PageInfoFooter forPage="home"/>
                 </div>
             </Fragment>
-        </AppPage>
-
-    // )
-    //         }
-    //     </Fragment>
+        </PageInfo>
     )
 }
 

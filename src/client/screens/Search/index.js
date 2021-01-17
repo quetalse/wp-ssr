@@ -7,17 +7,17 @@ import { useLocation } from 'react-router-dom'
 import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
 import { sagaFetchPage } from "../../../store/actions/page";
 
+/** HOC COMPONENTS **/
+import { PageInfo } from "../../components/HOC/PageInfo";
+
 /** APP COMPONENTS **/
-import { AppPage } from "../../components/AppPage";
-import { AppMeta } from "../../components/AppMeta";
-import { AppCrash } from "../../components/AppError";
-import { AppLoader } from "../../components/AppLoader";
-import { AppHeaderPage } from "../../components/AppHeaderPage";
-import { AppFooterPage } from "../../components/AppFooterPage";
+import { PageMeta } from "../../components/PageMeta";
+import { PageInfoHeader } from "../../components/PageInfoHeader";
+import { PageInfoFooter } from "../../components/PageInfoFooter";
 
 /** LOCAL COMPONENTS **/
-import { Form } from "./Form";
-import { BathList } from "./BathList";
+import { SearchForm } from "./SearchForm";
+import { BathroomCardList } from "./BathroomCardList";
 
 import "./index.scss";
 
@@ -78,22 +78,23 @@ const Search = ({history}) => {
         //     )}
         //     {pageLoading && <AppLoader/>}
         //     {pageData !== null && (
-        <AppPage clientSagaData={searchPage}>
+        <PageInfo clientSagaData={searchPage}>
             <Fragment>
+                <PageMeta/>
                 <div className="" style={{marginTop: '50px'}}>
-                    <AppHeaderPage forPage="search" routes={clientSagaData}/>
+                    <PageInfoHeader forPage="search" routes={clientSagaData}/>
                     <div className="row">
                         <div className="col s3">
-                            <Form routes={clientSagaData} history={history}/>
+                            <SearchForm routes={clientSagaData} history={history}/>
                         </div>
                         <div className="col s9">
-                            <BathList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+                            <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
                         </div>
                     </div>
-                    <AppFooterPage forPage="search"/>
+                    <PageInfoFooter forPage="search"/>
                 </div>
             </Fragment>
-        </AppPage>
+        </PageInfo>
     // )
     //         }
     //     </Fragment>
