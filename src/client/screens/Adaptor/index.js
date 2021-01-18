@@ -99,7 +99,7 @@ const Adaptor = () => {
     return (
         <PageInfo clientSagaData={adaptorPage}>
             <Fragment>
-                { pageData && content()}
+                { pageData && content() }
             </Fragment>
         </PageInfo>
     )
