@@ -32,7 +32,7 @@ export const AppCollectionForm = ({classifier}) => {
     return (
         <Fragment>
             {error && false}
-            {loading && <Skeleton/>}
+            {(loading || !data) && <Skeleton/>}
             {data && collection(data[classifier])}
         </Fragment>
     )

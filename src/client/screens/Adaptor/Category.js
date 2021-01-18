@@ -19,6 +19,7 @@ import { SearchForm } from "../../components/SearchForm";
 // import { TopCategories } from "./TopCategory";
 
 import "./index.scss";
+import {BathroomCardList} from "../Search/BathroomCardList";
 
 const _apiBase = process.env.__API_BASE__;
 const {clientSagaData, serverSagaData} = homeDataUrls;
@@ -80,18 +81,20 @@ export const Category = () => {
 
 
 
-    // useEffect(() => {
-    //     if(!classifiersData && !classifiersLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'classifiers'
-    //         });
-    //         dispatch(sagaFetchClassifiers(url))
-    //     }
-    // },[classifiersData, classifiersLoading])
+    useEffect(() => {
+        if(!classifiersData && !classifiersLoading){
+            const url = clientSagaData.filter((route)=>{
+                return route.name === 'classifiers'
+            });
+            dispatch(sagaFetchClassifiers(url))
+        }
+    },[classifiersData, classifiersLoading])
 
     return (
         <Fragment>
-            1{/*<SearchForm routes={clientSagaData} history={history}/>*/}
+            <SearchForm routes={clientSagaData} history={history}/>
+            <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+
         </Fragment>
     )
 }

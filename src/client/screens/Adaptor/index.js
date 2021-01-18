@@ -74,32 +74,28 @@ const Adaptor = () => {
         console.log('content', content)
     }
 
-    // useEffect(() => {
-    //     if(!pageData && !pageLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'page'
-    //         });
-    //         dispatch(sagaFetchPage(url))
-    //     }
-    //     // return () => {
-    //     //     console.log('drop')
-    //     //     dispatch(dropField(['page']))
-    //     // };
-    // },[pageData, pageLoading])
+    useEffect(() => {
+        if(!pageData && !pageLoading){
+            const url = adaptorPage.filter((route)=>{
+                return route.name === 'page'
+            });
+            dispatch(sagaFetchPage(url))
+        }
+    },[pageData, pageLoading])
 
-    // useEffect(() => {
-    //     if(!classifiersData && !classifiersLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'classifiers'
-    //         });
-    //         dispatch(sagaFetchClassifiers(url))
-    //     }
-    // },[classifiersData, classifiersLoading])
+    if(!pageData || pageLoading) return <AppLoader/>
+    if(pageError) return (
+        <Fragment>
+            <PageMeta/>
+            <AppError error={error}/>
+        </Fragment>
+    )
 
     return (
         <PageInfo clientSagaData={adaptorPage}>
             <Fragment>
-                { pageData && content() }
+                { content() }
+
             </Fragment>
         </PageInfo>
     )

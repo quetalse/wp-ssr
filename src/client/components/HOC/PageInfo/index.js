@@ -16,7 +16,7 @@ export const PageInfo = ({children, clientSagaData}) => {
 
     useEffect(() => {
         if(!data && !loading){
-            const url = clientSagaData.filter((route)=>{
+            const url = clientSagaData.filter((route) => {
                 return route.name === 'page'
             });
             dispatch(sagaFetchPage(url))
