@@ -4,7 +4,7 @@ import { sagaFetchHome } from "../../../store/actions/home";
 import Skeleton from '../../components/skeletons/RandomBathCard';
 import { BathroomCardRandom } from "../../components/BathroomCardRandom";
 
-export const RandomBathList= ({routes}) => {
+export const BathroomCardRandomList = ({routes}) => {
     const dispatch = useDispatch();
     const [randomBathrooms, setRandomBathrooms] = useState({
         data: null,

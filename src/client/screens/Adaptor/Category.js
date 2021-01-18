@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { homeDataUrls } from '../../screensDataUrls'
 
@@ -10,19 +10,18 @@ import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
 /** APP COMPONENTS **/
+import { SearchForm } from "../../components/SearchForm";
+
 
 /** LOCAL COMPONENTS **/
 // import { HomeForm } from "./HomeForm";
 // import { RandomBathList } from "./RandomBathList";
 // import { TopCategories } from "./TopCategory";
 
-
-
 import "./index.scss";
 
 const _apiBase = process.env.__API_BASE__;
 const {clientSagaData, serverSagaData} = homeDataUrls;
-
 
 
 const contentSwitch = pageType => {
@@ -35,6 +34,13 @@ const contentSwitch = pageType => {
 }
 
 export const Category = () => {
+
+    const history = useHistory()
+    const dispatch = useDispatch();
+    const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
+        // console.log('STATE', state)
+        return state.classifiers
+    });
 
     // const {pathname, search} = useLocation();
     // const dispatch = useDispatch();
@@ -59,8 +65,6 @@ export const Category = () => {
     //
     // let content;
 
-
-
     // useEffect(() => {
     //     if(!pageData && !pageLoading){
     //         const url = clientSagaData.filter((route)=>{
@@ -74,6 +78,8 @@ export const Category = () => {
     //     // };
     // },[pageData, pageLoading])
 
+
+
     // useEffect(() => {
     //     if(!classifiersData && !classifiersLoading){
     //         const url = clientSagaData.filter((route)=>{
@@ -84,9 +90,9 @@ export const Category = () => {
     // },[classifiersData, classifiersLoading])
 
     return (
-            <Fragment>
-                <div>Category</div>
-            </Fragment>
+        <Fragment>
+            1{/*<SearchForm routes={clientSagaData} history={history}/>*/}
+        </Fragment>
     )
 }
 

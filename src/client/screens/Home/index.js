@@ -19,8 +19,8 @@ import { PageInfoFooter } from "../../components/PageInfoFooter";
 
 /** LOCAL COMPONENTS **/
 import { HomeForm } from "./HomeForm";
-import { RandomBathList } from "./RandomBathList";
-import { TopCategories } from "./TopCategory";
+import { BathroomCardRandomList } from "./BathroomCardRandomList";
+import { TopCategories } from "./TopCategories";
 
 import "./index.scss";
 
@@ -65,7 +65,7 @@ const Home = () => {
                     <PageInfoHeader forPage="home" routes={clientSagaData}/>
                     <HomeForm routes={clientSagaData}/>
                     <div className="row random-card-offers">
-                        <RandomBathList routes={clientSagaData}/>
+                        <BathroomCardRandomList routes={clientSagaData}/>
                     </div>
                     <div className="row top-categories">
                         <TopCategories routes={clientSagaData}/>

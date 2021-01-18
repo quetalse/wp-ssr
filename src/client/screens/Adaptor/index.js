@@ -33,7 +33,6 @@ const _apiBase = process.env.__API_BASE__;
 const {clientSagaData, serverSagaData} = homeDataUrls;
 
 
-
 const contentSwitch = pageType => {
     switch(pageType) {
         case 'category':
@@ -74,9 +73,6 @@ const Adaptor = () => {
         content = contentSwitch(`${pageData.page.type_pageId}`);
         console.log('content', content)
     }
-
-
-
 
     // useEffect(() => {
     //     if(!pageData && !pageLoading){

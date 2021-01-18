@@ -1,10 +1,10 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import { AppSelect } from "../../components/UI/AppSelect";
-import { AppDatePicker } from "../../components/UI/AppDatePicker";
-import { AppCollection } from "../../components/UI/AppCollection";
-import { AppBtnSearch } from "../../components/UI/AppBtnSearch";
+import { AppSelect } from "../UI/AppSelect";
+import { AppDatePicker } from "../UI/AppDatePicker";
+import { AppCollectionForm } from "../UI/AppCollectionForm";
+import { AppBtnSearch } from "../UI/AppBtnSearch";
 
 import { sagaFetchHome } from "../../../store/actions/home";
 
@@ -99,13 +99,13 @@ export const SearchForm = ({routes, history}) => {
                 />
             </div>
             <div className="">
-                <AppCollection classifier="purpose" topCategories={false}/>
+                <AppCollectionForm classifier="purpose"/>
             </div>
             <div className="">
-                <AppCollection classifier="services" topCategories={false}/>
+                <AppCollectionForm classifier="services"/>
             </div>
             <div className="">
-                <AppCollection classifier="aqua" topCategories={false}/>
+                <AppCollectionForm classifier="aqua"/>
             </div>
             <div className="input-field">
                 <AppBtnSearch

@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { searchDaraUrls } from '../../screensDataUrls';
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 /** ACTIONS **/
 import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
@@ -14,9 +14,9 @@ import { PageInfo } from "../../components/HOC/PageInfo";
 import { PageMeta } from "../../components/PageMeta";
 import { PageInfoHeader } from "../../components/PageInfoHeader";
 import { PageInfoFooter } from "../../components/PageInfoFooter";
+import { SearchForm } from "../../components/SearchForm";
 
 /** LOCAL COMPONENTS **/
-import { SearchForm } from "./SearchForm";
 import { BathroomCardList } from "./BathroomCardList";
 
 import "./index.scss";
@@ -24,8 +24,9 @@ import "./index.scss";
 const _apiBase = process.env.__API_BASE__;
 const {clientSagaData, serverSagaData} = searchDaraUrls;
 
-const Search = ({history}) => {
+const Search = () => {
 
+    const history = useHistory()
     const {pathname, search} = useLocation();
     // console.log('location', location);
 
