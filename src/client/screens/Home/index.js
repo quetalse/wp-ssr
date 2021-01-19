@@ -7,18 +7,11 @@ import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
 import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
-/** HOC COMPONENTS **/
-import { PageInfo } from "../../components/HOC/PageInfo";
-
 /** APP COMPONENTS **/
-import { PageMeta } from "../../components/PageMeta";
-// import { AppError } from "../../components/UI/AppError";
-// import { AppLoader } from "../../components/AppLoader";
-import { PageInfoHeader } from "../../components/PageInfoHeader";
-import { PageInfoFooter } from "../../components/PageInfoFooter";
+import { PageData } from "../../components/PageData";
 
 /** LOCAL COMPONENTS **/
-import { HomeForm } from "./HomeForm";
+import { FilterPanelHome } from "./FilterPanelHome";
 import { BathroomCardRandomList } from "./BathroomCardRandomList";
 import { TopCategories } from "./TopCategories";
 
@@ -58,22 +51,15 @@ const Home = () => {
 
 
     return (
-        <PageInfo clientSagaData={clientSagaData}>
-            <Fragment>
-                <PageMeta/>
-                <div className="center-align" style={{marginTop: '50px'}}>
-                    <PageInfoHeader forPage="home" routes={clientSagaData}/>
-                    <HomeForm routes={clientSagaData}/>
-                    <div className="row random-card-offers">
-                        <BathroomCardRandomList routes={clientSagaData}/>
-                    </div>
-                    <div className="row top-categories">
-                        <TopCategories routes={clientSagaData}/>
-                    </div>
-                    <PageInfoFooter forPage="home"/>
-                </div>
-            </Fragment>
-        </PageInfo>
+        <PageData clientSagaData={clientSagaData}>
+            <FilterPanelHome routes={clientSagaData}/>
+            <div className="row random-card-offers">
+                <BathroomCardRandomList routes={clientSagaData}/>
+            </div>
+            <div className="row top-categories">
+                <TopCategories routes={clientSagaData}/>
+            </div>
+        </PageData>
     )
 }
 

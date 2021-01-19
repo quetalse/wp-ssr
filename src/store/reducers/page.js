@@ -45,6 +45,11 @@ export default (state = initState, action) => {
                 }
             })
 
+        console.log('DEOP', {
+            ...state,
+            data: null,
+        })
+
             return {
                 ...state,
                 data: null,

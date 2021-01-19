@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { homeDataUrls } from '../../screensDataUrls'
 
 /** HOC COMPONENTS **/
-import { PageInfo } from "../../components/HOC/PageInfo";
+import { PageData } from "../../components/PageData";
 
 /** ACTIONS **/
 import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
@@ -13,11 +13,11 @@ import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
 /** APP COMPONENTS **/
-import { PageMeta } from "../../components/PageMeta";
+// import { PageMeta } from "../../components/PageDataMeta";
 import { AppError } from "../../components/UI/AppError";
 import { AppLoader } from "../../components/UI/AppLoader";
-import { PageInfoHeader } from "../../components/PageInfoHeader";
-import { PageInfoFooter } from "../../components/PageInfoFooter";
+// import { PageInfoHeader } from "../../components/PageDataHeader";
+// import { PageInfoFooter } from "../../components/PageDataFooter";
 
 /** LOCAL COMPONENTS **/
 // import { HomeForm } from "./HomeForm";
@@ -61,17 +61,15 @@ const Adaptor = () => {
         ]
     }]
 
-    console.log('pageData', pageData)
-    console.log('pageError', pageError)
-    console.log('pageLoading', pageLoading)
+    // console.log('pageData', pageData)
+    // console.log('pageError', pageError)
+    // console.log('pageLoading', pageLoading)
 
 
     let content = () => {};
 
     if(pageData){
-        console.log('pageData.page.type_pageId', pageData.page.type_pageId)
         content = contentSwitch(`${pageData.page.type_pageId}`);
-        console.log('content', content)
     }
 
     useEffect(() => {
@@ -84,20 +82,12 @@ const Adaptor = () => {
     },[pageData, pageLoading])
 
     if(!pageData || pageLoading) return <AppLoader/>
-    if(pageError) return (
-        <Fragment>
-            <PageMeta/>
-            <AppError error={error}/>
-        </Fragment>
-    )
+    if(pageError) return <AppError error={pageError}/>
 
     return (
-        <PageInfo clientSagaData={adaptorPage}>
-            <Fragment>
-                { content() }
-
-            </Fragment>
-        </PageInfo>
+        <PageData clientSagaData={adaptorPage}>
+            { pageData && content() }
+        </PageData>
     )
 }
 

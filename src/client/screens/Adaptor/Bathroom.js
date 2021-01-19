@@ -43,14 +43,14 @@ export const Category = () => {
     },[classifiersData, classifiersLoading])
 
     return (
-        <div className="row">
+        <Fragment>
             <div className="col s3">
                 <FilterPanelLeft routes={clientSagaData}/>
             </div>
             <div className="col s9">
                 <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
             </div>
-        </div>
+        </Fragment>
     )
 }
 

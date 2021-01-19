@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import {Helmet} from "react-helmet-async";
 
-export const PageInfoHeader = ({forPage, routes}) => {
+export const PageDataHeader = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => (state.page));
@@ -25,12 +25,16 @@ export const PageInfoHeader = ({forPage, routes}) => {
     //     };
     // },[]);
 
+
+    console.log('data', data)
+
+
     const renderHeaderMain = (page, count) => {
         return (
             <Fragment>
                 <h1>{page ? page.h1 : <Skeleton count={1} width={160}/>}</h1>
                 <p>{page ? page.slogan : <Skeleton count={2}/>}
-                    &ensp;<span>{count ? count.count : ''}</span>
+                    {/*&ensp;<span>{count ? count.count : ''}</span>*/}
                 </p>
             </Fragment>
         )
@@ -40,7 +44,7 @@ export const PageInfoHeader = ({forPage, routes}) => {
         <div className="row">
             {error && <h1>&#129298; Error!</h1> }
             {loading && renderHeaderMain(null, null)}
-            {data !== null && renderHeaderMain(data.page, data.count)}
+            {data !== null && renderHeaderMain(data, null)}
         </div>
     )
 }

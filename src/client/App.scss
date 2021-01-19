@@ -2,7 +2,6 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  //background-color: #a1c4e2;
 }
 
 main.container {
@@ -11,4 +10,6 @@ main.container {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  margin-top: 50px;
 }

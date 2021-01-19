@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { sagaFetchHome } from "../../../store/actions/home";
 import Skeleton from '../../components/skeletons/RandomBathCard';
-import { BathroomCardRandom } from "../../components/BathroomCardRandom";
+import { BathroomCardRandom } from "../../components/BathroomCard/BathroomCardRandom";
 
 export const BathroomCardRandomList = ({routes}) => {
     const dispatch = useDispatch();

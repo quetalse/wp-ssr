@@ -6,13 +6,14 @@ import {
     SUCCESS_FETCH_TOP_CATEGORIES,
     FAILURE_FETCH_HOME, SAGA_FETCH_CLASSIFIERS, PUSH_ROUTE_PAGE
 } from "../types";
-import { dataExtract } from './helpers';
+import { dataExtract, dataTemplate } from './helpers';
 
 // Генератор запроса данных
 function* loadPageData(dataUrls) {
     try{
         yield put(loadFetchPage())
         const data = yield call(dataExtract, dataUrls);
+        console.log('DATa', data)
         yield put(successFetchPage(data))
     }catch(e){
         yield put(failureFetchPage(e))
@@ -27,8 +28,10 @@ export function* pageSaga(arg) {
 // Сага отслеживает событие получения данных о странице, запуская loadPageData
 function* clientLoadPageData() {
     yield takeEvery(SAGA_FETCH_PAGE, function* (action){
-        const { data } = action.payload; // содердит url для получения данных о page
-        yield fork(loadPageData, data)
+        const { route } = action.payload; // содердит url для получения данных о page
+        const data = dataTemplate(route);
+        console.log(data);
+        yield fork(loadPageData, [data])
     });
 }
 
@@ -50,6 +53,7 @@ export function* clientPagePushRoute(){
     // eslint-disable-next-line func-names
     yield takeEvery(PUSH_ROUTE_PAGE, function* (action){
         const data = action.payload;
+        console.log('PUSH_ROUTE_PAGE', data)
         yield fork(pagePushRoute, data)
     });
 }

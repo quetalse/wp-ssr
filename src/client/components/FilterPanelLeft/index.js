@@ -12,7 +12,7 @@ import moment from 'moment';
 
 import {Link} from "react-router-dom";
 
-export const SearchForm = ({routes, history}) => {
+export const FilterPanelLeft = () => {
 
     const [datePicker, setDatePicker] = useState(new Date());
     const [btnCounter, setBtnCounter] = useState({
@@ -69,52 +69,54 @@ export const SearchForm = ({routes, history}) => {
     }
 
     return (
-        <form className="">
-            <div className="input-field">
-                <AppDatePicker
-                    label="Дата"
-                    mode="inline"
-                    startDate={datePicker}
-                    setStartDate={setDatePicker}
-                />
-            </div>
-            <div className="input-tool">
-                <AppSelect
-                    classifier="metro"
-                    label="Метро"
-                    instanceId="metro-select"
-                    selectedOption={selected.metro}
-                    handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
-                    placeholder="Выбор метро"
-                />
-            </div>
-            <div className="input-tool">
-                <AppSelect
-                    classifier="types"
-                    label="Местоположение"
-                    instanceId="location-select"
-                    selectedOption={selected.location}
-                    handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}
-                    placeholder="Выбор местоположения"
-                />
-            </div>
-            <div className="">
-                <AppCollectionForm classifier="purpose"/>
-            </div>
-            <div className="">
-                <AppCollectionForm classifier="services"/>
-            </div>
-            <div className="">
-                <AppCollectionForm classifier="aqua"/>
-            </div>
-            <div className="input-field">
-                <AppBtnSearch
-                    text="Поиск"
-                    btnCounter={btnCounter}
-                    selected={selected}
-                    datePicker={datePicker}
-                />
-            </div>
-        </form>
+        <aside className="filterPanelLeft">
+            <form className="filterPanelForm">
+                <div className="input-field">
+                    <AppDatePicker
+                        label="Дата"
+                        mode="inline"
+                        startDate={datePicker}
+                        setStartDate={setDatePicker}
+                    />
+                </div>
+                <div className="input-tool">
+                    <AppSelect
+                        classifier="metro"
+                        label="Метро"
+                        instanceId="metro-select"
+                        selectedOption={selected.metro}
+                        handleChange={(selectedOption) => handleSelect(selectedOption, 'metro')}
+                        placeholder="Выбор метро"
+                    />
+                </div>
+                <div className="input-tool">
+                    <AppSelect
+                        classifier="types"
+                        label="Местоположение"
+                        instanceId="location-select"
+                        selectedOption={selected.location}
+                        handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}
+                        placeholder="Выбор местоположения"
+                    />
+                </div>
+                <div className="">
+                    <AppCollectionForm classifier="purpose"/>
+                </div>
+                <div className="">
+                    <AppCollectionForm classifier="services"/>
+                </div>
+                <div className="">
+                    <AppCollectionForm classifier="aqua"/>
+                </div>
+                <div className="input-field">
+                    <AppBtnSearch
+                        text="Поиск"
+                        btnCounter={btnCounter}
+                        selected={selected}
+                        datePicker={datePicker}
+                    />
+                </div>
+            </form>
+        </aside>
     )
 }

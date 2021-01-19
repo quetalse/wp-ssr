@@ -8,7 +8,7 @@ import { AppDatePicker } from "../../components/UI/AppDatePicker";
 
 import { dropField, sagaFetchHome } from "../../../store/actions/home";
 
-export const HomeForm = ({routes, history}) => {
+export const FilterPanelHome = ({routes, history}) => {
 
     const dispatch = useDispatch();
     const [datePicker, setDatePicker] = useState(new Date());
@@ -28,8 +28,6 @@ export const HomeForm = ({routes, history}) => {
         }
     });
 
-
-    // console.log('data', data)
 
     const handleSelect = async (selectedOption, selectKey) => {
 
@@ -58,7 +56,7 @@ export const HomeForm = ({routes, history}) => {
     };
 
     return (
-        <form className="row inputs">
+        <form className="row inputs FilterPanelHome">
             <div className="col s6 input-field">
                 <div className="input-tool">
                     <AppSelect

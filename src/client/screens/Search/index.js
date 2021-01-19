@@ -7,14 +7,9 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
 import { sagaFetchPage } from "../../../store/actions/page";
 
-/** HOC COMPONENTS **/
-import { PageInfo } from "../../components/HOC/PageInfo";
-
 /** APP COMPONENTS **/
-import { PageMeta } from "../../components/PageMeta";
-import { PageInfoHeader } from "../../components/PageInfoHeader";
-import { PageInfoFooter } from "../../components/PageInfoFooter";
-import { SearchForm } from "../../components/SearchForm";
+import { PageData } from "../../components/PageData";
+import { FilterPanelLeft } from "../../components/FilterPanelLeft";
 
 /** LOCAL COMPONENTS **/
 import { BathroomCardList } from "./BathroomCardList";
@@ -26,7 +21,6 @@ const {clientSagaData, serverSagaData} = searchDaraUrls;
 
 const Search = () => {
 
-    const history = useHistory()
     const {pathname, search} = useLocation();
     // console.log('location', location);
 
@@ -38,27 +32,15 @@ const Search = () => {
         ]
     }]
 
-    const params = new URLSearchParams(history.location.search);
-    const type = params.get('type');
-    const metro = params.get('metro');
+    // const params = new URLSearchParams(history.location.search);
+    // const type = params.get('type');
+    // const metro = params.get('metro');
 
     const dispatch = useDispatch();
-    // const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => {
-    //     return state.page
-    // });
     const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
         // console.log('STATE', state)
         return state.classifiers
     });
-
-    // useEffect(() => {
-    //     if(!pageData && !pageLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'page'
-    //         });
-    //         dispatch(sagaFetchPage(url))
-    //     }
-    // },[pageData, pageLoading])
 
     useEffect(() => {
         if(!classifiersData && !classifiersLoading){
@@ -70,35 +52,16 @@ const Search = () => {
     },[classifiersData, classifiersLoading])
 
     return (
-        // <Fragment>
-        //     {pageError && (
-        //         <Fragment>
-        //             <AppMeta/>
-        //             <AppCrash error={pageError}/>
-        //         </Fragment>
-        //     )}
-        //     {pageLoading && <AppLoader/>}
-        //     {pageData !== null && (
-        <PageInfo clientSagaData={searchPage}>
-            <Fragment>
-                <PageMeta/>
-                <div className="" style={{marginTop: '50px'}}>
-                    <PageInfoHeader forPage="search" routes={clientSagaData}/>
-                    <div className="row">
-                        <div className="col s3">
-                            <SearchForm routes={clientSagaData} history={history}/>
-                        </div>
-                        <div className="col s9">
-                            <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
-                        </div>
-                    </div>
-                    <PageInfoFooter forPage="search"/>
+        <PageData clientSagaData={searchPage}>
+            <div className="row">
+                <div className="col s3">
+                    <FilterPanelLeft routes={clientSagaData}/>
                 </div>
-            </Fragment>
-        </PageInfo>
-    // )
-    //         }
-    //     </Fragment>
+                <div className="col s9">
+                    <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+                </div>
+            </div>
+        </PageData>
     )
 }
 

@@ -15,11 +15,11 @@ import {
 //     }
 // }
 
-export const sagaFetchPage = (data) => {
+export const sagaFetchPage = (route) => {
 
     return {
         type: SAGA_FETCH_PAGE,
-        payload: {data}
+        payload: {route}
     }
 }
 

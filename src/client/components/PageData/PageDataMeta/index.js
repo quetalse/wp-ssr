@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 
-export const PageMeta = () => {
+export const PageDataMeta = () => {
 
     const {data, error, loading} = useSelector(state => (state.page));
 

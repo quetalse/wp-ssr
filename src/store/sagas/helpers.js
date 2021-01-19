@@ -1,6 +1,7 @@
 import { call } from 'redux-saga/effects';
 import { fetchData } from "../api";
 
+const _apiBase = process.env.__API_BASE__;
 export function* dataExtract(dataUrls, name = false){
     let data;
     try {
@@ -23,3 +24,8 @@ export function* dataExtract(dataUrls, name = false){
         throw e
     }
 }
+
+export const dataTemplate = (route) => ({
+    name: "page",
+    url: `${_apiBase}/api/page${route}`
+})

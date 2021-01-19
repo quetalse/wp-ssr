@@ -47,13 +47,19 @@ export const homeDataUrls = {
         serverSagaData.homePage,
         serverSagaData.topCategories,
     ],
-    clientSagaData: [
-        serverSagaData.homePage,
+    clientSagaData:
+        [
+
+
+        // serverSagaData.homePage,
         serverSagaData.topCategories,
 
         clientSagaData.classifiers,
         clientSagaData.randomBathrooms,
     ]
+    // {
+    //
+    // }
 };
 
 export const searchDaraUrls = {
