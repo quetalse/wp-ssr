@@ -9,6 +9,7 @@ import { clientTopCategoriesSaga, topCategoriesSaga } from "./topCategories";
  * @returns {Generator<*, void, *>}
  */
 function* watchRoot(arg) {
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < arg.length; i++) {
         switch (arg[i].name) {
             case 'page':
@@ -26,7 +27,7 @@ function* watchRoot(arg) {
     // yield fork(loadRoot, arg)
 }
 
-// Вызывается со стороны сервера
+// Вызывается со стороны сервера при обработки запроса
 export function* rootSaga(arg) {
     yield all([
         watchRoot(arg)

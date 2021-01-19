@@ -34,13 +34,14 @@ export const successFetchPage = data => {
     return {
         type: SUCCESS_FETCH_PAGE,
         payload: {
-            data: data
+            data
         }
     }
 }
 
 export const failureFetchPage = e => {
-    console.log('EE', e)
+    console.log('e', e.name)
+    console.log('e', e.message)
     return {
         type: FAILURE_FETCH_PAGE,
         payload: {

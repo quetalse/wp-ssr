@@ -1,35 +1,38 @@
 import fetch from "node-fetch";
 import { Base64 } from 'js-base64';
 
-let username = process.env.SWAGGER_USER;
-let password = process.env.SWAGGER_PSWD;
+const username = process.env.SWAGGER_USER;
+const password = process.env.SWAGGER_PSWD;
 
 export const fetchData = async (haveName = false, {name, url}) => {
-    const response = await fetch(url, {
-        method: 'GET',
-        credentials: 'same-origin',
-        redirect: 'follow',
-        agent: null,
-        headers: {
-            "Content-Type": 'text/json',
-            'Authorization': 'Basic ' + Base64.encode(`${username}:${password}`),
-        },
-    });
-    const result = await response.json();
+    const encoder = Base64.encode(`${username}:${password}`)
 
-    if(response.status >= 400){
-        console.log('result', result)
-        throw new Error(result.error)
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            // credentials: 'same-origin',
+            // redirect: 'follow',
+            // agent: null,
+            headers: {
+                "Content-Type": 'text/json',
+                'Authorization': `Basic ${encoder}`,
+            },
+        });
+        const result = await response.json();
+        if(haveName) return {[name]: result}
+        return result
+    }catch(err){
+        throw err
     }
 
-    // console.log({
-    //     [name]: result
-    // })
+    // console.log('response', response)
+    // // console.log(response.error)
+    //
+    // if(response.status >= 400){
+    //     console.log('ressdsdult')
+    //     throw new Error(result.error)
+    // }
 
-    if(haveName) return {[name]: result}
-    else{
-       return result
-    }
 }
 
 // haveName - ? - если набо данных имеет вложенность (соежржит подмассив урлов) фунция возвращет объект с ключом по имени вложенных урлов, иначе - простой объект - ДЛЯ избежания доп вложености

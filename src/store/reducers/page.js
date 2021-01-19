@@ -28,7 +28,7 @@ export default (state = initState, action) => {
                 },
             }
         case FAILURE_FETCH_PAGE:
-            console.log('action.payload.data', action.payload.data)
+            // console.log('action.payload.data', action.payload.data)
             return {
                 ...state,
                 loading: false,

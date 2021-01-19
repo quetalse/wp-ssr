@@ -20,6 +20,6 @@ export function* dataExtract(dataUrls, name = false){
         return data;
 
     }catch (e) {
-        throw new Error(e.message)
+        throw e
     }
 }

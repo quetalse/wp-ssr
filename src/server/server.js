@@ -30,7 +30,7 @@ app.use(express.static('build/'));
 
 app.get('*', (req, res, next) => {
 
-    // console.log('req', req.originalUrl)
+    console.log('req', req.originalUrl)
     // console.log('res', res)
     // global.__URL__ = req.protocol + '://' + req.get('host');
     // console.log('__URL__', __URL__)
