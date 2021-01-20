@@ -69,7 +69,7 @@ const Adaptor = () => {
     let content = () => {};
 
     if(pageData){
-        content = contentSwitch(`${pageData.page.type_pageId}`);
+        content = contentSwitch(`${pageData.type_pageId}`);
     }
 
     useEffect(() => {

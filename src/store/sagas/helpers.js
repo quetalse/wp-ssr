@@ -25,7 +25,7 @@ export function* dataExtract(dataUrls, name = false){
     }
 }
 
-export const dataTemplate = (route) => ({
+export const dataPageTemplate = (route) => ([{
     name: "page",
     url: `${_apiBase}/api/page${route}`
-})
+}])

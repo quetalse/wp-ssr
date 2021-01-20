@@ -73,9 +73,11 @@ const clientConfig = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
+            __APP_PORT__: 3000,
             __API_BASE_SWAGGER__: 'http://45.89.66.172',
             __API_BASE__: 'https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io',
             'process.env': {
+                '__APP_PORT__': 3000,
                 '__API_BASE__': JSON.stringify('https://04cc38d3-af42-4165-9ea3-b4af627aa1ea.mock.pstmn.io'), // '"production"'
                 '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
             }

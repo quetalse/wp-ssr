@@ -26,9 +26,6 @@ export const PageDataHeader = ({forPage, routes}) => {
     // },[]);
 
 
-    console.log('data', data)
-
-
     const renderHeaderMain = (page, count) => {
         return (
             <Fragment>
