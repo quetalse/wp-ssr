@@ -8,6 +8,7 @@ import {sagaFetchClassifiers} from "../../../store/actions/home";
 export const BathroomCardList = ({route, count}) => {
 
     const [bathList, setBathList] = useState(null);
+
     useEffect(async () => {
         const response = await fetch(route);
         const data = await response.json();

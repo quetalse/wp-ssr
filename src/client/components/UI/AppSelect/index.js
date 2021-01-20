@@ -31,40 +31,29 @@ const customStyles = {
 
 export const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
 
-     const {data, error, loading} = useSelector(state => {
+     const {data, error, loading} = useSelector( state => {
          return state.classifiers
      });
 
-     const getOptions = (array) => {
-         return array.map((item) => ({
-                 value: item[0],
-                 label: item[1],
-                 icon:  item[2]
-             })
-         )
-     };
+    const getOptions = (array) => array.map(([value, label, icon]) => ({value, label, icon}));
+
     const value = selectedOption.label === null ? null : selectedOption;
     const options = data ? getOptions(data[classifier]) : {};
-    const content = () => {
-        return (
-            <Fragment>
-             <label>{label}</label>
-             <Select
-                 instanceId={instanceId}
-                 isDisabled={!data}
-                 styles={customStyles}
-                 height="3rem"
-                 placeholder={placeholder}
-                 value={value}
-                 onChange={handleChange}
-                 options={options}
-             />
-            </Fragment>)
-    }
 
+    if(error) return null;
     return (
         <Fragment>
-            { error ? false : content() }
+            <label>{label}</label>
+            <Select
+                instanceId={instanceId}
+                isDisabled={!data}
+                styles={customStyles}
+                height="3rem"
+                placeholder={placeholder}
+                value={value}
+                onChange={handleChange}
+                options={options}
+            />
         </Fragment>
     )
 }

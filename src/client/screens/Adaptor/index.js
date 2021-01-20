@@ -52,6 +52,10 @@ const Adaptor = () => {
     //     return state.classifiers
     // });
 
+    const route = `${pathname}${search}`
+
+    console.log('route', route)
+
     const adaptorPage = [{
         name: 'page',
         url: [
@@ -61,7 +65,7 @@ const Adaptor = () => {
         ]
     }]
 
-    // console.log('pageData', pageData)
+    console.log('pageData', pageData)
     // console.log('pageError', pageError)
     // console.log('pageLoading', pageLoading)
 
@@ -74,20 +78,23 @@ const Adaptor = () => {
 
     useEffect(() => {
         if(!pageData && !pageLoading){
-            const url = adaptorPage.filter((route)=>{
-                return route.name === 'page'
-            });
-            dispatch(sagaFetchPage(url))
+            // const url = adaptorPage.filter((route)=>{
+            //     return route.name === 'page'
+            // });
+            dispatch(sagaFetchPage(route))
         }
-    },[pageData, pageLoading])
+    },[])
 
     if(!pageData || pageLoading) return <AppLoader/>
     if(pageError) return <AppError error={pageError}/>
 
     return (
-        <PageData clientSagaData={adaptorPage}>
-            { pageData && content() }
-        </PageData>
+        <Fragment>
+            1
+        </Fragment>
+        // <PageData clientSagaData={adaptorPage}>
+        //     { pageData && content() }
+        // </PageData>
     )
 }
 

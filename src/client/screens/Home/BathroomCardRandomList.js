@@ -16,7 +16,6 @@ export const BathroomCardRandomList = ({routes}) => {
             let url = routes.filter((route) => {
                 return route.name === "randomBathrooms"
             });
-
             setRandomBathrooms((state) =>({...state, loading: true}))
             try{
                 const response = await fetch(url[0].url);

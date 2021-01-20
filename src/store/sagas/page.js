@@ -29,6 +29,7 @@ function* clientLoadPageData() {
     yield takeEvery(SAGA_FETCH_PAGE, function* (action){
         const { route } = action.payload; // содердит url для получения данных о page
         const data = dataPageTemplate(route);
+        console.log('data', data)
         yield fork(loadPageData, data)
     });
 }

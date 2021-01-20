@@ -10,7 +10,7 @@ import { AppError } from "../UI/AppError";
 import { AppLoader } from "../UI/AppLoader";
 import { PageDataHeader } from "./PageDataHeader";
 import { PageDataFooter } from "./PageDataFooter";
-import {useLocation} from "react-router-dom";
+import { useLocation} from "react-router-dom";
 
 export const PageData = ({children, clientSagaData}) => {
 
