@@ -32,6 +32,7 @@ const Search = () => {
         ]
     }]
 
+    console.log('SEARCG')
     // const params = new URLSearchParams(history.location.search);
     // const type = params.get('type');
     // const metro = params.get('metro');

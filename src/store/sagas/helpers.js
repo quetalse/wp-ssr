@@ -5,6 +5,7 @@ const _apiBase = process.env.__API_BASE__;
 export function* dataExtract(dataUrls, name = false){
     let data;
     try {
+        // console.log('dataUrls', dataUrls)
         const responses = yield dataUrls.map(dataUrl => {
             if(Array.isArray(dataUrl.url)){
                 return call(dataExtract, dataUrl.url, dataUrl.name)

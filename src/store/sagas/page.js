@@ -1,5 +1,6 @@
 import {all, call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import { sagaFetchPage, loadFetchPage, successFetchPage, failureFetchPage, dropField} from '../actions/page';
+
 import {
     SAGA_FETCH_PAGE,
     LOAD_FETCH_PAGE,
@@ -21,6 +22,7 @@ function* loadPageData(dataUrls) {
 
 // Генератор запуска запроса данных со стороны сервера
 export function* pageSaga(arg) {
+
     yield call(loadPageData, [arg]);
 }
 
@@ -35,7 +37,7 @@ function* clientLoadPageData() {
 }
 
 // Сага зупускается на клиенте, вызывает clientLoadPageData
-export function* clientPageSaga() {
+export function* clientPageSaga(){
     yield call(clientLoadPageData);
 }
 

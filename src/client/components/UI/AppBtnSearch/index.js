@@ -27,9 +27,9 @@ export const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, dateP
 
         pushUrl += `date=[${dateStr}]`;
 
-        dispatch(pushRoute({ url: `/search?${pushUrl}`, history}));
+        // dispatch(pushRoute({ url: `/search?${pushUrl}`, history}));
 
-        // history.push(`/search?${pushUrl}`);
+        history.push(`/search?${pushUrl}`);
     }
 
     return (

@@ -30,7 +30,7 @@ export default function configureStore () {
         composeEnhancers(applyMiddleware(...middleware))
         // applyMiddleware(sagaMiddleware)
     );
-    store.runSaga = (saga, params = {}) => {
+    store.runSaga = (saga, params = []) => {
         // console.log('params', params)
         return sagaMiddleware.run(saga, params)
     };

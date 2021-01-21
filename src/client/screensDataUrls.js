@@ -44,7 +44,7 @@ const clientSagaData = {
 
 export const homeDataUrls = {
     serverSagaData: [
-        serverSagaData.homePage,
+        // serverSagaData.homePage,
         serverSagaData.topCategories,
     ],
     clientSagaData:

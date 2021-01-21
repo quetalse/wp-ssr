@@ -7,6 +7,8 @@ import './App.scss';
 
 const App = ({location, route}) => {
 
+
+
     return (
         <React.Fragment>
             <NavMenu/>

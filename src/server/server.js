@@ -21,8 +21,6 @@ const indexFile = path.resolve('./build/app/template.html');
 global.__SERVER__ = true;
 global.__CLIENT__ = false;
 
-
-
 app.use(require('express-status-monitor')());
 app.use(express.static('build/'));
 app.get('*', (req, res, next) => {
@@ -32,12 +30,21 @@ app.get('*', (req, res, next) => {
     const routes = matchRoutes(Routes, req.path).pop();
     const store = configureStore();
 
-
     const saga = rootSaga,
+          routeData = {
+              name: "route",
+              url: `${req.originalUrl}`
+          },
           pageData = dataPageTemplate(req.originalUrl),
           componentData = routes.route.serverSagaData
 
-    store.runSaga(saga, [...componentData, ...pageData]).done.then(() => {
+
+    // console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+    // console.log('req.originalUrl',req.originalUrl)
+    // console.log('///////////////////', [...componentData, ...pageData])
+    // console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||')
+
+    store.runSaga(saga, [...componentData, routeData,...pageData]).done.then(() => {
             const context = {};
             const helmetContext = {};
             const content = renderer(req, store, context, helmetContext);
@@ -67,6 +74,7 @@ app.get('*', (req, res, next) => {
                 data = data.replace('__CLIENT__SCRIPTS__', `/app/${assetsByChunkName.main[1]}`);
 
                 return res.send(data)
+                // return res.send('1')
             })
     })
     .catch((e) => {
