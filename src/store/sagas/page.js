@@ -1,6 +1,6 @@
 import {all, call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import { sagaFetchPage, loadFetchPage, successFetchPage, failureFetchPage, dropField} from '../actions/page';
-
+import { setRoute, dropRoute } from '../actions/route';
 import {
     SAGA_FETCH_PAGE,
     LOAD_FETCH_PAGE,
@@ -10,11 +10,16 @@ import {
 import { dataExtract, dataPageTemplate } from './helpers';
 
 // Генератор запроса данных
-function* loadPageData(dataUrls) {
+function* loadPageData(route) {
+    // console.log('ROUTE', route)
+
+    const dataPage = dataPageTemplate(route);
+    // console.log('dataPage', dataPage)
     try{
         yield put(loadFetchPage())
-        const data = yield call(dataExtract, dataUrls);
+        const data = yield call(dataExtract, dataPage);
         yield put(successFetchPage(data))
+        yield put(setRoute(route))
     }catch(e){
         yield put(failureFetchPage(e))
     }
@@ -23,16 +28,14 @@ function* loadPageData(dataUrls) {
 // Генератор запуска запроса данных со стороны сервера
 export function* pageSaga(arg) {
 
-    yield call(loadPageData, [arg]);
+    yield call(loadPageData, arg);
 }
 
 // Сага отслеживает событие получения данных о странице, запуская loadPageData
 function* clientLoadPageData() {
     yield takeEvery(SAGA_FETCH_PAGE, function* (action){
         const { route } = action.payload; // содердит url для получения данных о page
-        const data = dataPageTemplate(route);
-        console.log('data', data)
-        yield fork(loadPageData, data)
+        yield fork(loadPageData, route)
     });
 }
 

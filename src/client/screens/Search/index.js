@@ -32,7 +32,6 @@ const Search = () => {
         ]
     }]
 
-    console.log('SEARCG')
     // const params = new URLSearchParams(history.location.search);
     // const type = params.get('type');
     // const metro = params.get('metro');
@@ -43,14 +42,14 @@ const Search = () => {
         return state.classifiers
     });
 
-    useEffect(() => {
-        if(!classifiersData && !classifiersLoading){
-            const url = clientSagaData.filter((route)=>{
-                return route.name === 'classifiers'
-            });
-            dispatch(sagaFetchClassifiers(url))
-        }
-    },[classifiersData, classifiersLoading])
+    // useEffect(() => {
+    //     if(!classifiersData && !classifiersLoading){
+    //         const url = clientSagaData.filter((route)=>{
+    //             return route.name === 'classifiers'
+    //         });
+    //         dispatch(sagaFetchClassifiers(url))
+    //     }
+    // },[classifiersData, classifiersLoading])
 
     return (
         <PageData clientSagaData={searchPage}>

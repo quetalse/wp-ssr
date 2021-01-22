@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect} from 'react';
 import Select from 'react-select';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {sagaFetchClassifiers} from "../../../../store/actions/classifiers";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -31,9 +32,17 @@ const customStyles = {
 
 export const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
 
+     const dispatch = useDispatch();
      const {data, error, loading} = useSelector( state => {
          return state.classifiers
      });
+
+    useEffect(() => {
+            // const url = clientSagaData.filter((route)=>{
+            //     return route.name === 'classifiers'
+            // });
+            dispatch(sagaFetchClassifiers(classifier))
+    },[])
 
     const getOptions = (array) => array.map(([value, label, icon]) => ({value, label, icon}));
 

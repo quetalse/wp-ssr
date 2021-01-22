@@ -25,17 +25,18 @@ app.use(require('express-status-monitor')());
 app.use(express.static('build/'));
 app.get('*', (req, res, next) => {
 
+    // console.log('req.baseUrl', req.path)
     // const params = req.params[0].split('/');
     // const id = params[2];
     const routes = matchRoutes(Routes, req.path).pop();
     const store = configureStore();
 
     const saga = rootSaga,
-          routeData = {
-              name: "route",
-              url: `${req.originalUrl}`
+          pageData = {
+              name: "page",
+              url: `${req.path}`
           },
-          pageData = dataPageTemplate(req.originalUrl),
+          // pageData = dataPageTemplate(req.path),
           componentData = routes.route.serverSagaData
 
 
@@ -44,7 +45,7 @@ app.get('*', (req, res, next) => {
     // console.log('///////////////////', [...componentData, ...pageData])
     // console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||')
 
-    store.runSaga(saga, [...componentData, routeData,...pageData]).done.then(() => {
+    store.runSaga(saga, [...componentData, pageData]).done.then(() => {
             const context = {};
             const helmetContext = {};
             const content = renderer(req, store, context, helmetContext);

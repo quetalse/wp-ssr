@@ -10,7 +10,6 @@ export const BathroomCardList = ({route, count}) => {
     const [bathList, setBathList] = useState(null);
 
     useEffect(async () => {
-        console.log('here')
         const response = await fetch(route);
         const data = await response.json();
         setBathList(data)

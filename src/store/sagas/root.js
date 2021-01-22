@@ -13,11 +13,11 @@ function* watchRoot(arg) {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < arg.length; i++) {
         switch (arg[i].name) {
-            case 'route':
-                yield fork(routeSaga, arg[i].url);
-                break;
+            // case 'route':
+            //     yield fork(routeSaga, arg[i].url);
+            //     break;
             case 'page':
-                yield fork(pageSaga, arg[i]);
+                yield fork(pageSaga, arg[i].url);
                 break;
             // case 'classifiers':
             //     yield fork(classifiersSaga, arg[i]);

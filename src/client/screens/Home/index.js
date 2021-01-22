@@ -27,19 +27,6 @@ const Home = () => {
         return state.classifiers
     });
 
-    // useEffect(() => {
-    //     if(!pageData && !pageLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'page'
-    //         });
-    //         dispatch(sagaFetchPage(url))
-    //     }
-    //     // return () => {
-    //     //     console.log('drop')
-    //     //     dispatch(dropField(['page']))
-    //     // };
-    // },[pageData, pageLoading])
-
     useEffect(() => {
         if(!classifiersData && !classifiersLoading){
             const url = clientSagaData.filter((route)=>{
@@ -51,7 +38,7 @@ const Home = () => {
 
 
     return (
-        <PageData clientSagaData={clientSagaData}>
+        <PageData>
             <FilterPanelHome routes={clientSagaData}/>
             <div className="row random-card-offers">
                 <BathroomCardRandomList routes={clientSagaData}/>

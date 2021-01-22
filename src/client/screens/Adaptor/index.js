@@ -46,24 +46,13 @@ const Adaptor = () => {
 
     const {pathname, search} = useLocation();
     const dispatch = useDispatch();
+
+    const routeData = useSelector(state => state.route);
     const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
-    // const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
-    //     // console.log('STATE', state)
-    //     return state.classifiers
-    // });
 
-    const route = `${pathname}${search}`
+    const isEqualRoute = routeData === pathname
 
-    console.log('route', route)
 
-    const adaptorPage = [{
-        name: 'page',
-        url: [
-            {name: 'page',  url: `${_apiBase}/api/page/category`},
-            // {name: 'page',  url: `${_apiBase}/api/page${pathname}${search}`},
-            // {name: 'count', url: `${_apiBase}/api/page/search?count`}
-        ]
-    }]
 
     console.log('pageData', pageData)
     // console.log('pageError', pageError)
@@ -77,11 +66,13 @@ const Adaptor = () => {
     }
 
     useEffect(() => {
-        if(!pageData && !pageLoading){
+        // if(!pageData && !pageLoading){
+        if(!isEqualRoute){
             // const url = adaptorPage.filter((route)=>{
             //     return route.name === 'page'
             // });
-            dispatch(sagaFetchPage(route))
+            let pathname = '/category'
+            dispatch(sagaFetchPage(pathname))
         }
     },[])
 
@@ -89,12 +80,12 @@ const Adaptor = () => {
     if(pageError) return <AppError error={pageError}/>
 
     return (
-        <Fragment>
-            1
-        </Fragment>
-        // <PageData clientSagaData={adaptorPage}>
-        //     { pageData && content() }
-        // </PageData>
+        // <Fragment>
+        //     1
+        // </Fragment>
+        <PageData>
+            { pageData && isEqualRoute && content() }
+        </PageData>
     )
 }
 

@@ -1,14 +1,15 @@
 import { call, fork, put, takeEvery } from 'redux-saga/effects';
 import { loadFetchClassifiers, successFetchClassifiers, failureFetchClassifiers} from '../actions/classifiers';
 import { SAGA_FETCH_CLASSIFIERS } from "../types";
-import { dataExtract } from './helpers';
+import {dataExtract, dataClassifierTemplate } from './helpers';
 
-function* loadClassifiersData(dataUrls) {
+function* loadClassifiersData(classifier) {
+    const dataClassifier = dataClassifierTemplate(classifier);
     try{
-        // console.log('dataUrls', dataUrls)
+        console.log('dataClassifier', dataClassifier)
         yield put(loadFetchClassifiers())
-        const data = yield call(dataExtract, dataUrls);
-        // console.log('data', data)
+        const data = yield call(dataExtract, dataClassifier);
+        console.log('data', data)
         yield put(successFetchClassifiers(data))
     }catch(e){
         console.log(e)
@@ -18,9 +19,9 @@ function* loadClassifiersData(dataUrls) {
 
 function* clientLoadClassifiersData(dataUrls) {
     yield takeEvery(SAGA_FETCH_CLASSIFIERS, function* (action){
-        const data = action['payload'].data;
+        const classifier = action['payload'].data;
         // console.log('data', data)
-        yield fork(loadClassifiersData, data)
+        yield fork(loadClassifiersData, classifier)
     });
 }
 

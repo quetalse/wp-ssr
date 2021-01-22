@@ -19,24 +19,21 @@ export const PageData = ({children, clientSagaData}) => {
     const dispatch = useDispatch();
     const {data, error, loading} = useSelector(state => state.page);
 
-    const routeRedux = useSelector(state => state.route);
-
-    const route = `${pathname}${search}`
-
-    console.log('route', route)
-    console.log('routeRedux', routeRedux)
-
+    const routeData = useSelector(state => state.route);
     //
+    // const route = `${pathname}${search}`
+
+    const isEqualRoute = routeData === pathname
+
     useEffect(() => {
         // if(!data && !loading){
-        if(route !== routeRedux){
-            const url = clientSagaData.filter((route) => {
-                return route.name === 'page'
-            });
-            // console.log('URL', url)
-            dispatch(sagaFetchPage(route))
+        if(!isEqualRoute){
+            // const url = clientSagaData.filter((route) => {
+            //     return route.name === 'page'
+            // });
+            dispatch(sagaFetchPage(pathname))
         }
-    },[data, loading])
+    },[])
 
     // useEffect(() => {
     //     console.log('location changed')
@@ -52,12 +49,16 @@ export const PageData = ({children, clientSagaData}) => {
         </Fragment>
     );
 
+
+    // console.log('data !== null', data !== null)
+    // console.log('isEqualRoute', isEqualRoute)
+
     return (
         <div className="content">
             <PageDataMeta/>
             {error && <AppError error={error}/>}
             {loading && <AppLoader/>}
-            {data !== null && content()}
+            {data !== null && isEqualRoute && content()}
         </div>
     )
 }

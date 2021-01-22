@@ -30,3 +30,12 @@ export const dataPageTemplate = (route) => ([{
     name: "page",
     url: `${_apiBase}/api/page${route}`
 }])
+
+export const dataClassifierTemplate = (classifier) => ([{
+    name: "classifiers",
+    url: [{
+        name: `${classifier}`,
+        url:`/data/classifiers/${classifier}.json`
+    }]
+}])
+

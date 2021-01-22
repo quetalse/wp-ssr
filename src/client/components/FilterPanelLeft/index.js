@@ -90,23 +90,23 @@ export const FilterPanelLeft = () => {
                     />
                 </div>
                 <div className="input-tool">
-                    <AppSelect
-                        classifier="types"
-                        label="Местоположение"
-                        instanceId="location-select"
-                        selectedOption={selected.location}
-                        handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}
-                        placeholder="Выбор местоположения"
-                    />
+                    {/*<AppSelect*/}
+                    {/*    classifier="types"*/}
+                    {/*    label="Местоположение"*/}
+                    {/*    instanceId="location-select"*/}
+                    {/*    selectedOption={selected.location}*/}
+                    {/*    handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}*/}
+                    {/*    placeholder="Выбор местоположения"*/}
+                    {/*/>*/}
                 </div>
                 <div className="">
-                    <AppCollectionForm classifier="purpose"/>
+                    {/*<AppCollectionForm classifier="purpose"/>*/}
                 </div>
                 <div className="">
-                    <AppCollectionForm classifier="services"/>
+                    {/*<AppCollectionForm classifier="services"/>*/}
                 </div>
                 <div className="">
-                    <AppCollectionForm classifier="aqua"/>
+                    {/*<AppCollectionForm classifier="aqua"/>*/}
                 </div>
                 <div className="input-field">
                     <AppBtnSearch
