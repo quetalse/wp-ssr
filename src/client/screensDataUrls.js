@@ -48,15 +48,17 @@ export const homeDataUrls = {
         serverSagaData.topCategories,
     ],
     clientSagaData:
-        [
+        {
+            'topCategories': `${_apiBase}/api/page/home?top-categories`,
+            'randomBathrooms': `${_apiBase}/api/random-baths?count`
 
+            // serverSagaData.homePage,
+            // serverSagaData.topCategories,
 
-        // serverSagaData.homePage,
-        serverSagaData.topCategories,
+            // clientSagaData.classifiers,
+            // clientSagaData.randomBathrooms,
 
-        clientSagaData.classifiers,
-        clientSagaData.randomBathrooms,
-    ]
+    }
     // {
     //
     // }

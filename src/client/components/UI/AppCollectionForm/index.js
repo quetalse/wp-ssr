@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
-import {useSelector} from "react-redux";
+import React, {Fragment, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import Skeleton from "../../../components/skeletons/TopCategory";
+import {sagaFetchClassifier} from "../../../../store/actions/classifier";
 
 const collectionItems = (array) => {
     return array.map((item, index) => (
@@ -14,9 +15,21 @@ const collectionItems = (array) => {
     ));
 };
 
-export const AppCollectionForm = ({classifier}) => {
+export const AppCollectionForm = ({classifierTitle}) => {
 
-    const {data, error, loading} = useSelector(state => state.classifiers);
+    const dispatch = useDispatch();
+    const classifier = useSelector( state => {
+        if(!state.classifiers[classifierTitle]) return {}
+        return state.classifiers[classifierTitle]
+    });
+
+    useEffect(() => {
+        if(!classifier.data){
+            dispatch(sagaFetchClassifier(classifierTitle))
+        }
+    },[])
+
+
     const collection = (classifier) => {
         return (
             <ul className="collection with-header">
@@ -31,9 +44,9 @@ export const AppCollectionForm = ({classifier}) => {
 
     return (
         <Fragment>
-            {error && false}
-            {(loading || !data) && <Skeleton/>}
-            {data && collection(data[classifier])}
+            {classifier.error && false}
+            {(classifier.loading || !classifier.data) && <Skeleton/>}
+            {classifier.data && collection(classifier.data)}
         </Fragment>
     )
 }

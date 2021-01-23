@@ -30,32 +30,45 @@ const customStyles = {
     }
 }
 
-export const AppSelect = ({classifier, label, instanceId, selectedOption, handleChange, placeholder }) => {
+export const AppSelect = ({classifierTitle, label, instanceId, selectedOption, handleChange, placeholder }) => {
 
      const dispatch = useDispatch();
-     const {data, error, loading} = useSelector( state => {
-         return state.classifiers
+     const classifier = useSelector( state => {
+         if(!state.classifiers[classifierTitle]) return {}
+         return state.classifiers[classifierTitle]
      });
 
+    console.log('classifier', classifier)
     useEffect(() => {
-            // const url = clientSagaData.filter((route)=>{
-            //     return route.name === 'classifiers'
-            // });
-            dispatch(sagaFetchClassifier(classifier))
+        if(!classifier.data){
+            dispatch(sagaFetchClassifier(classifierTitle))
+        }
     },[])
 
-    const getOptions = (array) => array.map(([value, label, icon]) => ({value, label, icon}));
+    // const getOptions = (array) => array.map(([value, label, icon]) => ({value, label, icon}));
+    const getOptions = (array) => {
+        let temp = [];
+        for (let value in array) {
+            temp.push({
+                value,
+                label:array[value].title
+            })
+        }
+        return temp;
+    }
 
     const value = selectedOption.label === null ? null : selectedOption;
-    const options = data ? getOptions(data[classifier]) : {};
+    const options = classifier.data ? getOptions(classifier.data) : {};
 
-    if(error) return null;
+
+
+    if(classifier.error) return null;
     return (
         <Fragment>
             <label>{label}</label>
             <Select
                 instanceId={instanceId}
-                isDisabled={!data}
+                isDisabled={!classifier.data}
                 styles={customStyles}
                 height="3rem"
                 placeholder={placeholder}

@@ -20,26 +20,16 @@ export const PageData = ({children, clientSagaData}) => {
     const {data, error, loading} = useSelector(state => state.page);
 
     const routeData = useSelector(state => state.route);
-    //
-    // const route = `${pathname}${search}`
+
+
 
     const isEqualRoute = routeData === pathname
 
     useEffect(() => {
-        // if(!data && !loading){
         if(!isEqualRoute){
-            // const url = clientSagaData.filter((route) => {
-            //     return route.name === 'page'
-            // });
             dispatch(sagaFetchPage(pathname))
         }
     },[])
-
-    // useEffect(() => {
-    //     console.log('location changed')
-    //     console.log('location', location)
-    //     dispatch(sagaFetchPage(route))
-    // },[])
 
     const content = () => (
         <Fragment>

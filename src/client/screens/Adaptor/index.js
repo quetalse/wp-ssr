@@ -8,7 +8,7 @@ import { homeDataUrls } from '../../screensDataUrls'
 import { PageData } from "../../components/PageData";
 
 /** ACTIONS **/
-import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
+// import { sagaFetchClassifier } from "../../../store/actions/classifier";
 import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 

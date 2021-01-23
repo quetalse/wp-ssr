@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { homeDataUrls } from '../../screensDataUrls'
 
 /** ACTIONS **/
-import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
+// import { sagaFetchClassifier } from "../../../store/actions/classifier";
 import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
@@ -33,14 +33,14 @@ export const Category = () => {
         return state.classifiers
     });
 
-    useEffect(() => {
-        if(!classifiersData && !classifiersLoading){
-            const url = clientSagaData.filter((route)=>{
-                return route.name === 'classifiers'
-            });
-            dispatch(sagaFetchClassifiers(url))
-        }
-    },[classifiersData, classifiersLoading])
+    // useEffect(() => {
+    //     if(!classifiersData && !classifiersLoading){
+    //         const url = clientSagaData.filter((route)=>{
+    //             return route.name === 'classifiers'
+    //         });
+    //         dispatch(sagaFetchClassifiers(url))
+    //     }
+    // },[classifiersData, classifiersLoading])
 
     return (
         <div className="row">

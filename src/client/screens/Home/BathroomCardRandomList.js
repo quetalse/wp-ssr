@@ -3,8 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { sagaFetchHome } from "../../../store/actions/home";
 import Skeleton from '../../components/skeletons/RandomBathCard';
 import { BathroomCardRandom } from "../../components/BathroomCard/BathroomCardRandom";
+import { homeDataUrls } from '../../screensDataUrls'
+import {sagaFetchClassifier} from "../../../store/actions/classifier";
 
-export const BathroomCardRandomList = ({routes}) => {
+const {clientSagaData} = homeDataUrls;
+export const BathroomCardRandomList = ({classifierTitles}) => {
+
     const dispatch = useDispatch();
     const [randomBathrooms, setRandomBathrooms] = useState({
         data: null,
@@ -12,13 +16,29 @@ export const BathroomCardRandomList = ({routes}) => {
         error: false
     });
 
+    const classifiers = useSelector(state => {
+        let data = {};
+        classifierTitles.map((classifierTitle) => {
+            if(state.classifiers[classifierTitle]) {
+                data[classifierTitle] = state.classifiers[classifierTitle].data
+            }
+        })
+        return data;
+    });
+
     useEffect(async () => {
-            let url = routes.filter((route) => {
-                return route.name === "randomBathrooms"
-            });
+            classifierTitles.map((classifierTitle) => {
+                if(!classifiers[classifierTitle]) {
+                    dispatch(sagaFetchClassifier(classifierTitle))
+                }
+            })
+        },[]
+    );
+
+    useEffect(async () => {
             setRandomBathrooms((state) =>({...state, loading: true}))
             try{
-                const response = await fetch(url[0].url);
+                const response = await fetch(clientSagaData.randomBathrooms);
                 const data = await response.json();
                 setRandomBathrooms((state) =>({...state, data}))
             }catch (error) {
@@ -27,12 +47,15 @@ export const BathroomCardRandomList = ({routes}) => {
         },[]
     );
 
+    const loadedClassifiers = classifierTitles.filter(classifierTitle => classifiers[classifierTitle]);
+    const isReadyClassifiers = loadedClassifiers.length === classifierTitles.length;
+
     const generateCards = (array, skeleton= false) => {
         return array.map((bath, index) => {
                 if(!skeleton) {
                     return (
                       <div key={index}>
-                          <BathroomCardRandom key={index} bath={bath}/>
+                          <BathroomCardRandom classifierTitles={["type", "metro"]} key={index} bath={bath}/>
                       </div>
                     )
                 }
@@ -46,9 +69,13 @@ export const BathroomCardRandomList = ({routes}) => {
         })
     }
 
+
+
     return (
         <Fragment>
-            {randomBathrooms.data ? generateCards(randomBathrooms.data) : generateCards([1, 2, 3, 4], true)}
+            {(randomBathrooms.data && isReadyClassifiers) ?
+                generateCards(randomBathrooms.data) :
+                generateCards([1, 2, 3, 4], true)}
         </Fragment>
     )
 }

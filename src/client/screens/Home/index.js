@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeDataUrls } from '../../screensDataUrls'
 
 /** ACTIONS **/
-import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
+import { sagaFetchClassifier } from "../../../store/actions/classifier";
 import { sagaFetchPage } from "../../../store/actions/page";
 import { dropField } from '../../../store/actions/page'
 
@@ -11,11 +11,12 @@ import { dropField } from '../../../store/actions/page'
 import { PageData } from "../../components/PageData";
 
 /** LOCAL COMPONENTS **/
-import { FilterPanelHome } from "./FilterPanelHome";
+import { FilterPanel } from "./FilterPanel";
 import { BathroomCardRandomList } from "./BathroomCardRandomList";
 import { TopCategories } from "./TopCategories";
 
 import "./index.scss";
+import {AppBtnSearch} from "../../components/UI/AppBtnSearch";
 
 const {clientSagaData, serverSagaData} = homeDataUrls;
 const Home = () => {
@@ -27,24 +28,23 @@ const Home = () => {
         return state.classifiers
     });
 
-    useEffect(() => {
-        if(!classifiersData && !classifiersLoading){
-            const url = clientSagaData.filter((route)=>{
-                return route.name === 'classifiers'
-            });
-            dispatch(sagaFetchClassifiers(url))
-        }
-    },[classifiersData, classifiersLoading])
-
+    // useEffect(() => {
+    //     if(!classifiersData && !classifiersLoading){
+    //         const url = clientSagaData.filter((route)=>{
+    //             return route.name === 'classifiers'
+    //         });
+    //         dispatch(sagaFetchClassifiers(url))
+    //     }
+    // },[classifiersData, classifiersLoading])
 
     return (
         <PageData>
-            <FilterPanelHome routes={clientSagaData}/>
+            <FilterPanel/>
             <div className="row random-card-offers">
-                <BathroomCardRandomList routes={clientSagaData}/>
+                <BathroomCardRandomList  classifierTitles={["type", "metro"]}/>
             </div>
             <div className="row top-categories">
-                <TopCategories routes={clientSagaData}/>
+                <TopCategories/>
             </div>
         </PageData>
     )

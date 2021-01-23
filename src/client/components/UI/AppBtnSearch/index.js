@@ -5,17 +5,21 @@ import moment from "moment";
 import {dropField} from "../../../../store/actions/home";
 import { pushRoute } from "../../../../store/actions/page";
 
-export const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, datePicker}) => {
+export const AppBtnSearch = ({classifierTitles, text, btnCounter: {loader, value}, selected, datePicker}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const {data, error, loading} = useSelector(state => {
-        return state.classifiers
+
+    const classifiers = useSelector(state => {
+        let data = {};
+        classifierTitles.map((classifierTitle) => {
+            if(state.classifiers[classifierTitle]) {
+                data[classifierTitle] = state.classifiers[classifierTitle].data
+            }
+        })
+        return data;
     });
 
-    const page = useSelector(state => {
-        return state.page
-    });
-
+    const classifiersData = classifierTitles.filter(classifierTitle => classifiers[classifierTitle])
     const searchHandler = (e) => {
         e.preventDefault();
         let pushUrl = '';
@@ -31,12 +35,11 @@ export const AppBtnSearch = ({text, btnCounter: {loader, value}, selected, dateP
 
         history.push(`/search?${pushUrl}`);
     }
-
     return (
         <button
             style={{width: '100%', color: '#000000', height: '3rem', backgroundColor: '#F0F0F0'}}
             className="btn waves-effect waves-light input-tool"
-            disabled={!data}
+            disabled={classifiersData.length !== classifierTitles.length}
             onClick={searchHandler}
         >{text}
             {!loader|| <img width="20px" style={{'top': '4px'}} src="/app/images/loading.gif" alt="Загрузка"/>}

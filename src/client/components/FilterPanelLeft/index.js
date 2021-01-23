@@ -81,7 +81,7 @@ export const FilterPanelLeft = () => {
                 </div>
                 <div className="input-tool">
                     <AppSelect
-                        classifier="metro"
+                        classifierTitle="metro"
                         label="Метро"
                         instanceId="metro-select"
                         selectedOption={selected.metro}
@@ -90,26 +90,27 @@ export const FilterPanelLeft = () => {
                     />
                 </div>
                 <div className="input-tool">
-                    {/*<AppSelect*/}
-                    {/*    classifier="types"*/}
-                    {/*    label="Местоположение"*/}
-                    {/*    instanceId="location-select"*/}
-                    {/*    selectedOption={selected.location}*/}
-                    {/*    handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}*/}
-                    {/*    placeholder="Выбор местоположения"*/}
-                    {/*/>*/}
+                    <AppSelect
+                        classifierTitle="location"
+                        label="Местоположение"
+                        instanceId="location-select"
+                        selectedOption={selected.location}
+                        handleChange={(selectedOption) => handleSelect(selectedOption, 'location')}
+                        placeholder="Выбор местоположения"
+                    />
                 </div>
                 <div className="">
-                    {/*<AppCollectionForm classifier="purpose"/>*/}
+                    <AppCollectionForm classifierTitle="purpose"/>
                 </div>
                 <div className="">
-                    {/*<AppCollectionForm classifier="services"/>*/}
+                    <AppCollectionForm classifierTitle="services"/>
                 </div>
                 <div className="">
-                    {/*<AppCollectionForm classifier="aqua"/>*/}
+                    <AppCollectionForm classifierTitle="aqua"/>
                 </div>
                 <div className="input-field">
                     <AppBtnSearch
+                        classifierTitles={["location", "metro"]}
                         text="Поиск"
                         btnCounter={btnCounter}
                         selected={selected}

@@ -8,7 +8,7 @@ import { AppDatePicker } from "../../components/UI/AppDatePicker";
 
 import { dropField, sagaFetchHome } from "../../../store/actions/home";
 
-export const FilterPanelHome = ({routes, history}) => {
+export const FilterPanel = ({routes, history}) => {
 
     const dispatch = useDispatch();
     const [datePicker, setDatePicker] = useState(new Date());
@@ -44,9 +44,9 @@ export const FilterPanelHome = ({routes, history}) => {
 
             const type = selectKey === 'type' ? selectedOption.value : selected['type'].value;
             const metro = selectKey === 'metro' ? selectedOption.value : selected['metro'].value;
-            console.log('__API_BASE_SWAGGER__', process.env.SWAGGER_HOST)
-            // const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
-            const response = await fetch(`${process.env.SWAGGER_HOST}/api/pre-search?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
+            // console.log('__API_BASE_SWAGGER__', process.env.SWAGGER_HOST)
+            const response = await fetch(`${process.env.__API_BASE__}/api/presearch?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
+            // const response = await fetch(`${process.env.SWAGGER_HOST}/api/pre-search?type=[${type}]&metro=[${metro}]&purpose=[1]&only_count`);
             const data = await response.json();
             setBtnCounter({
                 value: data.count,
@@ -60,7 +60,7 @@ export const FilterPanelHome = ({routes, history}) => {
             <div className="col s6 input-field">
                 <div className="input-tool">
                     <AppSelect
-                        classifier="types"
+                        classifierTitle="type"
                         label="Тип"
                         instanceId="types-select"
                         selectedOption={selected.type}
@@ -70,7 +70,7 @@ export const FilterPanelHome = ({routes, history}) => {
                 </div>
                 <div className="input-tool">
                     <AppSelect
-                        classifier="metro"
+                        classifierTitle="metro"
                         label="Метро"
                         instanceId="metro-select"
                         selectedOption={selected.metro}
@@ -89,6 +89,7 @@ export const FilterPanelHome = ({routes, history}) => {
             </div>
             <div className="col s3 input-field">
                 <AppBtnSearch
+                    classifierTitles={["type", "metro"]}
                     text="Поиск"
                     btnCounter={btnCounter}
                     selected={selected}

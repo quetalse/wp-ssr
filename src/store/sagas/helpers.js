@@ -39,3 +39,7 @@ export const dataClassifierTemplate = (classifier) => ([{
     }]
 }])
 
+export const dataTopCategoriesTemplate = route => ([{
+    name: "topCategories",
+    url: `${route}`
+}])

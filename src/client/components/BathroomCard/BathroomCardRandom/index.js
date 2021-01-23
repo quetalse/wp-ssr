@@ -1,20 +1,38 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 
-export const BathroomCardRandom = ({bath}) => {
+export const BathroomCardRandom = ({classifierTitles, bath: [title, idTypes, metro, rating, price, url]}) => {
+
+    const classifiers = useSelector(state => {
+        let data = {};
+        classifierTitles.map((classifierTitle) => {
+            if(state.classifiers[classifierTitle]) {
+                data[classifierTitle] = state.classifiers[classifierTitle].data
+            }
+        })
+        return data;
+    });
+
+    console.log('classifierTitles', classifiers)
+
     return (
         <div className="card">
             <div className="card-image">
-                <img src={bath[5]}/>
-                <span className="card-head card-price">{bath[4]} р.</span>
-                <span className="card-head card-mark">{bath[3]}</span>
+                <img src={url}/>
+                <span className="card-head card-price">{price} р.</span>
+                <span className="card-head card-mark">{rating}</span>
             </div>
             <div className="card-content left-align">
-                <p className="content-title">{bath[0]}</p>
-                <p className="content-type">{bath[1]}</p>
+                <p className="content-title">{title}</p>
+                <ul className="content-type">
+                    {
+                        idTypes.map(id => (<li key={`${id}`}>{classifiers.type[id].title}</li>))
+                    }
+                </ul>
                 <ul className="content-stations">
-                    {bath[2].map((metro, index) => {
+                    {metro.map(([idMetro, distance]) => {
                         return (
-                            <li key={index} className="valign-wrapper station">{metro[0]} ({metro[1]})
+                            <li key={`${idMetro}`} className="valign-wrapper station">{classifiers.metro[idMetro].title} ({distance})
                                 <img
                                     src="app/images/icons/metro.png"
                                     className="secondary-content" width="10px"/>

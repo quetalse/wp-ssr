@@ -4,7 +4,7 @@ import { searchDaraUrls } from '../../screensDataUrls';
 import { useHistory, useLocation } from 'react-router-dom'
 
 /** ACTIONS **/
-import { sagaFetchClassifiers } from "../../../store/actions/classifiers";
+import { sagaFetchClassifier } from "../../../store/actions/classifier";
 import { sagaFetchPage } from "../../../store/actions/page";
 
 /** APP COMPONENTS **/
@@ -58,7 +58,10 @@ const Search = () => {
                     <FilterPanelLeft routes={clientSagaData}/>
                 </div>
                 <div className="col s9">
-                    <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+                    <BathroomCardList
+                        classifierTitles={["aqua", "entertainment", "equipment", "location", "type", "purpose", "services", "metro"]}
+                        count={7}
+                    />
                 </div>
             </div>
         </PageData>

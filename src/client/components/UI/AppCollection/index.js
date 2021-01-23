@@ -6,7 +6,7 @@ import Skeleton from "../../../components/skeletons/TopCategory";
 const CollectionItems = ({array}) => {
     return array.map((item, index) => (
         <li className="collection-item" key={index + 1}>
-            <Link to={item.url}>{item.text}</Link>)
+            <Link to={item.url}>{item.text}</Link>
         </li>
     ));
 };

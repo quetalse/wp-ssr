@@ -1,10 +1,6 @@
 import {LOAD_FETCH_CLASSIFIER, SUCCESS_FETCH_CLASSIFIER, FAILURE_FETCH_CLASSIFIER }  from "../types";
 
-const initState = {
-    data: null,
-    loading: false,
-    error: false
-};
+const initState = {};
 
 export default (state = initState, action) => {
 
@@ -12,37 +8,41 @@ export default (state = initState, action) => {
         case LOAD_FETCH_CLASSIFIER:
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    [action.payload.data]:{
-                        loading: true,
-                        error: false,
-                        data: null
-                    }
+                [action.payload.data]:{
+                    loading: true,
+                    error: false,
+                    data: null
                 }
-
             }
         case SUCCESS_FETCH_CLASSIFIER:
             let classifier = action.payload.classifier;
             let data = action.payload.data[classifier];
+
+
+            console.log('classifier', classifier)
+            console.log('data', data)
+
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    [action.payload.classifier]: {
-                        data: action.payload.data[classifier]
-                    }
+                [classifier]: {
+                    data,
+                    loading: false,
+                    error: false,
                 }
                 // loading: false,
                 // error: false,
                 // data: action.payload.data,
             }
         case FAILURE_FETCH_CLASSIFIER:
+            let errorClassifier = action.payload.classifier;
+            let error = action.payload.data[errorClassifier];
             return {
                 ...state,
-                loading: false,
-                data: null,
-                error: action.payload.data
+                [errorClassifier]: {
+                    loading: false,
+                    data: null,
+                    error
+                }
             }
         default:
             return state

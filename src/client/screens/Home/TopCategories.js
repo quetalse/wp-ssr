@@ -7,7 +7,9 @@ import { sagaFetchTopCategories } from '../../../store/actions/topCategories';
 import Skeleton from "../../components/skeletons/TopCategory";
 import { AppCollection } from "../../components/UI/AppCollection";
 import { _arraySkeleton } from "../../components/skeletons/_arraySkeleton";
+import { homeDataUrls } from '../../screensDataUrls'
 
+const {clientSagaData} = homeDataUrls;
 export const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
 
@@ -18,10 +20,8 @@ export const TopCategories = ({routes}) => {
 
     useEffect(() => {
             if(!data && !loading){
-                const url = routes.filter((route)=>{
-                    return route.name === 'topCategories'
-                });
-                dispatch(sagaFetchTopCategories(url))
+                const route = clientSagaData.topCategories
+                dispatch(sagaFetchTopCategories(route))
             }
         },[]
     );

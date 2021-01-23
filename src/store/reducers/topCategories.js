@@ -1,7 +1,7 @@
 import {LOAD_FETCH_TOP_CATEGORIES, SUCCESS_FETCH_TOP_CATEGORIES, FAILURE_FETCH_TOP_CATEGORIES }  from "../types";
 
 const initState = {
-    data: {},
+    data: null,
     loading: false,
     error: false
 };
@@ -14,7 +14,7 @@ export default (state = initState, action) => {
                 ...state,
                 loading: true,
                 error: false,
-                data: {}
+                data: null
             }
         case SUCCESS_FETCH_TOP_CATEGORIES:
             return {
@@ -27,7 +27,7 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 loading: false,
-                data: {},
+                data: null,
                 error: action.payload.data
             }
         default:

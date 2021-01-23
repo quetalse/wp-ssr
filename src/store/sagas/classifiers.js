@@ -1,19 +1,39 @@
-import { call, fork, put, takeEvery } from 'redux-saga/effects';
+import { select, call, cancel, fork, put, takeEvery } from 'redux-saga/effects';
 import { loadFetchClassifier, successFetchClassifier, failureFetchClassifier} from '../actions/classifier';
 import { SAGA_FETCH_CLASSIFIER } from "../types";
 import {dataExtract, dataClassifierTemplate } from './helpers';
 
+
+
 function* loadClassifiersData(classifier) {
     const dataClassifier = dataClassifierTemplate(classifier);
-    try{
-        console.log('dataClassifier', dataClassifier)
-        yield put(loadFetchClassifier(classifier))
-        const data = yield call(dataExtract, dataClassifier);
-        console.log('data', data)
-        yield put(successFetchClassifier({data, classifier}))
-    }catch(e){
-        console.log(e)
-        yield put(failureFetchClassifier(e))
+    const state = yield select();
+    if(!state.classifiers[classifier]){
+        try{
+            // console.log('state', state.classifiers)
+            // console.log('classifier', )
+            yield put(loadFetchClassifier(classifier))
+            const data = yield call(dataExtract, dataClassifier);
+            let refactor = {};
+
+            data[classifier].map(([id, title, url]) => {
+                refactor[id] = { title, url}
+            })
+
+            // console.log('{\n' +
+            //     '                data, classifier\n' +
+            //     '            }', {
+            //     data, classifier
+            // })
+            yield put(successFetchClassifier({
+                data:{
+                    [classifier]: refactor
+                }, classifier
+            }))
+        }catch(e){
+            console.log(e)
+            yield put(failureFetchClassifier(e, classifier))
+        }
     }
 }
 
