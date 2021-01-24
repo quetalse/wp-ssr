@@ -28,15 +28,6 @@ const Home = () => {
         return state.classifiers
     });
 
-    // useEffect(() => {
-    //     if(!classifiersData && !classifiersLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'classifiers'
-    //         });
-    //         dispatch(sagaFetchClassifiers(url))
-    //     }
-    // },[classifiersData, classifiersLoading])
-
     return (
         <PageData>
             <FilterPanel/>

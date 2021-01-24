@@ -1,5 +1,6 @@
 import React from 'react';
 import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 
 export const BathroomCardRandom = ({classifierTitles, bath: [title, idTypes, metro, rating, price, url]}) => {
 
@@ -13,8 +14,6 @@ export const BathroomCardRandom = ({classifierTitles, bath: [title, idTypes, met
         return data;
     });
 
-    console.log('classifierTitles', classifiers)
-
     return (
         <div className="card">
             <div className="card-image">
@@ -23,7 +22,7 @@ export const BathroomCardRandom = ({classifierTitles, bath: [title, idTypes, met
                 <span className="card-head card-mark">{rating}</span>
             </div>
             <div className="card-content left-align">
-                <p className="content-title">{title}</p>
+                <Link to={url} className="content-title">{title}</Link>
                 <ul className="content-type">
                     {
                         idTypes.map(id => (<li key={`${id}`}>{classifiers.type[id].title}</li>))

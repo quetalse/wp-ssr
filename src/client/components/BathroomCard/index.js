@@ -1,34 +1,48 @@
-import React, { useState } from 'react';``
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import {useSelector} from "react-redux";
 
-export const BathroomCard = ({bath}) => {
+import { v4 as uuidv4 } from 'uuid';
 
+export const BathroomCard = ({classifierTitles, bath}) => {
+
+    const [title, typeId, metro, rating, price, url] = bath;
     const [additional, setAdditional] = useState(false);
     const showAdditional = () => {
         setAdditional(!additional)
     }
-    let showAdditionalText = additional ? 'Скрыть услуги' : 'Смотреть все услуги';
 
+    const {metro: classifierMetro} = useSelector(state => {
+        let data = {};
+        classifierTitles.map((classifierTitle) => {
+            if(state.classifiers[classifierTitle]) {
+                data[classifierTitle] = state.classifiers[classifierTitle].data
+            }
+        })
+        return data;
+    });
+
+    let showAdditionalText = additional ? 'Скрыть услуги' : 'Смотреть все услуги';
     return (
         <div className="row card bathroom-card">
             <div className="row bathroom-card-main">
                 <div className="col s3 bathroom-card-head card-image">
-                    <img className="" width="250" src={bath[5]}/>
+                    <img className="" width="250" src={url}/>
                     {/*<span className="card-head card-price">300 р.</span>*/}
-                    <span className="bathroom-card-rating">{bath[3]} rate</span>
+                    <span className="bathroom-card-rating">{rating} rate</span>
                 </div>
                 <div className="col s9 bathroom-card-content left-align">
-                    <span className="content-price">{bath[4]} р.</span>
-                    <p className="content-title">{bath[0]}</p>
+                    <span className="content-price">{price} р.</span>
+                    <p className="content-title">{title}</p>
                     <ul className="content-stations">
                         <li className="valign-wrapper station">
                             <Link to="google.com">Местоположение</Link>
                         </li>
                         <li className="valign-wrapper station">
                             {
-                                bath[2].map((metro) => (
-                                    <span key={metro[0]}>
-                                        <Link to="google.com">{metro[0]}</Link>-{metro[1]}м.
+                                metro.map(([idMetro, distance]) => (
+                                    <span key={`${uuidv4()}`}>
+                                        <Link to={`/bath${idMetro}`}>{classifierMetro[idMetro].title}</Link>-{distance}м.
                                     </span>))
                             }
                         </li>

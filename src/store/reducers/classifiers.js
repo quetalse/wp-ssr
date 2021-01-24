@@ -18,10 +18,6 @@ export default (state = initState, action) => {
             let classifier = action.payload.classifier;
             let data = action.payload.data[classifier];
 
-
-            console.log('classifier', classifier)
-            console.log('data', data)
-
             return {
                 ...state,
                 [classifier]: {

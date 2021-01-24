@@ -4,15 +4,19 @@ import {Link} from "react-router-dom";
 import Skeleton from "../../../components/skeletons/TopCategory";
 import {sagaFetchClassifier} from "../../../../store/actions/classifier";
 
-const collectionItems = (array) => {
-    return array.map((item, index) => (
-        <li className="collection-item" key={index + 1}>
+const collectionItems = (classifierObj) => {
+    let result = [];
+
+    for (let id in classifierObj) {
+        result.push(
+        <li className="collection-item" key={`${id}`}>
             <label>
                 <input type="checkbox" className="filled-in"/>
-                <span>{item[1]}</span>
+                <span>{classifierObj[id].title}</span>
             </label>
-        </li>
-    ));
+        </li>)
+    }
+    return result
 };
 
 export const AppCollectionForm = ({classifierTitle}) => {
@@ -29,11 +33,10 @@ export const AppCollectionForm = ({classifierTitle}) => {
         }
     },[])
 
-
     const collection = (classifier) => {
         return (
             <ul className="collection with-header">
-                <li className="collection-header" key={0}>
+                <li className="collection-header">
                     <h4>{classifier.title || "Заголовок"}</h4>
                 </li>
                 {collectionItems(classifier)}

@@ -38,7 +38,6 @@ export const AppSelect = ({classifierTitle, label, instanceId, selectedOption, h
          return state.classifiers[classifierTitle]
      });
 
-    console.log('classifier', classifier)
     useEffect(() => {
         if(!classifier.data){
             dispatch(sagaFetchClassifier(classifierTitle))
