@@ -45,7 +45,7 @@ export const BathroomCardList = ({count, classifierTitles}) => {
     const renderBathList = () => {
         if (bathList && isReadyClassifiers){
             return bathList.map((bath, index) => (
-                <BathroomCard key={`${index}`} bath={bath} classifierTitles={["aqua", "entertainment", "equipment", "location", "type", "purpose", "services", "metro"]}/>
+                <BathroomCard key={`${index}`} bath={bath} />
             ))
         }else{
             return _arraySkeleton(count, Skeleton)

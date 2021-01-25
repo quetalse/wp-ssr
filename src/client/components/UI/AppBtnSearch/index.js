@@ -11,7 +11,7 @@ export const AppBtnSearch = ({classifierTitles, text, btnCounter: {loader, value
 
     const classifiers = useSelector(state => {
         let data = {};
-        classifierTitles.map((classifierTitle) => {
+        classifierTitles.forEach(classifierTitle => {
             if(state.classifiers[classifierTitle]) {
                 data[classifierTitle] = state.classifiers[classifierTitle].data
             }

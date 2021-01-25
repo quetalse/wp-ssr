@@ -55,7 +55,7 @@ export const BathroomCardRandomList = ({classifierTitles}) => {
                 if(!skeleton) {
                     return (
                       <div key={index}>
-                          <BathroomCardRandom classifierTitles={["type", "metro"]} key={index} bath={bath}/>
+                          <BathroomCardRandom key={index} bath={bath}/>
                       </div>
                     )
                 }

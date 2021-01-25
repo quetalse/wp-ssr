@@ -74,11 +74,11 @@ module.exports = {
         new webpack.DefinePlugin({
             __CLIENT__: true,
             __SERVER__: false,
-            __API_BASE__: 'https://41c51597-c58f-4f9a-baa7-df3c821d6c7b.mock.pstmn.io',
+            __API_BASE__: 'https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io',
             __API_BASE_SWAGGER__: JSON.stringify('http://45.89.66.172'),
             'process.env': {
                 '__APP_PORT__': 3000,
-                '__API_BASE__': JSON.stringify('https://41c51597-c58f-4f9a-baa7-df3c821d6c7b.mock.pstmn.io'), // '"production"'
+                '__API_BASE__': JSON.stringify('https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io'),
                 '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
             }
         }),

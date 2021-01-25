@@ -2,8 +2,9 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
-export const BathroomCardRandom = ({classifierTitles, bath: [title, idTypes, metro, rating, price, url]}) => {
+export const BathroomCardRandom = ({bath: [title, idTypes, metro, rating, price, url]}) => {
 
+    const classifierTitles = ["type", "metro"]
     const classifiers = useSelector(state => {
         let data = {};
         classifierTitles.map((classifierTitle) => {

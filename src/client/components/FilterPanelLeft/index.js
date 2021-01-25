@@ -29,18 +29,6 @@ export const FilterPanelLeft = () => {
             value: null
         }
     });
-    const {data, error, loading} = useSelector(state => {
-        return state.classifiers
-    })
-    // types, metro, purpose, services, aqua, entertainment
-    // useEffect(() => {
-    //     if(!types) {
-    //         let url = routes.filter((route) => {
-    //             return route.name === 'types' || route.name === 'metro'
-    //         });
-    //         dispatch(sagaFetchHome(url))
-    //     }
-    // },[]);
 
     const handleSelect = async (selectedOption, selectKey) => {
         if (selected[selectKey].label !== selectedOption.label) {

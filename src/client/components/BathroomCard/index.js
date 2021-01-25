@@ -4,17 +4,18 @@ import {useSelector} from "react-redux";
 
 import { v4 as uuidv4 } from 'uuid';
 
-export const BathroomCard = ({classifierTitles, bath}) => {
+export const BathroomCard = ({ bath }) => {
 
+    const classifierTitles = ["aqua", "entertainment", "equipment", "location", "type", "purpose", "services", "metro"]
     const [title, typeId, metro, rating, price, url] = bath;
     const [additional, setAdditional] = useState(false);
     const showAdditional = () => {
-        setAdditional(!additional)
+        setAdditional(additional => !additional)
     }
 
     const {metro: classifierMetro} = useSelector(state => {
         let data = {};
-        classifierTitles.map((classifierTitle) => {
+        classifierTitles.forEach(classifierTitle => {
             if(state.classifiers[classifierTitle]) {
                 data[classifierTitle] = state.classifiers[classifierTitle].data
             }
