@@ -28,10 +28,10 @@ export const Category = () => {
 
     const history = useHistory()
     const dispatch = useDispatch();
-    const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
-        // console.log('STATE', state)
-        return state.classifiers
-    });
+    // const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
+    //     // console.log('STATE', state)
+    //     return state.classifiers
+    // });
 
     // useEffect(() => {
     //     if(!classifiersData && !classifiersLoading){
@@ -45,10 +45,10 @@ export const Category = () => {
     return (
         <div className="row">
             <div className="col s3">
-                <FilterPanelLeft routes={clientSagaData}/>
+                1{/*<FilterPanelLeft routes={clientSagaData}/>*/}
             </div>
             <div className="col s9">
-                <BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>
+               2 {/*<BathroomCardList route={`${process.env.__API_BASE__}/api/search?type[1]&metro[1]&purpose[1]`} count={7}/>*/}
             </div>
         </div>
     )

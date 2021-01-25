@@ -12,7 +12,7 @@ export const NavMenu = () => {
                     >Бани</Link>
                     <ul className="left">
                         <li><Link to="/">Главная</Link></li>
-                        <li><Link to="/contacts">Контакты</Link></li>
+                        <li><Link to="/bathroom">Банный комплес</Link></li>
                         <li><Link to="/category">Категории</Link></li>
                     </ul>
                 </div>

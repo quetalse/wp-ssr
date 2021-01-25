@@ -20,9 +20,6 @@ export const PageData = ({children, clientSagaData}) => {
     const {data, error, loading} = useSelector(state => state.page);
 
     const routeData = useSelector(state => state.route);
-
-
-
     const isEqualRoute = routeData === pathname
 
     useEffect(() => {

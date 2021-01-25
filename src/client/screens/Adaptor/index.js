@@ -24,6 +24,7 @@ import { AppLoader } from "../../components/UI/AppLoader";
 // import { RandomBathList } from "./RandomBathList";
 // import { TopCategories } from "./TopCategory";
 
+import { Bathroom } from './Bathroom'
 import { Category } from './Category';
 import Home from '../Home';
 
@@ -35,6 +36,8 @@ const {clientSagaData, serverSagaData} = homeDataUrls;
 
 const contentSwitch = pageType => {
     switch(pageType) {
+        case 'bathroom':
+            return Bathroom;
         case 'category':
             return Category;
         default:
@@ -52,18 +55,17 @@ const Adaptor = () => {
 
     const isEqualRoute = routeData === pathname
 
+    // console.log('pageData', pageData)
 
-
-    console.log('pageData', pageData)
-    // console.log('pageError', pageError)
-    // console.log('pageLoading', pageLoading)
-
-
-    let content = () => {};
+    let Content = () => {};
 
     if(pageData){
-        content = contentSwitch(`${pageData.type_pageId}`);
+        Content = contentSwitch(`${pageData.type_pageId}`);
+
+        // console.log('content', content)
     }
+
+    // console.log('isEqualRoute', isEqualRoute)
 
     useEffect(() => {
         // if(!pageData && !pageLoading){
@@ -71,20 +73,27 @@ const Adaptor = () => {
             // const url = adaptorPage.filter((route)=>{
             //     return route.name === 'page'
             // });
-            let pathname = '/category'
+            // let pathname = '/category'
+            // let pathname = '/bath'
+            // console.log('sagaFetchPage')
             dispatch(sagaFetchPage(pathname))
         }
-    },[])
+    },[pathname])
 
-    if(!pageData || pageLoading) return <AppLoader/>
+    //
+    // console.log('pageLoading', pageLoading)
+    // console.log('pageError', pageError)
+    // console.log('pageData', pageData)
+
+    if(!isEqualRoute || pageLoading) return <AppLoader/>
     if(pageError) return <AppError error={pageError}/>
 
-    return (
+    if(pageData && isEqualRoute) return (
         // <Fragment>
         //     1
         // </Fragment>
         <PageData>
-            { pageData && isEqualRoute && content() }
+            <Content/>
         </PageData>
     )
 }
