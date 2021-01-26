@@ -2,11 +2,11 @@ import fetch from "node-fetch";
 import { Base64 } from 'js-base64';
 
 const username = process.env.SWAGGER_USER;
-const password = process.env.SWAGGER_PSWD;
+const password = process.env.SWAGsGER_PSWD;
 
 export const fetchData = async (haveName = false, {name, url}) => {
     const encoder = Base64.encode(`${username}:${password}`)
-
+    console.log('url', url)
     try {
         const response = await fetch(url, {
             method: 'GET',

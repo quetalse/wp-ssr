@@ -5,7 +5,7 @@ const baseConfig = require('../base/webpack.config.base');
 const webpackNodeExternals = require('webpack-node-externals');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {StatsWriterPlugin} = require('webpack-stats-plugin');
-const WaitPlugin = require('../waitPlugin')
+const WaitPlugin = require('../waitPlugin');
 const Dotenv = require('dotenv-webpack');
 
 

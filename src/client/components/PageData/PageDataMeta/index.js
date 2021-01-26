@@ -28,7 +28,7 @@ export const PageDataMeta = () => {
     return (
       <Helmet>
           {error && <title>&#129298; Error!</title> }
-          {data !== null && renderMeta(data.page)}
+          {data !== null && renderMeta(data)}
       </Helmet>
     )
 }
