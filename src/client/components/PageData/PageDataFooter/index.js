@@ -2,8 +2,10 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import {useSelector} from "react-redux";
 import Skeleton from "react-loading-skeleton";
 
+import { getPageData } from "../../../selectors";
+
 export const PageDataFooter = () => {
-    const {data, error, loading} = useSelector(state => (state.page));
+    const {data, error, loading} = useSelector(getPageData);
 
     return (
         <div className="row">

@@ -9,14 +9,14 @@ import { AppCollection } from "../../components/UI/AppCollection";
 import { _arraySkeleton } from "../../components/skeletons/_arraySkeleton";
 import { homeDataUrls } from '../../screensDataUrls'
 
+/** SELECTORS **/
+import { getTopCategories } from "../../selectors";
+
 const {clientSagaData} = homeDataUrls;
 export const TopCategories = ({routes}) => {
     const dispatch = useDispatch();
 
-    const {data, error, loading} = useSelector(state => {
-        // if(!state.data.classifiers) return {}
-        return state.topCategories
-    })
+    const {data, error, loading} = useSelector(getTopCategories)
 
     useEffect(() => {
             if(!data && !loading){

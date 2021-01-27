@@ -5,48 +5,34 @@ import moment from "moment/min/moment.min";
 import {dropField} from "../../../../store/actions/home";
 import { pushRoute } from "../../../../store/actions/page";
 
+import { getClassifiersLengthByTitles } from "../../../selectors";
+
 export const AppBtnSearch = ({classifierTitles, text, btnCounter: {loader, value}, selected, datePicker}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const classifiersLength = useSelector(state => {
-        let length = 0;
-        classifierTitles.forEach(classifierTitle => {
-            if(state.classifiers[classifierTitle]) {
-                length += 1;
-                // data[classifierTitle] = state.classifiers[classifierTitle].data
-            }
-        })
-        return length;
-    });
+    const classifiersLength = useSelector(getClassifiersLengthByTitles(classifierTitles));
     const classifierTitlesLength = classifierTitles.length;
-    // const classifiersData = classifierTitles.filter(classifierTitle => classifiers[classifierTitle])
+    const isClassifiersReady = classifiersLength !== classifierTitlesLength;
+
     const searchHandler = (e) => {
         e.preventDefault();
-        // let data = {};
 
-        // data['date'] = moment(datePicker).format("DD/MM/YYYY");
         let pushUrl = '';
         let dateStr = moment(datePicker).format("DD/MM/YYYY");
         //
         for (let key in selected) {
-            // data[key] = selected[key].value
             pushUrl += `${key}=[${selected[key].value}]&`
         }
-
-        // console.log('data', data);
-        //
         pushUrl += `date=[${dateStr}]`;
-
         // dispatch(pushRoute({ url: `/search?${pushUrl}`, history}));
-
         history.push(`/search?${pushUrl}`);
     }
     return (
         <button
             style={{width: '100%', color: '#000000', height: '3rem', backgroundColor: '#F0F0F0'}}
             className="btn waves-effect waves-light input-tool"
-            disabled={classifiersLength !== classifierTitlesLength}
+            disabled={isClassifiersReady}
             onClick={searchHandler}
         >{text}
             {!loader|| <img width="20px" style={{'top': '4px'}} src="/app/images/loading.gif" alt="Загрузка"/>}

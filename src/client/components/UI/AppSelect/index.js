@@ -2,6 +2,7 @@ import React, { Fragment, useEffect} from 'react';
 import Select from 'react-select';
 import {useDispatch, useSelector} from "react-redux";
 import {sagaFetchClassifier} from "../../../../store/actions/classifier";
+import {getClassifierByTitle} from "../../../selectors";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -33,15 +34,10 @@ const customStyles = {
 export const AppSelect = ({classifierTitle, label, instanceId, selectedOption, handleChange, placeholder }) => {
 
      const dispatch = useDispatch();
-     const classifier = useSelector( state => {
-         if(!state.classifiers[classifierTitle]) return {}
-         return state.classifiers[classifierTitle]
-     });
-
-     console.log('classifier.data', classifier[classifierTitle])
+     const classifier = useSelector( getClassifierByTitle(classifierTitle));
 
     useEffect(() => {
-        if(!classifier[classifierTitle]){
+        if(!classifier.data){
             dispatch(sagaFetchClassifier(classifierTitle))
         }
     },[])
@@ -60,8 +56,6 @@ export const AppSelect = ({classifierTitle, label, instanceId, selectedOption, h
 
     const value = selectedOption.label === null ? null : selectedOption;
     const options = classifier.data ? getOptions(classifier.data) : {};
-
-
 
     if(classifier.error) return null;
     return (

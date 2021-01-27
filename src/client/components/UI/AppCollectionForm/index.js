@@ -4,6 +4,9 @@ import {Link} from "react-router-dom";
 import Skeleton from "../../../components/skeletons/TopCategory";
 import {sagaFetchClassifier} from "../../../../store/actions/classifier";
 
+/** SELECTORS **/
+import {getClassifierByTitle} from "../../../selectors";
+
 const collectionItems = (classifierObj) => Object.entries(classifierObj).map(([id, data]) => (
     <li className="collection-item" key={`${id}`}>
         <label>
@@ -17,10 +20,7 @@ const collectionItems = (classifierObj) => Object.entries(classifierObj).map(([i
 export const AppCollectionForm = ({classifierTitle}) => {
 
     const dispatch = useDispatch();
-    const classifier = useSelector( state => {
-        if(!state.classifiers[classifierTitle]) return {}
-        return state.classifiers[classifierTitle]
-    });
+    const classifier = useSelector( getClassifierByTitle(classifierTitle));
 
     useEffect(() => {
         if(!classifier.data){

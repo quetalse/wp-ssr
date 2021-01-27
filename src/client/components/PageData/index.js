@@ -12,14 +12,18 @@ import { PageDataHeader } from "./PageDataHeader";
 import { PageDataFooter } from "./PageDataFooter";
 import { useLocation } from "react-router-dom";
 
+/** SELECTORS **/
+import { getPageData, getRouteData } from "../../selectors";
+
 export const PageData = ({children, clientSagaData}) => {
 
     const location = useLocation();
     const {pathname, search} = useLocation();
     const dispatch = useDispatch();
-    const {data, error, loading} = useSelector(state => state.page);
 
-    const routeData = useSelector(state => state.route);
+    const {data, error, loading} = useSelector(getPageData);
+    const routeData = useSelector(getRouteData);
+
     const isEqualRoute = routeData === pathname
 
     useEffect(() => {

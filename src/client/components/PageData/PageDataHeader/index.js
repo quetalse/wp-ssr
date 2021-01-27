@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
-import {Helmet} from "react-helmet-async";
+
+import {getPageData} from "../../../selectors";
 
 export const PageDataHeader = ({forPage, routes}) => {
 
     const dispatch = useDispatch();
-    const {data, error, loading} = useSelector(state => (state.page));
+    const {data, error, loading} = useSelector(getPageData);
 
     // useEffect(() => {
     //     console.log('load', forPage)

@@ -2,23 +2,17 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
+import { getClassifiersByTitles } from "../../../selectors";
+
 export const BathroomCardRandom = ({bath: [title, idTypes, metro, rating, price, url]}) => {
 
     const classifierTitles = ["type", "metro"]
-    const classifiers = useSelector(state => {
-        let data = {};
-        classifierTitles.map((classifierTitle) => {
-            if(state.classifiers[classifierTitle]) {
-                data[classifierTitle] = state.classifiers[classifierTitle].data
-            }
-        })
-        return data;
-    });
+    const classifiers = useSelector(getClassifiersByTitles(classifierTitles));
 
     return (
         <div className="card">
             <div className="card-image">
-                <img src={url}/>
+                <img src={url} alt="Баня"/>
                 <span className="card-head card-price">{price} р.</span>
                 <span className="card-head card-mark">{rating}</span>
             </div>

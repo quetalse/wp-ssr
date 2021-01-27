@@ -85,6 +85,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: 'src/_images', to: 'images' },
+            { from: 'src/_data', to: '../data' },
             // { from: 'src/_static', to: './' },
         ]),
         new MiniCssExtractPlugin({

@@ -1,11 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
 import { homeDataUrls } from '../../screensDataUrls'
 
 /** ACTIONS **/
-import { sagaFetchClassifier } from "../../../store/actions/classifier";
-import { sagaFetchPage } from "../../../store/actions/page";
-import { dropField } from '../../../store/actions/page'
+// import { sagaFetchClassifier } from "../../../store/actions/classifier";
+// import { sagaFetchPage } from "../../../store/actions/page";
+// import { dropField } from '../../../store/actions/page'
 
 /** APP COMPONENTS **/
 import { PageData } from "../../components/PageData";
@@ -16,32 +15,22 @@ import { BathroomCardRandomList } from "./BathroomCardRandomList";
 import { TopCategories } from "./TopCategories";
 
 import "./index.scss";
-import {AppBtnSearch} from "../../components/UI/AppBtnSearch";
+// import {AppBtnSearch} from "../../components/UI/AppBtnSearch";
 
-const {clientSagaData, serverSagaData} = homeDataUrls;
-const Home = () => {
+const Home = () => (
+    <PageData>
+        <FilterPanel/>
+        <div className="row random-card-offers">
+            <BathroomCardRandomList  classifierTitles={["type", "metro"]}/>
+        </div>
+        <div className="row top-categories">
+            <TopCategories/>
+        </div>
+    </PageData>
+)
 
-    const dispatch = useDispatch();
-    // const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
-    const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
-        // console.log('STATE', state)
-        return state.classifiers
-    });
-
-    return (
-        <PageData>
-            <FilterPanel/>
-            <div className="row random-card-offers">
-                <BathroomCardRandomList  classifierTitles={["type", "metro"]}/>
-            </div>
-            <div className="row top-categories">
-                <TopCategories/>
-            </div>
-        </PageData>
-    )
-}
 
 export default {
     component: Home,
-    serverSagaData: serverSagaData
+    serverSagaData: homeDataUrls.serverSagaData
 }

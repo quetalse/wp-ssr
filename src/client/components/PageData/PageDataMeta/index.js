@@ -2,9 +2,11 @@ import React, { Fragment } from 'react';
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 
+import { getPageData } from "../../../selectors";
+
 export const PageDataMeta = () => {
 
-    const {data, error, loading} = useSelector(state => (state.page));
+    const {data, error, loading} = useSelector(getPageData);
 
     const renderMeta = (page) => {
         const title = page ? page.title : '',

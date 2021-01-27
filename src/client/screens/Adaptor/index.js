@@ -24,11 +24,15 @@ import { AppLoader } from "../../components/UI/AppLoader";
 // import { RandomBathList } from "./RandomBathList";
 // import { TopCategories } from "./TopCategory";
 
+/** SELECTORS **/
+import {getPageData, getRouteData} from "../../selectors";
+
 import { Bathroom } from './Bathroom'
 import { Category } from './Category';
 import Home from '../Home';
 
 import "./index.scss";
+
 
 const _apiBase = process.env.__API_BASE__;
 const {clientSagaData, serverSagaData} = homeDataUrls;
@@ -50,12 +54,10 @@ const Adaptor = () => {
     const {pathname, search} = useLocation();
     const dispatch = useDispatch();
 
-    const routeData = useSelector(state => state.route);
-    const {data: pageData, error: pageError, loading: pageLoading} = useSelector(state => (state.page));
+    const routeData = useSelector(getRouteData);
+    const {data: pageData, error: pageError, loading: pageLoading} = useSelector(getPageData);
 
     const isEqualRoute = routeData === pathname
-
-    // console.log('pageData', pageData)
 
     let Content = () => {};
 
@@ -89,9 +91,6 @@ const Adaptor = () => {
     if(pageError) return <AppError error={pageError}/>
 
     if(pageData && isEqualRoute) return (
-        // <Fragment>
-        //     1
-        // </Fragment>
         <PageData>
             <Content/>
         </PageData>

@@ -6,6 +6,7 @@ import { _arraySkeleton } from "../../components/skeletons/_arraySkeleton";
 import {sagaFetchClassifiers} from "../../../store/actions/home";
 import {useDispatch, useSelector} from "react-redux";
 import {sagaFetchClassifier} from "../../../store/actions/classifier";
+import {getClassifiersByTitles} from "../../selectors";
 
 export const BathroomCardList = ({count, classifierTitles}) => {
 
@@ -14,15 +15,7 @@ export const BathroomCardList = ({count, classifierTitles}) => {
     const [bathList, setBathList] = useState(null);
     const route = `${process.env.__API_BASE__}/api/${pathname}${search}`;
 
-    const classifiers = useSelector(state => {
-        let data = {};
-        classifierTitles.map((classifierTitle) => {
-            if(state.classifiers[classifierTitle]) {
-                data[classifierTitle] = state.classifiers[classifierTitle].data
-            }
-        })
-        return data;
-    });
+    const classifiers = useSelector(getClassifiersByTitles(classifierTitles));
 
     useEffect(async () => {
             classifierTitles.map((classifierTitle) => {

@@ -1,5 +1,5 @@
 import { call } from 'redux-saga/effects';
-import { fetchData } from "../api";
+import { sagaFetchData } from "../api";
 
 const _apiBase = process.env.__API_BASE__;
 export function* dataExtract(dataUrls, name = false){
@@ -10,7 +10,7 @@ export function* dataExtract(dataUrls, name = false){
             if(Array.isArray(dataUrl.url)){
                 return call(dataExtract, dataUrl.url, dataUrl.name)
             }
-            return call(fetchData, name, dataUrl)
+            return call(sagaFetchData, name, dataUrl)
         });
         yield responses.map(response => {
             data = {...data,...response}

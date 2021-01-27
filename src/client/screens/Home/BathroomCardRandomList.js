@@ -5,28 +5,22 @@ import Skeleton from '../../components/skeletons/RandomBathCard';
 import { BathroomCardRandom } from "../../components/BathroomCard/BathroomCardRandom";
 import { homeDataUrls } from '../../screensDataUrls'
 import {sagaFetchClassifier} from "../../../store/actions/classifier";
+import { fetchData } from "../../../store/api";
+import {getClassifiersByTitles} from "../../selectors";
 
 const {clientSagaData} = homeDataUrls;
 export const BathroomCardRandomList = ({classifierTitles}) => {
 
     const dispatch = useDispatch();
+    const classifiers = useSelector(getClassifiersByTitles(classifierTitles));
+
     const [randomBathrooms, setRandomBathrooms] = useState({
         data: null,
         loading: false,
         error: false
     });
 
-    const classifiers = useSelector(state => {
-        let data = {};
-        classifierTitles.map((classifierTitle) => {
-            if(state.classifiers[classifierTitle]) {
-                data[classifierTitle] = state.classifiers[classifierTitle].data
-            }
-        })
-        return data;
-    });
-
-    useEffect(async () => {
+    useEffect(() => {
             classifierTitles.map((classifierTitle) => {
                 if(!classifiers[classifierTitle]) {
                     dispatch(sagaFetchClassifier(classifierTitle))
@@ -35,15 +29,17 @@ export const BathroomCardRandomList = ({classifierTitles}) => {
         },[]
     );
 
-    useEffect(async () => {
-            setRandomBathrooms((state) =>({...state, loading: true}))
-            try{
-                const response = await fetch(clientSagaData.randomBathrooms);
-                const data = await response.json();
-                setRandomBathrooms((state) =>({...state, data}))
-            }catch (error) {
-                setRandomBathrooms((state) =>({...state, error}))
+    useEffect( () => {
+            const getRandomBathrooms = async() => {
+                setRandomBathrooms((state) =>({...state, loading: true}))
+                try{
+                    const data = await fetchData(clientSagaData.randomBathrooms);
+                    setRandomBathrooms((state) =>({...state, data}))
+                }catch (error){
+                    setRandomBathrooms((state) =>({...state, error}))
+                }
             }
+            getRandomBathrooms();
         },[]
     );
 

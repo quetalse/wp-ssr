@@ -36,21 +36,6 @@ const Search = () => {
     // const type = params.get('type');
     // const metro = params.get('metro');
 
-    const dispatch = useDispatch();
-    const {data: classifiersData , error: classifiersError, loading: classifiersLoading} = useSelector(state => {
-        // console.log('STATE', state)
-        return state.classifiers
-    });
-
-    // useEffect(() => {
-    //     if(!classifiersData && !classifiersLoading){
-    //         const url = clientSagaData.filter((route)=>{
-    //             return route.name === 'classifiers'
-    //         });
-    //         dispatch(sagaFetchClassifiers(url))
-    //     }
-    // },[classifiersData, classifiersLoading])
-
     return (
         <PageData clientSagaData={searchPage}>
             <div className="row">
