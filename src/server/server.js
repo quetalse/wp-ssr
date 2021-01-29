@@ -1,10 +1,7 @@
 import '@babel/polyfill';
-
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-import { makeServer } from "./mockServer";
-
 import { matchRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
 import proxy from 'express-http-proxy';
@@ -13,40 +10,42 @@ import { renderer } from "./helpers/renderer";
 import Routes from '../Route';
 import configureStore from '../store';
 import { assetsByChunkName } from '../../build/app/stats.json';
+import { rootSaga } from "../store/sagas/root";
+import { dataPageTemplate } from '../store/sagas/helpers'
 
+const PORT = process.env.__APP_PORT__;
 
 const app = express();
 const indexFile = path.resolve('./build/app/template.html');
 
+global.__SERVER__ = true;
+global.__CLIENT__ = false;
 
-makeServer({ environment: "development" })
-
-app.use('/api', proxy('http://jsonplaceholder.typicode.com/photos', {
-
-}));
-
-app.use(express.static('build/app'));
-
+app.use(require('express-status-monitor')());
+app.use(express.static('build/'));
 app.get('*', (req, res, next) => {
-    const params = req.params[0].split('/');
-    const id = params[2];
+
+    // console.log('req.baseUrl', req.path)
+    // const params = req.params[0].split('/');
+    // const id = params[2];
     const routes = matchRoutes(Routes, req.path).pop();
     const store = configureStore();
 
-    // console.log('routes', routes)
+    const saga = rootSaga,
+          pageData = {
+              name: "page",
+              url: `${req.path}`
+          },
+          // pageData = dataPageTemplate(req.path),
+          componentData = routes.route.serverSagaData
 
-    const saga = routes.route.saga || function* (){}
-    //       sagaUrl = routes.route.sagaUrl || '',
-    //       sagaUrlParam = routes.match.params.id || '',
-    //       dataUrl = `${sagaUrl}/${sagaUrlParam}`,
-    //       metaUrl = routes.route.sagaMetaUrl || '';
 
-    const dataUrls = routes.route.serverSagaData;
-    const {keysSsrIgnore} = routes.route;
-    const {stateKey} = routes.route;
+    // console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+    // console.log('req.originalUrl',req.originalUrl)
+    // console.log('///////////////////', [...componentData, ...pageData])
+    // console.log('||||||||||||||||||||||||||||||||||||||||||||||||||||||')
 
-    store.runSaga(saga, dataUrls).done
-    .then(() => {
+    store.runSaga(saga, [...componentData, pageData]).done.then(() => {
             const context = {};
             const helmetContext = {};
             const content = renderer(req, store, context, helmetContext);
@@ -63,29 +62,20 @@ app.get('*', (req, res, next) => {
 
                 const { helmet } = helmetContext;
 
-                // let initalData = store.getState();
-
-                // console.log(initalData[stateKey])
-                // keysSsrIgnore.forEach((key) => {
-                //     // console.log(key)
-                //     if(initalData[stateKey].data[key]){
-                //         delete initalData[stateKey].data[key]
-                //     }
-                // });
-                //
-                // console.log(initalData[stateKey])
+                // console.log('getState', store.getState())
 
 
-                data = data.replace('__STYLES__', `/${assetsByChunkName.main[0]}`);
+                data = data.replace('__STYLES__', `/app/${assetsByChunkName.main[0]}`);
                 data = data.replace('__LOADER__', '');
                 data = data.replace('<div id="root"></div>', `<div id="root">${content}</div>`);
                 data = data.replace('<title></title>', helmet.title.toString());
                 data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
                 data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(store.getState())}</script>`);
                 // data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${serialize(initalData)}</script>`);
-                data = data.replace('__CLIENT__SCRIPTS__', `/${assetsByChunkName.main[1]}`);
+                data = data.replace('__CLIENT__SCRIPTS__', `/app/${assetsByChunkName.main[1]}`);
 
                 return res.send(data)
+                // return res.send('1')
             })
     })
     .catch((e) => {
@@ -94,6 +84,7 @@ app.get('*', (req, res, next) => {
     store.close();
 });
 
-app.listen(3000, () => {
-    console.log('😎 Server on port 3000');
-})
+app.listen(PORT, () => {
+    console.log(`😎 Server on port ${PORT}`);
+});
+

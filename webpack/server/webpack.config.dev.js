@@ -5,7 +5,8 @@ const baseConfig = require('../base/webpack.config.base');
 const webpackNodeExternals = require('webpack-node-externals');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {StatsWriterPlugin} = require('webpack-stats-plugin');
-const WaitPlugin = require('../waitPlugin')
+const WaitPlugin = require('../waitPlugin');
+const Dotenv = require('dotenv-webpack');
 
 
 module.exports = {
@@ -34,7 +35,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: 'null-loader'
             },
             // {
@@ -70,7 +71,19 @@ module.exports = {
             // window: path.resolve(path.join(__dirname, './../window.mock')),
             // document: 'global/document',
         }),
-        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json'))
+        new webpack.DefinePlugin({
+            __CLIENT__: true,
+            __SERVER__: false,
+            __API_BASE__: 'https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io',
+            __API_BASE_SWAGGER__: JSON.stringify('http://45.89.66.172'),
+            'process.env': {
+                '__APP_PORT__': 3000,
+                '__API_BASE__': JSON.stringify('https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io'),
+                '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
+            }
+        }),
+        new WaitPlugin(path.resolve(process.cwd(), 'build/app/stats.json')),
+        new Dotenv()
 
     ],
     resolve: {
@@ -82,6 +95,8 @@ module.exports = {
             '.js',
             '.jsx',
             '.react.js',
+            '.css',
+            '.scss',
         ],
         mainFields: [
             'browser',

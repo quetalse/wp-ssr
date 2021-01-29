@@ -1,9 +1,9 @@
-import Home from './client/pages/Home';
-import About from "./client/pages/About";
-import NotFound from "./client/pages/NotFound";
-import Bathrooms from "./client/pages/Bathrooms";
-import Bathroom from "./client/pages/Bathroom";
 import App from './client/App';
+import Home from './client/screens/Home';
+import Search from './client/screens/Search';
+import Adaptor from './client/screens/Adaptor'
+import About from "./client/screens/About";
+import NotFound from "./client/screens/NotFound";
 
 export default [
     {
@@ -13,14 +13,14 @@ export default [
                 ...Home,
                 path: '/',
                 exact: true
-            }, {
-                ...Bathrooms,
-                path: '/bathrooms',
+            },
+            {
+                ...Search,
+                path: '/search',
                 exact: true,
             },
             {
-                path: "/bathrooms/:id",
-                ...Bathroom
+                ...Adaptor,
             },
             {
                 ...About,

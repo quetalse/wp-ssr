@@ -2,6 +2,7 @@ import {createStore, applyMiddleware, compose} from "redux";
 import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from "redux-thunk";
 import reducers from './reducers';
+import root from './reducers/root';
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [thunk, sagaMiddleware];
 
@@ -29,7 +30,8 @@ export default function configureStore () {
         composeEnhancers(applyMiddleware(...middleware))
         // applyMiddleware(sagaMiddleware)
     );
-    store.runSaga = (saga, params = {}) => {
+    store.runSaga = (saga, params = []) => {
+        // console.log('params', params)
         return sagaMiddleware.run(saga, params)
     };
     store.close = () => store.dispatch(END);

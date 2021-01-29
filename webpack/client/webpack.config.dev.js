@@ -36,7 +36,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    'style-loader','css-loader', 'sass-loader']
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
             {
                 test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
@@ -77,6 +80,9 @@ module.exports = {
             'process.env': {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
             },
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'client-styles.[chunkhash].css'
         }),
         new webpack.NamedModulesPlugin()
     ],

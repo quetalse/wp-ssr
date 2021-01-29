@@ -1,0 +1,118 @@
+$width: 230px;
+$secondary-color: #F0F0F0;
+
+
+.inputs{
+  display: flex;
+  align-items: flex-end;
+
+  .input-field{
+    display: flex;
+    justify-content: space-around;
+
+    .input-tool{
+      width: $width;
+      margin: 0 4px;
+    }
+
+    .datepicker{
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border-color: hsl(0,0%,90%);
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 1px;
+      cursor: default;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      min-height: 38px;
+      outline: 0 !important;
+      position: relative;
+      -webkit-transition: all 100ms;
+      transition: all 100ms;
+      box-sizing: border-box;
+      height: 3rem;
+      text-align: center;
+      margin-bottom: 0;
+
+      &:focus{
+        //border: 0 !important;
+        outline: 0;
+        box-shadow: none;
+      }
+      //input:focus{
+      //
+      //}
+    }
+
+    .react-datepicker-wrapper{
+      margin: 0 auto;
+    }
+
+    .btn{
+      color: #000000;
+      height: 3rem;
+      background-color: $secondary-color;
+    }
+  }
+}
+
+.random-card-offers{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  .card{
+    width: 178px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    .card-head{
+      background-color: rgba(255, 255, 255, 0.45);
+      color: #F52E09;
+      position: absolute;
+      max-width: 100%;
+      margin: 6px;
+      padding-right: 4px;
+      padding-left: 4px;
+    }
+    .card-price{
+      bottom: 0;
+      right: 0;
+    }
+    .card-mark{
+      top: 0;
+      right: 0;
+    }
+
+    .card-content{
+      background-color: $secondary-color;
+
+      .content-stations{
+        margin-bottom: 0;
+        .station{
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+.categories{
+  li{
+    background-color: $secondary-color !important;
+  }
+}
+

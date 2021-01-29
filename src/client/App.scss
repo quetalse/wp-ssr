@@ -2,9 +2,14 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  //background-color: #a1c4e2;
 }
 
-main {
+main.container {
   flex: 1 0 auto;
+  min-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
 }

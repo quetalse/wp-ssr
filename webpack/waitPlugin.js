@@ -4,12 +4,12 @@ const WebpackBeforeBuildPlugin = require('before-build-webpack')
 const fs = require('fs')
 
 class WaitPlugin extends WebpackBeforeBuildPlugin {
-    constructor(file, interval = 100, timeout = 10000) {
+    constructor(file, interval = 100, timeout = 40000) {
         super(function(stats, callback) {
             let start = Date.now()
 
             function poll() {
-                console.log('im start')
+                console.log(`${(Date.now() - start)/1000} second left`)
                 if (fs.existsSync(file)) {
                     callback()
                 } else if (Date.now() - start > timeout) {

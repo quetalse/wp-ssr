@@ -50,6 +50,6 @@ export function* bathroomsSaga(arg) {
 export function* clientBathroomsSaga(arg) {
     yield all([
         clientsSaga(),
-        fork(clientBathrooms)
+        clientBathrooms()
     ])
 }

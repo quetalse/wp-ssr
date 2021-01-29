@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 
 // const clientConfig = require('./client/webpack.config.dev.js');
@@ -37,10 +38,12 @@ const clientConfig = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader', 'sass-loader']
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
@@ -68,8 +71,15 @@ const clientConfig = {
         new CompressionPlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
+            __CLIENT__: true,
+            __SERVER__: false,
+            __APP_PORT__: 3000,
+            __API_BASE_SWAGGER__: 'http://45.89.66.172',
+            __API_BASE__: 'https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io',
             'process.env': {
-                NODE_ENV: JSON.stringify('development')
+                '__APP_PORT__': 3000,
+                '__API_BASE__': JSON.stringify('https://e5b15210-c67e-4041-9c51-700682901def.mock.pstmn.io'), // '"production"'
+                '__API_BASE_SWAGGER__': JSON.stringify('http://45.89.66.172')
             }
         }),
         new StatsWriterPlugin({
@@ -80,11 +90,13 @@ const clientConfig = {
         }),
         new CopyWebpackPlugin([
             { from: 'src/_images', to: 'images' },
+            { from: 'src/_data', to: '../data' },
             // { from: 'src/_static', to: './' },
         ]),
         new MiniCssExtractPlugin({
             filename: 'client-styles.[chunkhash].css'
-        })
+        }),
+        new Dotenv()
     ],
     devtool: 'inline-source-map' // для отладки в браузере
 }
