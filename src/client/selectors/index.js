@@ -16,7 +16,8 @@ export const getClassifiersByTitles = titles => state => {
 export const getClassifiersLengthByTitles = titles => state => {
     let length = 0;
     titles.forEach(classifierTitle => {
-        if(state.classifiers[classifierTitle]) length += 1
+        const classifierData = state.classifiers[classifierTitle] || {};
+        if(classifierData.data) length += 1
     })
     return length;
 };
