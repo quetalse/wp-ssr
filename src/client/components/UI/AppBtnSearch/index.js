@@ -28,6 +28,7 @@ export const AppBtnSearch = ({classifierTitles, text, btnCounter: {loader, value
         // dispatch(pushRoute({ url: `/search?${pushUrl}`, history}));
         history.push(`/search?${pushUrl}`);
     }
+    // console.log(classifiersLength);
     return (
         <button
             style={{width: '100%', color: '#000000', height: '3rem', backgroundColor: '#F0F0F0'}}

@@ -57,6 +57,8 @@ export const AppSelect = ({classifierTitle, label, instanceId, selectedOption, h
     const value = selectedOption.label === null ? null : selectedOption;
     const options = classifier.data ? getOptions(classifier.data) : {};
 
+    console.log('classifier', classifier)
+
     if(classifier.error) return null;
     return (
         <Fragment>

@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect'
+
 export const getClassifierByTitle = title => state => {
     if(!state.classifiers[title]) return {}
     return state.classifiers[title]
@@ -19,6 +21,8 @@ export const getClassifiersLengthByTitles = titles => state => {
         const classifierData = state.classifiers[classifierTitle] || {};
         if(classifierData.data) length += 1
     })
+    // console.log('length', length);
+
     return length;
 };
 
